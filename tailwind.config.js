@@ -8,7 +8,9 @@ module.exports = {
         '24': ['24px', '29px'],
       },
       colors: {
-        'orange': '#FF9648'
+        'orange': '#FF9648',
+        'grey': '#D9D9D9',
+        'blue': '#1D2570'
       },
       borderRadius: {
         '5': '5px'

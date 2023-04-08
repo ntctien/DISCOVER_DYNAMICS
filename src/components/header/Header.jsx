@@ -1,8 +1,8 @@
 import { Dropdown } from "antd";
 import DropdownButton from "./DropdownButton";
-import logo from "../assets/logo.png";
-import accountIcon from "../assets/account.svg";
 import DropdownItem from "./DropdownItem";
+import logo from "../../assets/logo.png";
+import accountIcon from "../../assets/account.svg";
 
 const dropDownItems = {
   destination: [],

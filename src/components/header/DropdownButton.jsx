@@ -1,5 +1,5 @@
 import { Dropdown } from "antd";
-import arrowIcon from "../assets/arrow-down.svg";
+import arrowIcon from "../../assets/arrow-down.svg";
 
 const DropdownButton = ({ items, label }) => {
   return (
