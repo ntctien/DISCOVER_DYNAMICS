@@ -19,3 +19,7 @@ code {
 .row {
   @apply flex items-center;
 }
+
+.between-row {
+  @apply flex items-center justify-between;
+}

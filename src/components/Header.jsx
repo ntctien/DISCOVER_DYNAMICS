@@ -1,45 +1,46 @@
-import logo from "../assets/logo.png";
+import { Dropdown } from "antd";
 import DropdownButton from "./DropdownButton";
+import logo from "../assets/logo.png";
+import accountIcon from "../assets/account.svg";
+import DropdownItem from "./DropdownItem";
 
-const items = [
-  {
-    key: '1',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        1st menu item
-      </a>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-        2nd menu item
-      </a>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-        3rd menu item
-      </a>
-    ),
-  },
-];
+const dropDownItems = {
+  destination: [],
+  tourType: [],
+  account: [
+    {
+      key: "sign-in",
+      label: <DropdownItem label={'Đăng nhập'}/>,
+    },
+    {
+      key: "sign-up",
+      label: <DropdownItem label={'Đăng ký'}/>,
+    },
+  ],
+};
 
 const Header = () => {
   return (
-    <div className="row">
+    <div className="between-row font-medium text-24">
       {/* Logo */}
       <img src={logo} alt="Logo" className="h-[80px]" />
       {/* Menu */}
-      <div className="row font-medium text-24">
-        <DropdownButton items={items} label={'Điểm đến'}/> 
-        <DropdownButton items={items} label={'Loại hình tour'}/>
+      <div className="row flex-1 justify-center gap-x-[56px]">
+        <DropdownButton items={dropDownItems.destination} label={"Điểm đến"} />
+        <DropdownButton
+          items={dropDownItems.tourType}
+          label={"Loại hình tour"}
+        />
         <p>Về chúng tôi</p>
         <p>Liên hệ</p>
       </div>
+      {/* Account */}
+      <Dropdown menu={{ items: dropDownItems.account }}>
+        <div onClick={(e) => e.preventDefault()} className="row gap-x-[13px]">
+          <img src={accountIcon} alt="Account" />
+          <p>Tài khoản</p>
+        </div>
+      </Dropdown>
     </div>
   );
 };
