@@ -1,13 +1,13 @@
-import { Outlet } from 'react-router-dom'
-import Header from '../components/header/Header'
+import { Outlet } from "react-router-dom";
+import Header from "../components/header/Header";
 
 const HomeLayout = () => {
   return (
-    <div className='px-[40px]'>
-        <Header/>
-        <Outlet/>
+    <div>
+      <Header />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default HomeLayout
+export default HomeLayout;
