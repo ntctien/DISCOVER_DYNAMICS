@@ -1,0 +1,24 @@
+.ant-breadcrumb {
+    font-family: Montserrat;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 34px;
+    color:black;
+}
+
+.ant-breadcrumb .ant-breadcrumb-separator {
+    color: black;
+    cursor: default
+}
+
+.ant-breadcrumb li {
+    @apply rounded-5 cursor-pointer
+}
+
+.ant-breadcrumb li:hover:not(.ant-breadcrumb-separator) {
+    background-color: rgba(0,0,0,.06);
+}
+
+.ant-breadcrumb li:last-child {
+    color: #5C913B;
+}
