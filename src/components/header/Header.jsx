@@ -21,7 +21,7 @@ const dropDownItems = {
 
 const Header = () => {
   return (
-    <div className="between-row font-medium text-24">
+    <div className="between-row font-medium text-24 px-[40px]">
       {/* Logo */}
       <img src={logo} alt="Logo" className="h-[80px]" />
       {/* Menu */}
