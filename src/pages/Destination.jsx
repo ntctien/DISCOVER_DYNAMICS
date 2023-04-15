@@ -1,26 +1,87 @@
-import { Pagination } from "antd";
+import { useState } from "react";
+import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import tours from "../constants/tours";
-import { nextArrowIcon, prevArrowIcon } from "../assets/arrow_icons";
+import { downArrowIcon } from "../assets/arrow_icons";
 
-const itemRender = (_, type, originalElement) => {
-  if (type === "prev") {
-    return <img src={prevArrowIcon} alt="Previous" />;
-  }
-  if (type === "next") {
-    return <img src={nextArrowIcon} alt="Next" />;
-  }
-  return originalElement;
-};
+const sampleData = [
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+  ...tours,
+];
+
+const itemsPerPage = 12;
 
 const Destination = () => {
+  const [data, setData] = useState([...sampleData]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const handleFilter = (value) => {
+    let tempArray;
+    switch (value) {
+      case "default":
+        setData([...sampleData]);
+        break;
+      case "ascent":
+        tempArray = data.sort((a, b) => a.expense - b.expense);
+        setData([...tempArray]);
+        break;
+      case "descent":
+        tempArray = data.sort((a, b) => b.expense - a.expense);
+        setData([...tempArray]);
+        break;
+      default:
+        break;
+    }
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="pb-[45px]">
-      <ToursContainer tours={tours} className={"mt-[25px]"} />
+    <div className="pb-[45px] relative">
+      <ToursContainer
+        tours={data.slice(startIndex, endIndex)}
+        className={"mt-[25px]"}
+      />
       <Pagination
-        defaultCurrent={1}
-        total={50}
+        current={currentPage}
+        onChange={setCurrentPage}
+        pageSize={itemsPerPage}
+        showSizeChanger={false}
+        total={data.length}
         className="mt-[47px] w-fit mx-auto"
+      />
+      <Select
+        defaultValue="default"
+        style={{
+          width: 200,
+        }}
+        onChange={handleFilter}
+        options={[
+          {
+            value: "default",
+            label: "Mặc định",
+          },
+          {
+            value: "ascent",
+            label: "Giá tăng dần",
+          },
+          {
+            value: "descent",
+            label: "Giá giảm dần",
+          },
+        ]}
+        suffixIcon={<img src={downArrowIcon} alt="Drop down" />}
+        className="absolute -top-[77px] right-0"
       />
     </div>
   );
