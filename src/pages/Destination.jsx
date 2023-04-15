@@ -60,29 +60,31 @@ const Destination = () => {
         total={data.length}
         className="mt-[47px] w-fit mx-auto"
       />
-      <Select
-        defaultValue="default"
-        style={{
-          width: 200,
-        }}
-        onChange={handleFilter}
-        options={[
-          {
-            value: "default",
-            label: "Mặc định",
-          },
-          {
-            value: "ascent",
-            label: "Giá tăng dần",
-          },
-          {
-            value: "descent",
-            label: "Giá giảm dần",
-          },
-        ]}
-        suffixIcon={<img src={downArrowIcon} alt="Drop down" />}
-        className="absolute -top-[77px] right-0"
-      />
+      <div className="absolute -top-[77px] right-0 row gap-x-[19px]">
+        <h4 className="font-semibold">Lọc theo:</h4>
+        <Select
+          defaultValue="default"
+          style={{
+            width: 200,
+          }}
+          onChange={handleFilter}
+          options={[
+            {
+              value: "default",
+              label: "Mặc định",
+            },
+            {
+              value: "ascent",
+              label: "Giá tăng dần",
+            },
+            {
+              value: "descent",
+              label: "Giá giảm dần",
+            },
+          ]}
+          suffixIcon={<img src={downArrowIcon} alt="Drop down" />}
+        />
+      </div>
     </div>
   );
 };
