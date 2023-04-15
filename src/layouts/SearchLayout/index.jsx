@@ -6,6 +6,7 @@ import { Breadcrumb } from "antd";
 
 const breadcrumbNameMap = {
   "/destination": "Điểm đến",
+  "/destination/detail": "Cao Bằng",
   "/about": "Về chúng tôi",
 };
 

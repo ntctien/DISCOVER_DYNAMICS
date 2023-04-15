@@ -1,8 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import numberWithDots from "../utils/numberWithDots";
 
 const TourItem = ({ name, duration, description, expense, image }) => {
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate('/destination/detail');
+  };
+
   return (
-    <div className="bg-white w-full flex flex-col rounded-5 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] overflow-hidden cursor-pointer">
+    <div
+      onClick={handleOnClick}
+      className="bg-white w-full flex flex-col rounded-5 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] overflow-hidden cursor-pointer"
+    >
       <img
         src={image}
         alt="Tour thumbnail"
