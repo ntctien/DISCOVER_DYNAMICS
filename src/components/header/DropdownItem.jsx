@@ -1,5 +1,5 @@
 import Popup from 'reactjs-popup';
-import LogInPopup from '../../pages/LogInPopup'
+import LogInPopup from '../../pages/SignInPopup'
 
 const DropdownItem = ({label}) => {
   return (
