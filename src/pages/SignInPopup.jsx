@@ -46,7 +46,7 @@ const LogInPopup = () => {
           />
           <input 
           type="password" 
-          placeholder="Password" 
+          placeholder="Mật khẩu" 
           style={{marginLeft :"16px",borderWidth :'0', outline:"none", width : "400px"}}>
           </input>
           <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078" }}/>
