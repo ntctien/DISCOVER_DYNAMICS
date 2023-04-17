@@ -1,6 +1,4 @@
-import { Modal } from "antd";
 import SignIn from "../modals/SignIn";
-
 
 const DropdownItem = ({label}) => {
   return (
