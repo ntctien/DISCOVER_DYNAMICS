@@ -1,16 +1,15 @@
-import Popup from 'reactjs-popup';
-import LogInPopup from '../../pages/SignInPopup'
+import { Modal } from "antd";
+import SignIn from "../modals/SignIn";
+
 
 const DropdownItem = ({label}) => {
   return (
     <center>
-      <div>
-            <Popup trigger=
-                {<button> {label} </button>}
-                modal nested>
-                  <LogInPopup/>
-            </Popup>
-        </div>
+      <a>
+        <SignIn>
+          {label}
+        </SignIn>
+      </a>
     </center>
   );
 };
