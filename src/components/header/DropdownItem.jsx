@@ -1,13 +1,7 @@
-import SignIn from "../modals/SignIn";
-
-const DropdownItem = ({label}) => {
+const DropdownItem = ({label, onClick }) => {
   return (
-    <center>
-      <a>
-        <SignIn>
-          {label}
-        </SignIn>
-      </a>
+    <center onClick = {onClick}>
+      <a>{label}</a>
     </center>
   );
 };

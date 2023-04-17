@@ -1,5 +1,4 @@
-import { Button, Modal } from "antd";
-import { useState } from 'react';
+import { Modal } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
@@ -7,24 +6,11 @@ import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
 import facebookIcon from '../../assets/facebook_icon.svg'
 
-const SignIn = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-      setIsModalOpen(true);
-    };
-    const handleOk = () => {
-      setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-      setIsModalOpen(false);
-    };
+const SignIn = ({open, handleCancel}) => {
     
     return (
       <>
-        <Button type="text" onClick={showModal}>
-          Đăng nhập
-        </Button>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
+        <Modal open={open} onCancel={handleCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                 <img
