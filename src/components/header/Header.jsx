@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import accountIcon from "../../assets/account.svg";
 import { useState } from "react";
 import SignIn from "../modals/SignIn";
+import SignUp from "../modals/SignUp";
 
 const Header = () => {
   const [currentModal, setCurrentModal] = useState(null);
@@ -19,7 +20,7 @@ const Header = () => {
       },
       {
         key: "sign-up",
-        label: <DropdownItem label={'Đăng ký'}/>,
+        label: <DropdownItem label={'Đăng ký'} onClick={()=>setCurrentModal('sign-up')}/>,
       },
     ],
   };
@@ -46,6 +47,7 @@ const Header = () => {
         </div>
       </Dropdown>
       <SignIn open={currentModal==='sign-in'} handleCancel={()=>setCurrentModal(null)}/>
+      <SignUp open={currentModal==='sign-up'} handleCancel={()=>setCurrentModal(null)}/>
     </div>
   );
 };
