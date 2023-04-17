@@ -1,4 +1,4 @@
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/search_bar/SearchBar";
 import banner from "../assets/banner.jpg";
 import Title from "../components/Title";
 import FeaturedTours from "../components/home/FeaturedTours";

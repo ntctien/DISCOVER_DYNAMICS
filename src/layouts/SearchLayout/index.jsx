@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import './SearchLayout.css';
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/search_bar/SearchBar";
 import { Outlet } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
