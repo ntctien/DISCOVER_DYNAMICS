@@ -129,3 +129,8 @@
     line-height: 20px;
     color: #7B7B7B;
 }
+
+/* Form */
+.ant-form-item {
+    @apply m-0
+}

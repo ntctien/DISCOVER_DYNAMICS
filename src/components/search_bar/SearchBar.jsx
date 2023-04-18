@@ -1,10 +1,10 @@
-import { cloneElement } from "react";
-import { Divider, Dropdown, theme } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate, createSearchParams, useLocation } from "react-router-dom";
 import SearchBarItem from "./SearchBarItem";
 import { locationIcon, priceIcon, typeIcon } from "../../assets/search_icons";
-import PriceInput from "./PriceInput";
-
-const { useToken } = theme;
+import PriceDropdown from "./PriceDropdown";
+import getCurrentFilter from "../../utils/getCurrentFilter";
+import numberWithDots from "../../utils/numberWithDots";
 
 const filters = [
   {
@@ -33,43 +33,51 @@ const filters = [
   },
 ];
 
-const items = [
-  {
-    key: "1",
-    label: "Dưới 2 triệu",
-  },
-  {
-    key: "2",
-    label: "2 triệu - 3 triệu",
-  },
-  {
-    key: "3",
-    label: "3 triệu - 5 triệu",
-  },
-  {
-    key: "4",
-    label: "5 triệu - 10 triệu",
-  },
-  {
-    key: "5",
-    label: "Trên 10 triệu",
-  },
-];
-
 const SearchBar = () => {
-  const { token } = useToken();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchData, setSearchData] = useState({
+    location: "",
+    price: { text: "", min: null, max: null },
+    type: "",
+  });
 
-  const contentStyle = {
-    backgroundColor: token.colorBgElevated,
-    borderRadius: "10px",
-    boxShadow: token.boxShadowSecondary,
-    padding: "20px 10px",
-    width: "300px",
-    fontFamily: "Montserrat",
+  useEffect(() => {
+    if (location.pathname !== "/destination") return;
+    const filter = getCurrentFilter(location);
+    const min = filter.min ?? 0;
+    const max = filter.max ?? 99999999;
+    setSearchData({
+      ...searchData,
+      location: filter.search ?? '',
+      price: {
+        text: `${numberWithDots(min)} - ${numberWithDots(max)}`,
+        min,
+        max,
+      },
+    });
+  }, [location]);
+
+  const getItemProps = (i, item) => {
+    return {
+      item,
+      index: i,
+      value: item.id === "price" ? searchData.price.text : searchData[item.id],
+    };
   };
 
-  const menuStyle = {
-    boxShadow: "none",
+  const handleSearch = () => {
+    const params = {
+      min: searchData.price.min,
+      max: searchData.price.max,
+    };
+    for (const param in params) {
+      if (!params[param]) delete params[param];
+    }
+    navigate({
+      pathname: "destination",
+      search: createSearchParams(params).toString(),
+    });
   };
 
   return (
@@ -77,36 +85,24 @@ const SearchBar = () => {
       <div className="h-2 w-full bg-white absolute -top-2"></div>
       <div className="search-bar-container">
         <div className="row gap-x-[46px]">
-          {filters.map((item, i) => (
-            <Dropdown
-              menu={{
-                items,
-              }}
-              disabled={item.id !== "price"}
-              dropdownRender={(menu) => (
-                <div style={contentStyle}>
-                  {cloneElement(menu, {
-                    style: menuStyle,
-                  })}
-                  <Divider className="mt-[15px] mb-5" />
-                  <div className="row gap-x-[15px]">
-                    <PriceInput placeholder="Tối thiểu" />
-                    <div className="w-[10px] h-[1px] bg-black" />
-                    <PriceInput placeholder="Tối đa"/>
-                  </div>
-                  <button className="w-full h-[40px] bg-orange rounded-5 text-16 text-white mt-[15px]">
-                    Tìm theo giá mong muốn
-                  </button>
-                </div>
-              )}
-            >
-              <button disabled={item.id !== "price"}>
-                <SearchBarItem key={i} item={item} index={i} />
-              </button>
-            </Dropdown>
-          ))}
+          {filters.map((item, i) =>
+            item.id === "price" ? (
+              <PriceDropdown
+                key={i}
+                searchData={searchData}
+                setSearchData={setSearchData}
+              >
+                <SearchBarItem {...getItemProps(i, item)} />
+              </PriceDropdown>
+            ) : (
+              <SearchBarItem key={i} {...getItemProps(i, item)} />
+            )
+          )}
         </div>
-        <button className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white">
+        <button
+          onClick={handleSearch}
+          className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white"
+        >
           Tìm kiếm
         </button>
       </div>

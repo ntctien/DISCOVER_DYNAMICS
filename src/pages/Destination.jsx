@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import tours from "../constants/tours";
 import { downArrowIcon } from "../assets/arrow_icons";
+import getCurrentFilter from "../utils/getCurrentFilter";
 
-const sampleData = [
+const baseData = [
   ...tours,
   ...tours,
   ...tours,
@@ -19,18 +21,35 @@ const sampleData = [
 
 const itemsPerPage = 12;
 
+const filterTypes = ["search", "min", "max"];
+
 const Destination = () => {
-  const [data, setData] = useState([...sampleData]);
+  const location = useLocation();
+  const [data, setData] = useState([...baseData]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState({ search: null, min: null, max: null });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  useEffect(() => {
+    setFilter(getCurrentFilter(location));
+  }, [location]);
+
+  useEffect(() => {
+    const min = filter.min ?? 0;
+    const max = filter.max ?? 999999999;
+    let tempArray = baseData.filter(
+      (item) => item.expense >= min && item.expense <= max
+    );
+    setData(tempArray);
+  }, [filter]);
 
   const handleFilter = (value) => {
     let tempArray;
     switch (value) {
       case "default":
-        setData([...sampleData]);
+        setData([...baseData]);
         break;
       case "ascent":
         tempArray = data.sort((a, b) => a.expense - b.expense);

@@ -1,13 +1,17 @@
-import { InputNumber } from "antd";
+import { InputNumber, Form } from "antd";
 
-const PriceInput = ({ placeholder }) => {
+const PriceInput = ({ placeholder, name}) => {
   return (
-    <InputNumber
-      type="number"
-      controls={false}
-      placeholder={placeholder}
-      className="price-input"
-    />
+    <Form.Item name={name}>
+      <InputNumber
+        type="number"
+        min={0}
+        max={999999999}
+        controls={false}
+        placeholder={placeholder}
+        className="price-input"
+      />
+    </Form.Item>
   );
 };
 
