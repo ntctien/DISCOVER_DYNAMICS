@@ -50,16 +50,21 @@ const Home = () => {
           trong cuộc đời!
         </p>
         {/* Tour */}
-        <Title text={'Các tour nổi bật'} className={'mt-[68px]'}/>
-        <p className="text-description mt-[9px]">Cùng Discover Dynamics điểm qua một vài điểm đến thú vị các bạn nhé!</p>
-        <FeaturedTours/>
+        <Title text={"Các tour nổi bật"} className={"mt-[68px]"} />
+        <p className="text-description mt-[9px]">
+          Cùng Discover Dynamics điểm qua một vài điểm đến thú vị các bạn nhé!
+        </p>
+        <FeaturedTours />
         {/* Destination */}
-        <Title text={'Điểm đến'} className={'mt-[86px]'}/>
-        <Destination/>
+        <Title text={"Điểm đến"} className={"mt-[86px]"} />
+        <Destination />
         {/* Tour types */}
-        <Title text={'Loại hình tour'} className={'mt-[86px]'}/>
-        <p className="text-description mt-[9px]">Một trải nghiệm tuyệt vời cùng Discover Dynamics với các loại hình sau đây</p>
-        <TourType/>
+        <Title text={"Loại hình tour"} className={"mt-[86px]"} />
+        <p className="text-description mt-[9px]">
+          Một trải nghiệm tuyệt vời cùng Discover Dynamics với các loại hình sau
+          đây
+        </p>
+        <TourType />
       </div>
     </div>
   );
