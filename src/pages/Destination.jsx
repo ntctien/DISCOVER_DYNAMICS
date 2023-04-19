@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import tours from "../constants/tours";
 import { downArrowIcon } from "../assets/arrow_icons";
 import getCurrentFilter from "../utils/getCurrentFilter";
 import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
+import removeAccents from "../utils/removeAccents";
 
 const baseData = [
   ...tours,
@@ -41,18 +42,21 @@ const Destination = () => {
     setFilter(getCurrentFilter(location));
   }, [location]);
 
-  useEffect(()=>{
+  useEffect(() => {
     handleFilter();
-  },[filter])
+  }, [filter]);
 
   const handleFilter = () => {
     let tempArray;
     // Filter
     const min = filter.min ?? 0;
     const max = filter.max ?? 999999999;
-    const search = filter.search?.toLowerCase() ?? '';
+    const search = filter.search?.toLowerCase() ?? "";
     tempArray = baseData.filter(
-      (item) => item.expense >= min && item.expense <= max && item.name.toLowerCase().includes(search)
+      (item) =>
+        item.expense >= min &&
+        item.expense <= max &&
+        removeAccents(item.name.toLowerCase()).includes(search)
     );
     switch (filter.sort) {
       case "ascent":
