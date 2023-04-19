@@ -11,7 +11,7 @@ const destinations = [
   { title: "Miền Nam", icon: southIcon, titleColor: "#FCC21B" },
 ];
 
-const Destination = () => {
+const DestinationContainer = () => {
   return (
     <div className="w-full mx-[20px] between-row mt-[37px]">
       {destinations.map((destination, i) => (
@@ -21,4 +21,4 @@ const Destination = () => {
   );
 };
 
-export default Destination;
+export default DestinationContainer;

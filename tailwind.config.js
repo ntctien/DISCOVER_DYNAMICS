@@ -8,9 +8,13 @@ module.exports = {
         '18': ['18px', '22px'],
         '20': ['20px', '24px'],
         '24': ['24px', '29px'],
+        '28': ['28px', '34px'],
         '32': ['32px', '39px'],
         '40': ['40px', '49px'],
         '48': ['48px', '59px'],
+      },
+      fontFamily: {
+        'montserrat': 'Montserrat'
       },
       colors: {
         'orange': '#FF9648',
@@ -24,6 +28,9 @@ module.exports = {
       borderRadius: {
         '5': '5px',
         '10': '10px',
+      },
+      borderWidth: {
+        '1': '1px'
       }
     },
   },
