@@ -10,7 +10,7 @@ const SignIn = ({open, handleCancel}) => {
     
     return (
       <>
-        <Modal open={open} onCancel={handleCancel} footer={null}>
+        <Modal centered open={open} onCancel={handleCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                 <img
