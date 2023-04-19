@@ -60,6 +60,28 @@ code {
   @apply bg-white rounded-t-[150px] rounded-b-10 center-col justify-center
 }
 
+.navbar {
+  font-family: "Montserrat", sans-serif;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+.detail-container{
+  margin-top: 50px;
+}
+
+.detail.content{
+  margin: 20px 0;
+  line-height: 30px;
+}
+
+.detail-text{
+  font-size: 1rem;
+  line-height: 1.7rem;
+  margin: 1rem 0;
+  text-align: justify;
+}
+
 /* Scrollbar */
 .tour-type::-webkit-scrollbar {
   height: 5px;
