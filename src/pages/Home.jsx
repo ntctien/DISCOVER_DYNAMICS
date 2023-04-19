@@ -9,8 +9,10 @@ const Home = () => {
   return (
     <div className="center-col">
       {/* Banner */}
-      <div className="relative px-[40px]">
-        <img src={banner} alt="Banner" />
+      <div className="relative px-[40px] w-full">
+        <div className="w-full aspect-[34/15] bg-green">
+          <img src={banner} alt="Banner" className="object-cover" />
+        </div>
         <div className="absolute bottom-[49px] right-[85px] text-right">
           <h2 className="font-semibold text-40 text-white">
             Trải nghiệm các tour mạo hiểm cùng
@@ -33,31 +35,39 @@ const Home = () => {
           Chúng tôi là một đội ngũ chuyên nghiệp và đam mê về du lịch mạo hiểm,
           luôn sẵn sàng đưa bạn đến những điểm đến kích thích nhất trên khắp
           Việt Nam.
-          <br /><br />
+          <br />
+          <br />
           Trên trang web của chúng tôi, bạn có thể tìm thấy những hành trình
           phiêu lưu đầy thử thách, từ leo núi, đi bộ đường dài, lặn biển đến
           những hoạt động địa hình khắc nghiệt. Chúng tôi cam kết mang đến cho
           bạn những trải nghiệm tuyệt vời nhất với những chuyến đi được tùy
           chỉnh cho từng nhóm và đáp ứng tối đa nhu cầu và mong muốn của bạn.
-          <br /><br />
+          <br />
+          <br />
           Bên cạnh đó, trang web của chúng tôi cũng cung cấp thông tin hữu ích
           về những địa điểm du lịch mạo hiểm, các hoạt động thú vị, các hướng
           dẫn viên và nhà cung cấp dịch vụ uy tín để giúp bạn có một kỳ nghỉ
-          hoàn hảo. <br /><br />
+          hoàn hảo. <br />
+          <br />
           Hãy cùng chúng tôi khám phá và trải nghiệm những điều tuyệt vời nhất
           trong cuộc đời!
         </p>
         {/* Tour */}
-        <Title text={'Các tour nổi bật'} className={'mt-[68px]'}/>
-        <p className="text-description mt-[9px]">Cùng Discover Dynamics điểm qua một vài điểm đến thú vị các bạn nhé!</p>
-        <FeaturedTours/>
+        <Title text={"Các tour nổi bật"} className={"mt-[68px]"} />
+        <p className="text-description mt-[9px]">
+          Cùng Discover Dynamics điểm qua một vài điểm đến thú vị các bạn nhé!
+        </p>
+        <FeaturedTours />
         {/* Destination */}
-        <Title text={'Điểm đến'} className={'mt-[86px]'}/>
-        <Destination/>
+        <Title text={"Điểm đến"} className={"mt-[86px]"} />
+        <Destination />
         {/* Tour types */}
-        <Title text={'Loại hình tour'} className={'mt-[86px]'}/>
-        <p className="text-description mt-[9px]">Một trải nghiệm tuyệt vời cùng Discover Dynamics với các loại hình sau đây</p>
-        <TourType/>
+        <Title text={"Loại hình tour"} className={"mt-[86px]"} />
+        <p className="text-description mt-[9px]">
+          Một trải nghiệm tuyệt vời cùng Discover Dynamics với các loại hình sau
+          đây
+        </p>
+        <TourType />
       </div>
     </div>
   );
