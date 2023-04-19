@@ -4,23 +4,28 @@ import DropdownButton from "./DropdownButton";
 import DropdownItem from "./DropdownItem";
 import logo from "../../assets/logo.png";
 import accountIcon from "../../assets/account.svg";
-
-const dropDownItems = {
-  destination: [],
-  tourType: [],
-  account: [
-    {
-      key: "sign-in",
-      label: <DropdownItem label={"Đăng nhập"} />,
-    },
-    {
-      key: "sign-up",
-      label: <DropdownItem label={"Đăng ký"} />,
-    },
-  ],
-};
+import { useState } from "react";
+import SignIn from "../modals/SignIn";
+import SignUp from "../modals/SignUp";
 
 const Header = () => {
+  const [currentModal, setCurrentModal] = useState(null);
+
+  const dropDownItems = {
+    destination: [],
+    tourType: [],
+    account: [
+      {
+        key: "sign-in",
+        label: <DropdownItem label={'Đăng nhập'} onClick={()=>setCurrentModal('sign-in')}/>,
+      },
+      {
+        key: "sign-up",
+        label: <DropdownItem label={'Đăng ký'} onClick={()=>setCurrentModal('sign-up')}/>,
+      },
+    ],
+  };
+
   return (
     <div className="between-row font-medium text-24 px-[40px] bg-white">
       {/* Logo */}
@@ -50,6 +55,8 @@ const Header = () => {
           <p>Tài khoản</p>
         </div>
       </Dropdown>
+      <SignIn open={currentModal==='sign-in'} handleCancel={()=>setCurrentModal(null)}/>
+      <SignUp open={currentModal==='sign-up'} handleCancel={()=>setCurrentModal(null)}/>
     </div>
   );
 };

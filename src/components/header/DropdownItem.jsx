@@ -1,9 +1,7 @@
-const DropdownItem = ({label}) => {
+const DropdownItem = ({label, onClick }) => {
   return (
-    <center>
-      <a className="text-24 mx-auto" href="https://www.antgroup.com">
-        {label}
-      </a>
+    <center onClick = {onClick}>
+      <a>{label}</a>
     </center>
   );
 };
