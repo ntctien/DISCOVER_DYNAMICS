@@ -11,7 +11,9 @@ const Home = () => {
       <div className="bg-white pb-[60px]">
         {/* Banner */}
         <div className="relative px-[40px] w-full z-10">
-          <img src={banner} alt="Banner" />
+          <div className="w-full aspect-[34/15] bg-green">
+            <img src={banner} alt="Banner" className="object-cover" />
+          </div>
           <div className="absolute bottom-[49px] right-[85px] text-right">
             <h2 className="font-semibold text-40 text-white">
               Trải nghiệm các tour mạo hiểm cùng
@@ -35,17 +37,20 @@ const Home = () => {
           Chúng tôi là một đội ngũ chuyên nghiệp và đam mê về du lịch mạo hiểm,
           luôn sẵn sàng đưa bạn đến những điểm đến kích thích nhất trên khắp
           Việt Nam.
-          <br /><br />
+          <br />
+          <br />
           Trên trang web của chúng tôi, bạn có thể tìm thấy những hành trình
           phiêu lưu đầy thử thách, từ leo núi, đi bộ đường dài, lặn biển đến
           những hoạt động địa hình khắc nghiệt. Chúng tôi cam kết mang đến cho
           bạn những trải nghiệm tuyệt vời nhất với những chuyến đi được tùy
           chỉnh cho từng nhóm và đáp ứng tối đa nhu cầu và mong muốn của bạn.
-          <br /><br />
+          <br />
+          <br />
           Bên cạnh đó, trang web của chúng tôi cũng cung cấp thông tin hữu ích
           về những địa điểm du lịch mạo hiểm, các hoạt động thú vị, các hướng
           dẫn viên và nhà cung cấp dịch vụ uy tín để giúp bạn có một kỳ nghỉ
-          hoàn hảo. <br /><br />
+          hoàn hảo. <br />
+          <br />
           Hãy cùng chúng tôi khám phá và trải nghiệm những điều tuyệt vời nhất
           trong cuộc đời!
         </p>
