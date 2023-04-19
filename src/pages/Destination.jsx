@@ -7,6 +7,7 @@ import { downArrowIcon } from "../assets/arrow_icons";
 import getCurrentFilter from "../utils/getCurrentFilter";
 import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
 import removeAccents from "../utils/removeAccents";
+import hasAccent from "../utils/hasAccent";
 
 const baseData = [
   ...tours,
@@ -56,7 +57,9 @@ const Destination = () => {
       (item) =>
         item.expense >= min &&
         item.expense <= max &&
-        removeAccents(item.name.toLowerCase()).includes(search)
+        (hasAccent(search)
+          ? item.name.toLowerCase().includes(search)
+          : removeAccents(item.name.toLowerCase()).includes(search))
     );
     switch (filter.sort) {
       case "ascent":
