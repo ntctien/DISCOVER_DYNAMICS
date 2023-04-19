@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, createSearchParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SearchBarItem from "./SearchBarItem";
 import { locationIcon, priceIcon, typeIcon } from "../../assets/search_icons";
 import PriceDropdown from "./PriceDropdown";
 import getCurrentFilter from "../../utils/getCurrentFilter";
-import numberWithDots from "../../utils/numberWithDots";
+import navigateToDestinationWithParams from "../../utils/navigateToDestinationWithParams";
+import getPriceText from "../../utils/getPriceText";
 
 const filters = [
   {
@@ -45,13 +46,13 @@ const SearchBar = () => {
   useEffect(() => {
     if (location.pathname !== "/destination") return;
     const filter = getCurrentFilter(location);
-    const min = filter.min ?? 0;
-    const max = filter.max ?? 99999999;
+    const min = parseInt(filter.min);
+    const max = parseInt(filter.max);
     setSearchData({
       ...searchData,
-      location: filter.search ?? '',
+      location: filter.search ?? "",
       price: {
-        text: `${numberWithDots(min)} - ${numberWithDots(max)}`,
+        text: getPriceText(min, max),
         min,
         max,
       },
@@ -63,27 +64,31 @@ const SearchBar = () => {
       item,
       index: i,
       value: item.id === "price" ? searchData.price.text : searchData[item.id],
+      onChange: (e) => {
+        if (item.id === "location") {
+          setSearchData({ ...searchData, location: e.target.value });
+        }
+      },
     };
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     const params = {
       min: searchData.price.min,
       max: searchData.price.max,
+      search: searchData.location,
     };
-    for (const param in params) {
-      if (!params[param]) delete params[param];
-    }
-    navigate({
-      pathname: "destination",
-      search: createSearchParams(params).toString(),
-    });
+    navigateToDestinationWithParams(params, navigate);
   };
 
   return (
     <div className="relative w-fit mx-auto">
       <div className="h-2 w-full bg-white absolute -top-2"></div>
-      <div className="search-bar-container">
+      <form
+        onSubmit={handleSearch}
+        className="search-bar-container"
+      >
         <div className="row gap-x-[46px]">
           {filters.map((item, i) =>
             item.id === "price" ? (
@@ -100,12 +105,12 @@ const SearchBar = () => {
           )}
         </div>
         <button
-          onClick={handleSearch}
+          type="submit"
           className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white"
         >
           Tìm kiếm
         </button>
-      </div>
+      </form>
     </div>
   );
 };

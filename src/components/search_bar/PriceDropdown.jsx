@@ -2,6 +2,7 @@ import { cloneElement, useState } from "react";
 import { Divider, Dropdown, Form, theme } from "antd";
 import PriceInput from "./PriceInput";
 import numberWithDots from "../../utils/numberWithDots";
+import getPriceText from "../../utils/getPriceText";
 
 const { useToken } = theme;
 
@@ -75,7 +76,7 @@ const PriceDropdown = ({ children, searchData, setSearchData }) => {
       setSearchData({
         ...searchData,
         price: {
-          text: `${numberWithDots(min)} - ${numberWithDots(max)}`,
+          text: getPriceText(min, max),
           min,
           max,
         },

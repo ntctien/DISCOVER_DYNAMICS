@@ -1,8 +1,8 @@
 import { downArrowIcon } from "../../assets/arrow_icons";
 
-const SearchBarItem = ({ item, index, value, setValue }) => {
+const SearchBarItem = ({ item, index, value, onChange }) => {
   return (
-    <div className="flex">
+    <div className="flex" onClick={(e)=>e.preventDefault()}>
       {index !== 0 && <div className="w-[1px] bg-grey mr-5" />}
       <img src={item.icon} alt={item.title} className="self-start" />
       <div className="ml-[9px]">
@@ -10,7 +10,7 @@ const SearchBarItem = ({ item, index, value, setValue }) => {
         <input
           readOnly={item.readOnly}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={onChange}
           placeholder={item.placeholder}
           className={`search-bar-input ${item.readOnly && "cursor-default truncate"}`}
         />

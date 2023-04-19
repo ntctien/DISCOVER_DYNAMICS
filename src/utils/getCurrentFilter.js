@@ -1,10 +1,10 @@
-const filterTypes = ["search", "min", "max"];
+const filterTypes = ["search", "min", "max","sort"];
 
 const getCurrentFilter = (location) => {
   const params = new URLSearchParams(location.search);
 
   return filterTypes
-    .map((type, i) => {
+    .map(type => {
       return {
         [type]: params.get(type),
       };
