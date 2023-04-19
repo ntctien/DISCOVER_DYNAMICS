@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Dropdown } from "antd";
 import DropdownButton from "./DropdownButton";
 import DropdownItem from "./DropdownItem";
@@ -26,18 +27,26 @@ const Header = () => {
   };
 
   return (
-    <div className="between-row font-medium text-24 px-[40px]">
+    <div className="between-row font-medium text-24 px-[40px] bg-white">
       {/* Logo */}
-      <img src={logo} alt="Logo" className="h-[80px]" />
+      <Link to={"/"}>
+        <img src={logo} alt="Logo" className="h-[80px]" />
+      </Link>
       {/* Menu */}
       <div className="row flex-1 justify-center gap-x-[56px]">
-        <DropdownButton items={dropDownItems.destination} label={"Điểm đến"} />
+        <DropdownButton
+          items={dropDownItems.destination}
+          label={"Điểm đến"}
+          linkTo={"/destination"}
+        />
         <DropdownButton
           items={dropDownItems.tourType}
           label={"Loại hình tour"}
         />
-        <p>Về chúng tôi</p>
-        <p>Liên hệ</p>
+        <Link to={'/about'}>
+          <p className="cursor-pointer">Về chúng tôi</p>
+        </Link>
+        <p className="cursor-pointer">Liên hệ</p>
       </div>
       {/* Account */}
       <Dropdown menu={{ items: dropDownItems.account }}>

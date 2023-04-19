@@ -1,4 +1,4 @@
-import arrowIcon from '../assets/arrow-down.svg';
+import {downArrowIcon} from '../assets/arrow_icons';
 
 const SearchBarItem = ({ item, index, dropdown }) => {
   return (
@@ -9,7 +9,7 @@ const SearchBarItem = ({ item, index, dropdown }) => {
         <p className="text-medium">{item.title}</p>
         <input placeholder={item.placeholder} className="search-bar-input" />
       </div>
-      {dropdown && <img src={arrowIcon} alt='Dropdown' className='self-center h-[30px]'/>}
+      {dropdown && <img src={downArrowIcon} alt='Dropdown' className='self-center h-[30px]'/>}
     </div>
   );
 };
