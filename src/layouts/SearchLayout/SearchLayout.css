@@ -100,3 +100,37 @@
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
     padding: 0 !important;
 }
+
+/* Dropdown */
+.ant-dropdown-menu-title-content {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+/* Input */
+.price-input {
+    @apply w-full h-[40px] border-1 border-description rounded-5 text-center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.price-input .ant-input-number-input-wrap,.price-input .ant-input-number-input {
+    @apply h-full text-center text-black
+}
+
+.price-input .ant-input-number-input::placeholder {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #7B7B7B;
+}
+
+/* Form */
+.ant-form-item {
+    @apply m-0
+}

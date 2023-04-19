@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import tours from "../constants/tours";
 import { downArrowIcon } from "../assets/arrow_icons";
+import getCurrentFilter from "../utils/getCurrentFilter";
+import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
 
-const sampleData = [
+const baseData = [
   ...tours,
   ...tours,
   ...tours,
@@ -20,30 +23,56 @@ const sampleData = [
 const itemsPerPage = 12;
 
 const Destination = () => {
-  const [data, setData] = useState([...sampleData]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [data, setData] = useState([...baseData]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState({
+    search: null,
+    min: null,
+    max: null,
+    sort: null,
+  });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const handleFilter = (value) => {
+  useEffect(() => {
+    setFilter(getCurrentFilter(location));
+  }, [location]);
+
+  useEffect(()=>{
+    handleFilter();
+  },[filter])
+
+  const handleFilter = () => {
     let tempArray;
-    switch (value) {
-      case "default":
-        setData([...sampleData]);
-        break;
+    // Filter
+    const min = filter.min ?? 0;
+    const max = filter.max ?? 999999999;
+    const search = filter.search?.toLowerCase() ?? '';
+    tempArray = baseData.filter(
+      (item) => item.expense >= min && item.expense <= max && item.name.toLowerCase().includes(search)
+    );
+    switch (filter.sort) {
       case "ascent":
-        tempArray = data.sort((a, b) => a.expense - b.expense);
-        setData([...tempArray]);
+        tempArray = tempArray.sort((a, b) => a.expense - b.expense);
         break;
       case "descent":
-        tempArray = data.sort((a, b) => b.expense - a.expense);
-        setData([...tempArray]);
+        tempArray = tempArray.sort((a, b) => b.expense - a.expense);
         break;
       default:
         break;
     }
+    setData(tempArray);
     setCurrentPage(1);
+  };
+
+  const handleSortClick = (value) => {
+    navigateToDestinationWithParams(
+      { ...filter, sort: value === "default" ? null : value },
+      navigate
+    );
   };
 
   return (
@@ -67,7 +96,8 @@ const Destination = () => {
           style={{
             width: 200,
           }}
-          onChange={handleFilter}
+          value={!filter.sort ? "default" : filter.sort}
+          onChange={handleSortClick}
           options={[
             {
               value: "default",
