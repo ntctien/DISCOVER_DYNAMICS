@@ -7,23 +7,56 @@ import accountIcon from "../../assets/account.svg";
 import { useState } from "react";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
+import LogOut from "../modals/LogOut";
 
 const Header = () => {
   const [currentModal, setCurrentModal] = useState(null);
+  const currentUser = true;
 
   const dropDownItems = {
     destination: [],
     tourType: [],
-    account: [
-      {
-        key: "sign-in",
-        label: <DropdownItem label={'Đăng nhập'} onClick={()=>setCurrentModal('sign-in')}/>,
-      },
-      {
-        key: "sign-up",
-        label: <DropdownItem label={'Đăng ký'} onClick={()=>setCurrentModal('sign-up')}/>,
-      },
-    ],
+    account: currentUser 
+      ? [
+        {
+          key: "doi-mat-khau",
+          label: (
+            <DropdownItem 
+              label={"Đổi mật khẩu"} 
+              onClick={()=>setCurrentModal("doi-mat-khau")}
+            />
+          ),
+        },
+        {
+          key: "sign-out",
+          label: (
+            <DropdownItem 
+              label={"Đăng xuất"} 
+              onClick={()=>setCurrentModal("sign-out")}
+            />
+          ),
+        },
+      ] 
+      : [
+        {
+          key: "sign-in",
+          label: (
+            <DropdownItem 
+              label={"Đăng nhập"} 
+              onClick={()=>setCurrentModal("sign-in")}
+            />
+          ),
+        },
+        {
+          key: "sign-up",
+          label: (
+            <DropdownItem 
+              label={"Đăng ký"} 
+              onClick={()=>setCurrentModal("sign-up")}
+            />
+          ),
+        },
+      ],
   };
 
   return (
@@ -57,6 +90,7 @@ const Header = () => {
       </Dropdown>
       <SignIn open={currentModal==='sign-in'} handleCancel={()=>setCurrentModal(null)}/>
       <SignUp open={currentModal==='sign-up'} handleCancel={()=>setCurrentModal(null)}/>
+      <LogOut open={currentModal==='sign-out'} handleCancel={()=>setCurrentModal(null)}/>
     </div>
   );
 };
