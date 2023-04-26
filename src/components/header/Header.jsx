@@ -8,6 +8,7 @@ import { useState } from "react";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
 import LogOut from "../modals/LogOut";
+import ChangePassword from "../modals/ChangePassword";
 
 const Header = () => {
   const [currentModal, setCurrentModal] = useState(null);
@@ -19,11 +20,11 @@ const Header = () => {
     account: currentUser 
       ? [
         {
-          key: "doi-mat-khau",
+          key: "change-password",
           label: (
             <DropdownItem 
               label={"Đổi mật khẩu"} 
-              onClick={()=>setCurrentModal("doi-mat-khau")}
+              onClick={()=>setCurrentModal("change-password")}
             />
           ),
         },
@@ -91,6 +92,7 @@ const Header = () => {
       <SignIn open={currentModal==='sign-in'} handleCancel={()=>setCurrentModal(null)}/>
       <SignUp open={currentModal==='sign-up'} handleCancel={()=>setCurrentModal(null)}/>
       <LogOut open={currentModal==='sign-out'} handleCancel={()=>setCurrentModal(null)}/>
+      <ChangePassword open={currentModal==='change-password'} handleCancel={()=>setCurrentModal(null)}/>
     </div>
   );
 };
