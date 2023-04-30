@@ -1,136 +1,211 @@
 /* Breadcrumb */
 .ant-breadcrumb {
-    font-family: Montserrat;
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 34px;
-    color:black;
+  font-family: Montserrat;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+  color: black;
 }
 
 .ant-breadcrumb .ant-breadcrumb-separator {
-    color: black;
-    cursor: default
+  color: black;
+  cursor: default;
 }
 
 .ant-breadcrumb li {
-    @apply rounded-5 cursor-pointer
+  @apply rounded-5 cursor-pointer;
 }
 
 .ant-breadcrumb li:hover:not(.ant-breadcrumb-separator) {
-    background-color: rgba(0,0,0,.06);
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
 .ant-breadcrumb li:last-child {
-    color: #5C913B;
+  color: #5c913b;
 }
 
 /* Pagination */
 .ant-pagination {
-    @apply flex items-center;
+  @apply flex items-center;
 }
 
+/* Table */
+.tour-info {
+  @apply flex items-center gap-x-7 self-start font-medium text-28 ml-[8.57%];
+}
+
+.tour-info-img-container {
+  @apply w-[50px] h-[50px] outline-dashed outline-1 outline-blue rounded-full flex items-center justify-center
+}
+
+/* Custom arrow button for Slick */
+
+.arrow-btn {
+  @apply absolute w-[40px] h-[40px] bg-white rounded-full opacity-50 hover:opacity-100;
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-next {
+  @apply pl-[16px];
+}
+
+.arrow-prev {
+  @apply pl-[13px];
+}
+
+.media-slider-container .arrow-next {
+  @apply top-1/2 right-[15px] -translate-y-1/2;
+}
+
+.media-slider-container .arrow-prev {
+  @apply top-1/2 left-[15px] -translate-y-1/2;
+}
+
+/* Custom slick dots */
+
+.slick-dots {
+  bottom: -21px !important;
+}
+
+.slick-dots li {
+  width: 7px !important;
+  height: 7px !important;
+  margin: 0 4px !important;
+}
+
+.slick-dots li button {
+  width: 7px !important;
+  height: 7px !important;
+  padding: 0 !important;
+}
+
+.slick-dots li button::before {
+  width: 7px !important;
+  height: 7px !important;
+  font-size: 7px !important;
+  line-height: 7px !important;
+  color: #d9d9d9 !important;
+  opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #676767 !important;
+  opacity: 1 !important;
+}
+
+/* Pagination */
+
 .ant-pagination .ant-pagination-item {
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24px;
-    min-width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    background-color: #D9D9D9;
-    margin-inline-end: 10px;
-    @apply flex items-center justify-center;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #d9d9d9;
+  margin-inline-end: 10px;
+  @apply flex items-center justify-center;
 }
 
 .ant-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover {
-    background-color: #cbcbcb;
+  background-color: #cbcbcb;
 }
 
 .ant-pagination .ant-pagination-item-active {
-    background-color: #FF9648;
-    border: none
+  background-color: #ff9648;
+  border: none;
 }
 
 .ant-pagination .ant-pagination-item-active a {
-    color: black !important;
+  color: black !important;
 }
 
-.ant-pagination .ant-pagination-next .ant-pagination-item-link,.ant-pagination .ant-pagination-prev .ant-pagination-item-link {
-    @apply bg-grey
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link {
+  @apply bg-grey;
 }
 
 .ant-pagination .ant-pagination-disabled .ant-pagination-item-link {
-    @apply bg-transparent
+  @apply bg-transparent;
 }
 
-.ant-pagination .ant-pagination-next .ant-pagination-item-link:hover,.ant-pagination .ant-pagination-prev .ant-pagination-item-link:hover {
-    background-color: #cbcbcb;
+.ant-pagination .ant-pagination-next .ant-pagination-item-link:hover,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link:hover {
+  background-color: #cbcbcb;
 }
 
-.ant-pagination .ant-pagination-next,.ant-pagination .ant-pagination-prev {
-    min-width: 50px;
-    height: 50px;
+.ant-pagination .ant-pagination-next,
+.ant-pagination .ant-pagination-prev {
+  min-width: 50px;
+  height: 50px;
 }
 
-.ant-pagination .ant-pagination-next .ant-pagination-item-link,.ant-pagination .ant-pagination-prev .ant-pagination-item-link {
-    @apply flex items-center justify-center
+.ant-pagination .ant-pagination-next .ant-pagination-item-link,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link {
+  @apply flex items-center justify-center;
 }
 
 /* Select */
-.ant-select:not(.ant-select-customize-input) .ant-select-selector,.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
-    @apply border-[2px] border-black
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
+    .ant-pagination-size-changer
+  ):hover
+  .ant-select-selector {
+  @apply border-[2px] border-black;
 }
 
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    @apply pl-6 pr-5
+  @apply pl-6 pr-5;
 }
 
 .ant-select-selection-item {
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 500 !important;
-    line-height: 24px !important;
-    @apply flex items-center
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  @apply flex items-center;
 }
 
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    height: 60px;
+  height: 60px;
 }
 
 .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 /* Dropdown */
 .ant-dropdown-menu-title-content {
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24px;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 /* Input */
 .price-input {
-    @apply w-full h-[40px] border-1 border-description rounded-5 text-center;
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
+  @apply w-full h-[40px] border-1 border-description rounded-5 text-center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
-.price-input .ant-input-number-input-wrap,.price-input .ant-input-number-input {
-    @apply h-full text-center text-black
+.price-input .ant-input-number-input-wrap,
+.price-input .ant-input-number-input {
+  @apply h-full text-center text-black;
 }
 
 .price-input .ant-input-number-input::placeholder {
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #7B7B7B;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #7b7b7b;
 }
 
 /* Form */
 .ant-form-item {
-    @apply m-0
+  @apply m-0;
 }
