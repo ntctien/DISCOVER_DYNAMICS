@@ -1,24 +1,9 @@
 import { Fragment } from "react";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Title from "../components/Title";
 import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
-
-var settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
-
-const images = [
-  "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb03.jpg?v=1673448958270",
-  "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cao-bang.jpg?v=1673448961023",
-  "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb02.jpg?v=1673448961297",
-];
+import ImageSlider from "../components/tour/ImageSlider";
 
 const types = [
   "Đi bộ",
@@ -71,20 +56,54 @@ const notes = [
 
 const TourDetail = () => {
   return (
-    <div className="pt-[10px] pb-[30px] flex items-start gap-x-5">
-      {/* Left side */}
+    <div className="pt-[10px] pb-[30px]">
+      <div className="flex gap-x-5">
+        {/* Left side */}
+        <div className="w-[65.625%]">
+          {/* Image slider */}
+          <ImageSlider />
+        </div>
+        {/* Right side */}
+        <div className="bg-white w-full flex flex-col items-center justify-center">
+          {/* Tour info */}
+          <div className="w-full flex flex-col gap-y-[55px] mt-[9%]">
+            <div className="tour-info">
+              <div className="tour-info-img-container">
+                <img src={locationIcon} alt="Location" />
+              </div>
+              <p>Cao Bằng</p>
+            </div>
+            <div className="tour-info">
+              <div className="tour-info-img-container">
+                <img src={durationIcon} alt="Duration" />
+              </div>
+              <p>5 ngày 4 đêm</p>
+            </div>
+            <div className="tour-info">
+              <div className="tour-info-img-container">
+                <img src={expenseIcon} alt="Expense" />
+              </div>
+              <p>6.600.000 VNĐ</p>
+            </div>
+          </div>
+          {/* Type tags */}
+          <div className="flex flex-wrap gap-[10px] ml-[8.57%] mr-[3.8%] mt-[58px]">
+            {types.map((type, i) => (
+              <div
+                key={i}
+                className="px-[11px] py-2 bg-grey rounded-5 font-medium text-20 text-[#7B7B7B]"
+              >
+                {type}
+              </div>
+            ))}
+          </div>
+          {/* Book button */}
+          <button className="w-[200px] h-[60px] bg-orange hover:brightness-110 rounded-5 font-semibold text-24 text-white mt-[60px] mb-[40px]">
+            ĐẶT TOUR
+          </button>
+        </div>
+      </div>
       <div className="w-[65.625%]">
-        {/* Image slider */}
-        <Slider className="w-full" {...settings}>
-          {images.map((image, i) => (
-            <img
-              key={i}
-              src={image}
-              alt="Tour"
-              className="w-full h-full aspect-[4/3] object-cover object-center"
-            />
-          ))}
-        </Slider>
         {/* Description */}
         <Title
           text={"Chương trình tour"}
@@ -115,39 +134,6 @@ const TourDetail = () => {
             ))}
           </Fragment>
         ))}
-      </div>
-      {/* Right side */}
-      <div className="bg-white w-full flex flex-col items-center">
-        {/* Tour info */}
-        <div className="w-full flex flex-col gap-y-[55px] mt-[9%]">
-          <div className="tour-info">
-            <img src={locationIcon} alt="Location" />
-            <p>Cao Bằng</p>
-          </div>
-          <div className="tour-info">
-            <img src={durationIcon} alt="Duration" />
-            <p>5 ngày 4 đêm</p>
-          </div>
-          <div className="tour-info">
-            <img src={expenseIcon} alt="Expense" />
-            <p>6.600.000 VNĐ</p>
-          </div>
-        </div>
-        {/* Type tags */}
-        <div className="flex flex-wrap gap-[10px] ml-[calc(8.57%-8px)] mr-[3.8%] mt-[58px]">
-          {types.map((type, i) => (
-            <div
-              key={i}
-              className="px-[11px] py-2 bg-grey rounded-5 font-medium text-20 text-[#7B7B7B]"
-            >
-              {type}
-            </div>
-          ))}
-        </div>
-        {/* Book button */}
-        <button className="w-[200px] h-[60px] bg-orange rounded-5 font-semibold text-24 text-white mt-[60px] mb-[40px]">
-          ĐẶT TOUR
-        </button>
       </div>
     </div>
   );

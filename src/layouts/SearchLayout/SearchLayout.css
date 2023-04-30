@@ -34,9 +34,66 @@
   @apply flex items-center gap-x-7 self-start font-medium text-28 ml-[8.57%];
 }
 
-.tour-info img {
-  @apply outline-dashed outline-1 outline-blue outline-offset-8 rounded-full;
+.tour-info-img-container {
+  @apply w-[50px] h-[50px] outline-dashed outline-1 outline-blue rounded-full flex items-center justify-center
 }
+
+/* Custom arrow button for Slick */
+
+.arrow-btn {
+  @apply absolute w-[40px] h-[40px] bg-white rounded-full opacity-50 hover:opacity-100;
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-next {
+  @apply pl-[16px];
+}
+
+.arrow-prev {
+  @apply pl-[13px];
+}
+
+.media-slider-container .arrow-next {
+  @apply top-1/2 right-[15px] -translate-y-1/2;
+}
+
+.media-slider-container .arrow-prev {
+  @apply top-1/2 left-[15px] -translate-y-1/2;
+}
+
+/* Custom slick dots */
+
+.slick-dots {
+  bottom: -21px !important;
+}
+
+.slick-dots li {
+  width: 7px !important;
+  height: 7px !important;
+  margin: 0 4px !important;
+}
+
+.slick-dots li button {
+  width: 7px !important;
+  height: 7px !important;
+  padding: 0 !important;
+}
+
+.slick-dots li button::before {
+  width: 7px !important;
+  height: 7px !important;
+  font-size: 7px !important;
+  line-height: 7px !important;
+  color: #d9d9d9 !important;
+  opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #676767 !important;
+  opacity: 1 !important;
+}
+
+/* Pagination */
 
 .ant-pagination .ant-pagination-item {
   font-family: Montserrat;
