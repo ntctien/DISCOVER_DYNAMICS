@@ -1,3 +1,8 @@
+/* Buttons */
+.success-btn {
+  @apply rounded-10 w-full h-[40px] text-16;
+}
+
 /* Book tour */
 .book-tour .container {
   @apply bg-white rounded-10 px-5;
