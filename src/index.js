@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ConfigProvider theme={{ token: { colorPrimaryHover: '#1D2570' } }}>
+    <ConfigProvider theme={{ token: { colorPrimaryHover: '#396746', colorPrimary: '#396746' } }}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

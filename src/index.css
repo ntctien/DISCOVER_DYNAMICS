@@ -40,6 +40,18 @@ code {
   @apply mt-[15px] w-[188px];
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .search-bar-input:focus {
   @apply outline-none;
 }
@@ -76,4 +88,30 @@ code {
 
 .tour-type::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.5); 
+}
+
+/* Buttons */
+.default-btn {
+  @apply h-[60px] bg-orange hover:brightness-110 rounded-5 font-semibold text-24 text-white;
+}
+
+.quantity-btn {
+  @apply row justify-center;
+}
+
+/* Antd */
+
+.ant-checkbox .ant-checkbox-inner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid black;
+}
+
+.ant-checkbox-wrapper {
+  padding-bottom: 5px;
+}
+
+.small-checkbox .ant-checkbox .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
 }

@@ -120,6 +120,7 @@ const Destination = () => {
             },
           ]}
           suffixIcon={<img src={downArrowIcon} alt="Drop down" />}
+          className="destination-filter"
         />
       </div>
     </div>
