@@ -99,6 +99,10 @@ input[type=number] {
   @apply row justify-center;
 }
 
+.warning-modal-btn {
+  @apply w-[200px] h-[50px] rounded-10 font-medium;
+}
+
 /* Antd */
 
 .ant-checkbox .ant-checkbox-inner {
@@ -114,4 +118,8 @@ input[type=number] {
 .small-checkbox .ant-checkbox .ant-checkbox-inner {
   width: 18px;
   height: 18px;
+}
+
+.ant-dropdown-menu-title-content {
+  @apply text-center;
 }

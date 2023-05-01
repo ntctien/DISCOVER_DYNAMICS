@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        '12': ['12px', '15px'],
         '14': ['14px', '17px'],
         '15': ['15px', '18px'],
         '16': ['16px', '20px'],
@@ -29,11 +30,13 @@ module.exports = {
         'red': '#BF0000',
         'background': '#F0F6FD',
         'description': '#7B7B7B',
-        'black47':'rgba(0, 0, 0, 0.47)'
+        'black47':'rgba(0, 0, 0, 0.47)',
+        'black50':'rgba(0, 0, 0, 0.50)'
       },
       borderRadius: {
         '5': '5px',
         '10': '10px',
+        '15': '15px',
       },
       borderWidth: {
         '1': '1px'
