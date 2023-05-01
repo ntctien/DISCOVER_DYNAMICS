@@ -3,10 +3,10 @@ import InputWrapper from "./InputWrapper";
 
 const { Option } = Select;
 
-const DefaultSelect = ({ label, items, placeholder }) => {
+const DefaultSelect = ({ label, items, placeholder, onChange }) => {
   return (
     <InputWrapper label={label}>
-      <Select placeholder={placeholder}>
+      <Select onChange={onChange} placeholder={placeholder}>
         {items?.map((d, i) => (
           <Option key={i} value={d.code + "_" + d.name}>
             {d.name}

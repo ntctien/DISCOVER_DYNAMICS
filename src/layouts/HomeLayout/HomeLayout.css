@@ -126,3 +126,7 @@
   all: unset;
   color: rgba(0, 0, 0, 0.47);
 }
+
+.ant-select-item-option-content {
+  @apply text-18;
+}
