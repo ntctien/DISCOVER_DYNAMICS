@@ -5,17 +5,19 @@ import Home from "./pages/Home";
 import Destination from "./pages/Destination";
 import About from './pages/About';
 import TourDetail from "./pages/TourDetail";
+import BookTour from "./pages/BookTour";
 
 function App() {
   return (
     <Routes>
       <Route element={<HomeLayout />} path='/' >
         <Route element={<Home />} path='' />
-        <Route element={<SearchLayout/>}>
-          <Route element={<Destination/>} path="destination"/>
-          <Route element={<TourDetail/>} path="destination/detail"/>
-          <Route element={<About/>} path="about"/>
+        <Route element={<SearchLayout />}>
+          <Route element={<Destination />} path="destination" />
+          <Route element={<TourDetail />} path="destination/detail" />
+          <Route element={<About />} path="about" />
         </Route>
+        <Route element={<BookTour />} path="book-tour" />
       </Route>
     </Routes>
   );

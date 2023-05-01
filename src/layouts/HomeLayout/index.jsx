@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import "./HomeLayout.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/Footer";
 
@@ -7,7 +8,7 @@ const HomeLayout = () => {
     <div className="bg-background">
       <Header />
       <Outlet />
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Title from "../components/Title";
-import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
 import ImageSlider from "../components/tour/ImageSlider";
+import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
 
 const types = [
   "Đi bộ",
@@ -55,6 +56,8 @@ const notes = [
 ];
 
 const TourDetail = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="pt-[10px] pb-[30px]">
       <div className="flex gap-x-5">
@@ -98,7 +101,10 @@ const TourDetail = () => {
             ))}
           </div>
           {/* Book button */}
-          <button className="w-[200px] h-[60px] bg-orange hover:brightness-110 rounded-5 font-semibold text-24 text-white mt-[60px] mb-[40px]">
+          <button
+            onClick={() => navigate("/book-tour")}
+            className="w-[200px] default-btn mt-[60px] mb-[40px]"
+          >
             ĐẶT TOUR
           </button>
         </div>
