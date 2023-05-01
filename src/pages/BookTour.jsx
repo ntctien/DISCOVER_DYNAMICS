@@ -3,9 +3,9 @@ import Quantity from "../components/Quantity";
 import DefaultInput from "../components/inputs/DefaultInput";
 import DefaultTextArea from "../components/inputs/DefaultTextArea";
 import DefaultDatePicker from "../components/inputs/DefaultDatePicker";
-import DefaultSelect from "../components/inputs/DefaultSelect";
 import { locationIcon } from "../assets/search_icons";
 import { durationIcon, expenseIcon } from "../assets/tour_icons";
+import AddressForm from "../components/book_tour/AddressForm";
 
 const BookTour = () => {
   return (
@@ -87,20 +87,7 @@ const BookTour = () => {
               placeholder={"dd/mm/yyyy"}
             />
           </div>
-          <div className="book-form-row">
-            <DefaultInput label={"Địa chỉ "} />
-            <DefaultSelect
-              label={"Tỉnh thành"}
-              placeholder={"Chọn tỉnh thành"}
-            />
-          </div>
-          <div className="book-form-row">
-            <DefaultSelect
-              label={"Quận/huyện"}
-              placeholder={"Chọn quận/huyện"}
-            />
-            <DefaultSelect label={"Phường/xã"} placeholder={"Chọn phường/xã"} />
-          </div>
+          <AddressForm/>
           <DefaultTextArea
             label={"Ghi chú về chuyến đi"}
             placeholder="Các yêu cầu về chuyến đi như chỗ ở, món ăn, đi lại,..."
