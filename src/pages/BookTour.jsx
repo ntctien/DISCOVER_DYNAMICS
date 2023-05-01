@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Checkbox } from "antd";
 import Quantity from "../components/Quantity";
 import DefaultInput from "../components/inputs/DefaultInput";
@@ -6,8 +8,12 @@ import DefaultDatePicker from "../components/inputs/DefaultDatePicker";
 import { locationIcon } from "../assets/search_icons";
 import { durationIcon, expenseIcon } from "../assets/tour_icons";
 import AddressForm from "../components/book_tour/AddressForm";
+import SuccessModal from "../components/book_tour/SuccessModal";
 
 const BookTour = () => {
+  const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
+
   return (
     <div className="flex items-start gap-x-5 pt-[30px] pb-[50px] px-[80px] book-tour">
       {/* Left side */}
@@ -87,7 +93,7 @@ const BookTour = () => {
               placeholder={"dd/mm/yyyy"}
             />
           </div>
-          <AddressForm/>
+          <AddressForm />
           <DefaultTextArea
             label={"Ghi chú về chuyến đi"}
             placeholder="Các yêu cầu về chuyến đi như chỗ ở, món ăn, đi lại,..."
@@ -139,7 +145,7 @@ const BookTour = () => {
           <p className="font-semibold text-25">6.600.000 VNĐ</p>
         </div>
         <div className="row gap-x-[10px] mt-[55px]">
-          <Checkbox id="policyCb" className="small-checkbox"/>
+          <Checkbox id="policyCb" className="small-checkbox" />
           <label
             htmlFor="policyCb"
             className="font-medium text-14"
@@ -149,8 +155,14 @@ const BookTour = () => {
             <span className="text-red"> *</span>
           </label>
         </div>
-        <button className="default-btn w-full mt-[10px]">XÁC NHẬN ĐẶT TOUR</button>
+        <button
+          onClick={() => setSuccess(true)}
+          className="default-btn w-full mt-[10px]"
+        >
+          XÁC NHẬN ĐẶT TOUR
+        </button>
       </div>
+      <SuccessModal open={success} onCancel={() => navigate("/")} />
     </div>
   );
 };
