@@ -3,10 +3,10 @@ import InputWrapper from "./InputWrapper";
 
 const { TextArea } = Input;
 
-const DefaultTextArea = ({ label, placeholder }) => {
+const DefaultTextArea = ({ label, placeholder, required, fontSize }) => {
   return (
-    <InputWrapper label={label}>
-      <TextArea placeholder={placeholder}/>
+    <InputWrapper label={label} required={required} fontSize={fontSize}>
+      <TextArea placeholder={placeholder} />
     </InputWrapper>
   );
 };

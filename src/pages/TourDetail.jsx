@@ -59,7 +59,7 @@ const TourDetail = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pt-[10px] pb-[30px]">
+    <div className="pt-[10px] pb-[30px] px-[80px]">
       <div className="flex gap-x-5">
         {/* Left side */}
         <div className="w-[65.625%]">

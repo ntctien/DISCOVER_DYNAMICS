@@ -83,7 +83,7 @@ const Destination = () => {
   };
 
   return (
-    <div className="pb-[45px] relative">
+    <div className="pb-[45px] relative px-[80px]">
       <ToursContainer
         tours={data.slice(startIndex, endIndex)}
         className={"mt-[25px]"}

@@ -5,7 +5,7 @@ import AppBreadcrumb from "../../components/AppBreadcrumb";
 
 const SearchLayout = () => {
   return (
-    <div className="px-[80px]">
+    <div>
       <SearchBar />
       <AppBreadcrumb />
       <Outlet />
