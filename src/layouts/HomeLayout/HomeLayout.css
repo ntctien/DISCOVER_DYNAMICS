@@ -86,6 +86,25 @@
   @apply font-medium text-20 text-grey-darker;
 }
 
+/* Scrollbar */
+.booking-detail::-webkit-scrollbar {
+  width: 8px;
+}
+
+.booking-detail::-webkit-scrollbar-track {
+  background-color: #D9D9D9;
+}
+ 
+.booking-detail::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25); 
+  border-radius: 5px;
+}
+
+.booking-detail::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); 
+}
+
+
 /* Antd */
 
 .book-form-item .ant-input-affix-wrapper {

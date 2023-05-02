@@ -30,6 +30,7 @@ module.exports = {
         'red': '#BF0000',
         'background': '#F0F6FD',
         'description': '#7B7B7B',
+        'black15':'rgba(0, 0, 0, 0.15)',
         'black47':'rgba(0, 0, 0, 0.47)',
         'black50':'rgba(0, 0, 0, 0.50)'
       },
