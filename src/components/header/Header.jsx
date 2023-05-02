@@ -81,14 +81,16 @@ const Header = () => {
         <Link to={"/about"}>
           <p className="cursor-pointer">Về chúng tôi</p>
         </Link>
-        <p className="cursor-pointer">Liên hệ</p>
+        <Link to={"/contact"}>
+          <p className="cursor-pointer">Liên hệ</p>
+        </Link>
       </div>
       {/* Account */}
       <Dropdown menu={{ items: dropDownItems.account }}>
         <div
           onClick={(e) => {
             e.preventDefault();
-            navigate('/account');
+            navigate("/account");
           }}
           className="row gap-x-[13px] cursor-pointer"
         >

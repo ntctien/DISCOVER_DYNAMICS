@@ -26,7 +26,7 @@
 
 /* Inputs */
 .default-input-text {
-  @apply font-montserrat text-18;
+  @apply font-montserrat;
 }
 
 .default-input-border {
@@ -39,7 +39,7 @@
 }
 
 .default-input {
-  @apply p-[15px] resize-none default-input-border default-input-border-radius default-input-text;
+  @apply px-[15px] resize-none default-input-border default-input-border-radius default-input-text;
 }
 
 .book-form-row {
@@ -51,7 +51,7 @@
 }
 
 .book-form-item h3 {
-  @apply font-medium text-18;
+  @apply font-medium;
 }
 
 .book-form-item h3.required::after {
@@ -61,11 +61,12 @@
 
 .book-form-item input,
 .book-form-item textarea {
+  font-size: inherit !important;
   @apply default-input;
 }
 
 .book-form-item textarea {
-  @apply h-[104px];
+  @apply h-[104px] py-[15px];
 }
 
 .book-summary p {
@@ -79,10 +80,12 @@
 /* Antd */
 
 .book-form-item .ant-input-affix-wrapper {
+  font-size: inherit !important;
   @apply default-input;
 }
 
 .book-form-item .ant-picker {
+  font-size: inherit !important;
   @apply default-input w-full h-[54px];
 }
 
@@ -101,6 +104,7 @@
 }
 
 .book-form-item .ant-picker .ant-picker-input > input {
+  font-size: inherit !important;
   @apply default-input-text;
 }
 
@@ -117,6 +121,8 @@
 .book-form-item
   .ant-select-single:not(.ant-select-customize-input)
   .ant-select-selector {
+    font-size: 18px !important;
+    line-height: 22px !important;
   @apply h-[54px] p-[15px] default-input-text;
 }
 

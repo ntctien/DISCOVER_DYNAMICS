@@ -6,6 +6,7 @@ const breadcrumbNameMap = {
   "/destination/detail": "Cao Bằng",
   "/about": "Về chúng tôi",
   "/account": "Thông tin tài khoản",
+  "/contact": "Liên hệ",
 };
 
 const AppBreadcrumb = () => {
@@ -34,7 +35,7 @@ const AppBreadcrumb = () => {
       },
     },
   ].concat(extraBreadcrumbItems);
-  return <Breadcrumb items={breadcrumbItems} className="mt-[35px]" />;
+  return <Breadcrumb items={breadcrumbItems} className="mt-[35px] px-[80px]" />;
 };
 
 export default AppBreadcrumb;

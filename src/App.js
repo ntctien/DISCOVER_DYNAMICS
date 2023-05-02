@@ -7,6 +7,7 @@ import About from './pages/About';
 import TourDetail from "./pages/TourDetail";
 import BookTour from "./pages/BookTour";
 import Account from "./pages/Account";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route element={<TourDetail />} path="destination/detail" />
           <Route element={<About />} path="about" />
           <Route element={<Account />} path="account" />
+          <Route element={<Contact />} path="contact" />
         </Route>
         <Route element={<BookTour />} path="book-tour" />
       </Route>

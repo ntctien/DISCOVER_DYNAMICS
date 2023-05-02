@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className='background-color: #D9D9D9 rounded-t-[150px] rounded-b-10 center-col justify-center'>
+    <div className='background-color: #D9D9D9 rounded-t-[150px] rounded-b-10 center-col justify-center px-[80px]'>
       <h1 className="about-title " style={{width : "180px", height : "49px", left : "622px", top : "269px", fontSize: "32px", 
           fontStyle: "normal", fontWeight : "500", lineHeight : "49px", textDecoration: "underline", color: "#1D2570", marginTop : "20px"}}>
             Giới thiệu</h1>
