@@ -8,6 +8,7 @@ import TourDetail from "./pages/TourDetail";
 import BookTour from "./pages/BookTour";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
+import BookedTours from "./pages/BookedTours";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route element={<Contact />} path="contact" />
         </Route>
         <Route element={<BookTour />} path="book-tour" />
+        <Route element={<BookedTours />} path="booked-tours" />
       </Route>
     </Routes>
   );

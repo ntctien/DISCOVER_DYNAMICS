@@ -77,6 +77,15 @@
   @apply text-grey-darker;
 }
 
+/* Booking detail */
+.booking-detail h3 {
+  @apply font-semibold text-24
+}
+
+.booking-detail span {
+  @apply font-medium text-20 text-grey-darker;
+}
+
 /* Antd */
 
 .book-form-item .ant-input-affix-wrapper {

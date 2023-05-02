@@ -14,6 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [currentModal, setCurrentModal] = useState(null);
   const currentUser = true;
+  const admin = false;
 
   const dropDownItems = {
     destination: [],
@@ -81,9 +82,15 @@ const Header = () => {
         <Link to={"/about"}>
           <p className="cursor-pointer">Về chúng tôi</p>
         </Link>
-        <Link to={"/contact"}>
-          <p className="cursor-pointer">Liên hệ</p>
-        </Link>
+        {admin ? (
+          <Link to={"/booked-tours"}>
+            <p className="cursor-pointer">Tour được đặt</p>
+          </Link>
+        ) : (
+          <Link to={"/contact"}>
+            <p className="cursor-pointer">Liên hệ</p>
+          </Link>
+        )}
       </div>
       {/* Account */}
       <Dropdown menu={{ items: dropDownItems.account }}>

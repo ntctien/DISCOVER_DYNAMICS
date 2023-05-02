@@ -2,6 +2,7 @@ import { useState } from "react";
 import BookItem from "./BookItem";
 import WarningModal from "../modals/WarningModal";
 import PaymentModal from "./PaymentModal";
+import BookingDetailModal from "../modals/BookingDetailModal";
 
 const data = [
   {
@@ -79,7 +80,12 @@ const BookingHistory = () => {
       <h2 className="font-semibold text-32 w-full">Lịch sử đặt tour</h2>
       <div className="flex flex-col gap-y-5 mt-[25px]">
         {data.map((item, i) => (
-          <BookItem key={i} item={item} setModal={setModal} />
+          <BookItem
+            key={i}
+            item={item}
+            setModal={setModal}
+            onClick={() => setModal("detail")}
+          />
         ))}
       </div>
       <button className="mt-[35px] font-medium hover:text-green">
@@ -97,6 +103,10 @@ const BookingHistory = () => {
         onCancel={() => setModal(null)}
       />
       <PaymentModal open={modal === "pay"} onCancel={() => setModal(null)} />
+      <BookingDetailModal
+        open={modal === "detail"}
+        onCancel={() => setModal(null)}
+      />
     </div>
   );
 };
