@@ -9,13 +9,16 @@ const editOptions = [
   { key: "cancel", label: "Hủy tour", danger: true },
 ];
 
-const BookItem = ({ item, setModal }) => {
+const BookItem = ({ item, setModal, onClick }) => {
   const handleOptionClick = ({ key }) => {
     setModal(key);
   };
 
   return (
-    <div className="font-medium bg-white rounded-10 border-1 border-grey-darker p-5 relative">
+    <div
+      onClick={onClick}
+      className="font-medium bg-white rounded-10 border-1 border-grey-darker p-5 relative cursor-pointer"
+    >
       <div className="flex justify-between text-grey-darker">
         <div>
           <p>
@@ -82,7 +85,7 @@ const BookItem = ({ item, setModal }) => {
         placement="top"
         arrow
       >
-        <button className="absolute bottom-5 right-5">
+        <button onClick={(e)=>e.stopPropagation()} className="absolute bottom-5 right-5">
           <img src={editIcon} alt="Edit" />
         </button>
       </Dropdown>
