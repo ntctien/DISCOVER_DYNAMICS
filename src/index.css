@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600&display=swap');
 
 body {
   margin: 0;
@@ -30,6 +30,10 @@ code {
   @apply flex flex-col items-center;
 }
 
+.absolute-center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+}
+
 /* Text */
 .text-medium {
   @apply font-medium text-20;
@@ -38,6 +42,18 @@ code {
 /* Inputs */
 .search-bar-input {
   @apply mt-[15px] w-[188px];
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .search-bar-input:focus {
@@ -76,4 +92,46 @@ code {
 
 .tour-type::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.5); 
+}
+
+/* Buttons */
+.default-btn {
+  @apply h-[60px] bg-orange hover:brightness-110 rounded-5 font-semibold text-24 text-white;
+}
+
+.primary-btn {
+  @apply bg-orange rounded-10 font-medium text-white hover:brightness-110;
+}
+
+.secondary-btn {
+  @apply rounded-10 border-1 border-black font-medium;
+}
+
+.quantity-btn {
+  @apply row justify-center;
+}
+
+.warning-modal-btn {
+  @apply w-[200px] h-[50px] rounded-10 font-medium;
+}
+
+/* Antd */
+
+.ant-checkbox .ant-checkbox-inner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid black;
+}
+
+.ant-checkbox-wrapper {
+  padding-bottom: 5px;
+}
+
+.small-checkbox .ant-checkbox .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+}
+
+.ant-dropdown-menu-title-content {
+  @apply text-center;
 }

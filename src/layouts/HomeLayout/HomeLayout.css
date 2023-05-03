@@ -1,0 +1,171 @@
+/* Buttons */
+.success-btn {
+  @apply rounded-10 w-full h-[40px] text-16;
+}
+
+/* Book tour */
+.book-tour .container {
+  @apply bg-white rounded-10 px-5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.book-tour h2 {
+  @apply font-semibold text-24;
+}
+
+.book-tour-info {
+  @apply flex items-center gap-x-[2px] mt-[14px];
+}
+
+.book-tour-info-container {
+  @apply flex flex-col justify-between;
+}
+
+.book-tour-info-container h3 {
+  @apply text-grey-darker;
+}
+
+/* Inputs */
+.default-input-text {
+  @apply font-montserrat;
+}
+
+.default-input-border {
+  border-color: rgba(0, 0, 0, 0.47) !important;
+  @apply border-1;
+}
+
+.default-input-border-radius {
+  @apply rounded-10;
+}
+
+.default-input {
+  @apply px-[15px] resize-none default-input-border default-input-border-radius default-input-text;
+}
+
+.book-form-row {
+  @apply flex gap-x-5;
+}
+
+.book-form-item {
+  @apply flex-1;
+}
+
+.book-form-item h3 {
+  @apply font-medium;
+}
+
+.book-form-item h3.required::after {
+  content: " *";
+  color: #ff473e;
+}
+
+.book-form-item input,
+.book-form-item textarea {
+  font-size: inherit !important;
+  @apply default-input;
+}
+
+.book-form-item textarea {
+  @apply h-[104px] py-[15px];
+}
+
+.book-summary p {
+  @apply font-medium;
+}
+
+.book-summary p > span {
+  @apply text-grey-darker;
+}
+
+/* Booking detail */
+.booking-detail h3 {
+  @apply font-semibold text-24
+}
+
+.booking-detail span {
+  @apply font-medium text-20 text-grey-darker;
+}
+
+/* Scrollbar */
+.booking-detail::-webkit-scrollbar {
+  width: 8px;
+}
+
+.booking-detail::-webkit-scrollbar-track {
+  background-color: #D9D9D9;
+}
+ 
+.booking-detail::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25); 
+  border-radius: 5px;
+}
+
+.booking-detail::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); 
+}
+
+
+/* Antd */
+
+.book-form-item .ant-input-affix-wrapper {
+  font-size: inherit !important;
+  @apply default-input;
+}
+
+.book-form-item .ant-picker {
+  font-size: inherit !important;
+  @apply default-input w-full h-[54px];
+}
+
+.book-form-item .ant-select {
+  @apply w-full;
+}
+
+.book-form-item
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  @apply default-input-border;
+}
+
+.book-form-item .ant-select-single .ant-select-selector {
+  @apply default-input-border-radius;
+}
+
+.book-form-item .ant-picker .ant-picker-input > input {
+  font-size: inherit !important;
+  @apply default-input-text;
+}
+
+.book-form-item .ant-input-prefix {
+  @apply mr-5;
+}
+
+.book-form-item input::placeholder,
+.book-form-item textarea::placeholder,
+.book-form-item .ant-picker .ant-picker-input > input::placeholder {
+  @apply text-black47;
+}
+
+.book-form-item
+  .ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
+    font-size: 18px !important;
+    line-height: 22px !important;
+  @apply h-[54px] p-[15px] default-input-text;
+}
+
+.book-form-item .ant-select-selection-item {
+  @apply flex items-center;
+}
+
+.book-form-item
+  .ant-select-single
+  .ant-select-selector
+  .ant-select-selection-placeholder {
+  all: unset;
+  color: rgba(0, 0, 0, 0.47);
+}
+
+.ant-select-item-option-content {
+  @apply text-18;
+}
