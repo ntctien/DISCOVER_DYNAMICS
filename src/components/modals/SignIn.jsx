@@ -1,13 +1,15 @@
-import { Modal } from "antd";
+import { Button, Modal } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
-import facebookIcon from '../../assets/facebook_icon.svg'
+import { useState } from "react";
+import SignUp from "../modals/SignUp";
+import facebookIcon from '../../assets/facebook_icon.svg';
 
 const SignIn = ({open, handleCancel}) => {
-    
+    const [currentModal, setCurrentModal] = useState(null);
     return (
       <>
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
@@ -43,15 +45,41 @@ const SignIn = ({open, handleCancel}) => {
                         <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078", fontSize: "20px" }}/>
                 </div>
 
-                <a style={{fontSize : "14px", textDecoration :"underline", width :"480px", textAlign:"end", margin:"8px"}}>
-                    Quên mật khẩu</a>
+                <button 
+                    style={{
+                        fontSize : "14px", 
+                        outline: "none", 
+                        padding: '8px', 
+                        textDecoration :"underline", 
+                        width :"480px", 
+                        textAlign:"end"
+                        }}>
+                    Quên mật khẩu
+                </button>
                 
                 <button 
-                    style={{width : "480px", height :"52px", borderRadius:"10px", background: "#FF9648", color:"white"}}>
+                    style={{
+                        width : "480px", 
+                        height :"52px", 
+                        borderRadius:"10px", 
+                        background: "#FF9648", 
+                        color:"white"
+                        }}>
                     ĐĂNG NHẬP </button>    
                 
-                <div style = {{display:"flex", alignItems:"center ", margin: "4px"}}>
-                    <div style={{width : "200px", height : "0px", left : "40px", right : "416px", opacity: "0.47", border: "1px solid #000000"}}></div>
+                <div style = {{
+                        display:"flex", 
+                        alignItems:"center ", 
+                        margin: "4px"
+                        }}>
+                    <div style={{
+                        width : "200px", 
+                        height : "0px", 
+                        left : "40px", 
+                        right : "416px", 
+                        opacity: "0.47", 
+                        border: "1px solid #000000"
+                        }}></div>
                     <div> <p style = {{padding : "16px", color: "#7B7B7B", fontSize: "20px"}}> 
                     hoặc </p></div>
                     <div style={{width : "200px", height : "0px", left : "320px", right : "416px", border: "1px solid rgba(0, 0, 0, 0.47)"}}></div>
@@ -78,12 +106,16 @@ const SignIn = ({open, handleCancel}) => {
 
                 <div style = {{marginTop : "20px"}}>
                     <p style = {{color: "rgba(0, 0, 0, 0.7)"}}> Chưa có tài khoản? 
-                    <button style={{color:"#FF9648", width : "110px"}}> 
-                    Đăng ký tại đây</button></p>
+                    <button style={{color:"#FF9648", width : "110px"}} onClick={() => {handleCancel(); setCurrentModal("sign-up")}}> 
+                        Đăng ký tại đây
+                    </button></p>
                 </div>
           </div>
-
         </Modal>
+        <SignUp
+            open={currentModal === "sign-up"}
+            handleCancel={() => setCurrentModal(null)}
+        />
       </>
     );
   };
