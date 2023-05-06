@@ -7,6 +7,7 @@ import googleIcon from '../../assets/google_icon.svg';
 import { useState } from "react";
 import SignUp from "../modals/SignUp";
 import facebookIcon from '../../assets/facebook_icon.svg';
+import ForgotPassword from "./ForgotPassword";
 
 const SignIn = ({open, handleCancel}) => {
     const [currentModal, setCurrentModal] = useState(null);
@@ -53,7 +54,8 @@ const SignIn = ({open, handleCancel}) => {
                         textDecoration :"underline", 
                         width :"480px", 
                         textAlign:"end"
-                        }}>
+                        }}
+                        onClick={() => {handleCancel(); setCurrentModal("forgot-password")}} >
                     Quên mật khẩu
                 </button>
                 
@@ -115,6 +117,10 @@ const SignIn = ({open, handleCancel}) => {
         <SignUp
             open={currentModal === "sign-up"}
             handleCancel={() => setCurrentModal(null)}
+        />
+        <ForgotPassword
+            open={currentModal === "forgot-password"}
+            handleCancel={() => setCurrentModal(null)} 
         />
       </>
     );
