@@ -108,10 +108,12 @@ const Header = () => {
       <SignIn
         open={currentModal === "sign-in"}
         handleCancel={() => setCurrentModal(null)}
+        handleSignUp={() => setCurrentModal("sign-up")}
       />
       <SignUp
         open={currentModal === "sign-up"}
         handleCancel={() => setCurrentModal(null)}
+        handleSignIn={() => setCurrentModal("sign-in")}
       />
       <LogOut
         open={currentModal === "sign-out"}

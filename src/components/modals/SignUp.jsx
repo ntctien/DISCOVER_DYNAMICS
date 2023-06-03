@@ -4,10 +4,12 @@ import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
-import facebookIcon from '../../assets/facebook_icon.svg'
+import facebookIcon from '../../assets/facebook_icon.svg';
+import { useState } from "react";
+import SignIn from "./SignIn"
 
-const SignUp = ({open, handleCancel}) => {
-    
+const SignUp = ({open, handleCancel, handleSignIn}) => {
+    const [currentModal, setCurrentModal] = useState(null);
     return (
       <>
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
@@ -87,8 +89,12 @@ const SignUp = ({open, handleCancel}) => {
 
                 <div style = {{marginTop : "20px"}}>
                     <p style = {{color: "rgba(0, 0, 0, 0.7)"}}> Đã có tài khoản? 
-                    <button style={{color:"#FF9648", width : "130px"}}> 
-                    Đăng nhập tại đây</button></p>
+                    <button style={{
+                                color:"#FF9648", 
+                                width : "130px" 
+                            }} 
+                            onClick={handleSignIn}> 
+                        Đăng nhập tại đây</button></p>
                 </div>
           </div>
 

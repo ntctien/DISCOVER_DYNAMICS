@@ -9,7 +9,7 @@ import SignUp from "../modals/SignUp";
 import facebookIcon from '../../assets/facebook_icon.svg';
 import ForgotPassword from "./ForgotPassword";
 
-const SignIn = ({open, handleCancel}) => {
+const SignIn = ({open, handleCancel, handleSignUp}) => {
     const [currentModal, setCurrentModal] = useState(null);
     return (
       <>
@@ -108,16 +108,16 @@ const SignIn = ({open, handleCancel}) => {
 
                 <div style = {{marginTop : "20px"}}>
                     <p style = {{color: "rgba(0, 0, 0, 0.7)"}}> Chưa có tài khoản? 
-                    <button style={{color:"#FF9648", width : "110px"}} onClick={() => {handleCancel(); setCurrentModal("sign-up")}}> 
+                    <button style={{
+                                color:"#FF9648", 
+                                width : "110px"
+                                }}
+                            onClick={handleSignUp}> 
                         Đăng ký tại đây
                     </button></p>
                 </div>
           </div>
         </Modal>
-        <SignUp
-            open={currentModal === "sign-up"}
-            handleCancel={() => setCurrentModal(null)}
-        />
         <ForgotPassword
             open={currentModal === "forgot-password"}
             handleCancel={() => setCurrentModal(null)} 
