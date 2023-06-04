@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import ToursContainer from "../ToursContainer";
-import fetchDestinations from "../../api/services/fetchDestinations";
+import useDestination from "../../hooks/useDestination";
 
 const FeaturedTours = () => {
-  const dispatch = useDispatch();
-  const { destinations } = useSelector((state) => state.destinations);
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -18,13 +15,7 @@ const FeaturedTours = () => {
       );
     });
   };
-
-  useEffect(() => {
-    if (destinations.length > 0) {
-      fetchData();
-    } else fetchDestinations(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destinations]);
+  const { destinations } = useDestination(fetchData);
 
   return <ToursContainer tours={data} className={"mt-[37px]"} />;
 };

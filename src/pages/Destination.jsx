@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import { downArrowIcon } from "../assets/arrow_icons";
@@ -8,15 +7,13 @@ import getCurrentFilter from "../utils/getCurrentFilter";
 import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
 import removeAccents from "../utils/removeAccents";
 import hasAccent from "../utils/hasAccent";
-import fetchDestinations from "../api/services/fetchDestinations";
+import useDestination from "../hooks/useDestination";
 
 const itemsPerPage = 12;
 
 const Destination = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { destinations } = useSelector((state) => state.destinations);
   const [baseData, setBaseData] = useState([]);
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +23,7 @@ const Destination = () => {
     max: null,
     sort: null,
   });
+  const { destinations } = useDestination(() => setBaseData([...destinations]));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -38,12 +36,6 @@ const Destination = () => {
     handleFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
-
-  useEffect(() => {
-    if (destinations.length > 0) setBaseData([...destinations]);
-    else fetchDestinations(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destinations]);
 
   const handleFilter = () => {
     let tempArray;

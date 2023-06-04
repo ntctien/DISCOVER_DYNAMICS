@@ -5,7 +5,7 @@ const TourItem = ({ tour }) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate('/destination/detail');
+    navigate(`/destination/${tour.id}`);
   };
 
   return (
@@ -21,7 +21,9 @@ const TourItem = ({ tour }) => {
       <div className="pt-[13px] pb-[15px] px-[25px] flex flex-col justify-between flex-1">
         <div>
           <h3 className="font-bold text-24 text-green">{tour.location}</h3>
-          <p className="text-16 mt-[1px]">{tour.dayDuration + " ngày " + tour.nightDuration + " đêm"}</p>
+          <p className="text-16 mt-[1px]">
+            {tour.dayDuration + " ngày " + tour.nightDuration + " đêm"}
+          </p>
           <p className="text-description mt-[17px]">{tour.shortDescription}</p>
         </div>
         <div className="between-row mt-[17px]">
