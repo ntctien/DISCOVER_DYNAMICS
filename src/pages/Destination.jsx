@@ -86,7 +86,7 @@ const Destination = () => {
         total={data?.length}
         className="mt-[47px] w-fit mx-auto"
       />
-      <div className="absolute -top-[77px] right-0 row gap-x-[19px]">
+      <div className="absolute -top-[77px] right-[80px] row gap-x-[19px]">
         <h4 className="font-semibold">Lọc theo:</h4>
         <Select
           defaultValue="default"
