@@ -13,7 +13,7 @@ import ChangePassword from "../modals/ChangePassword";
 const Header = () => {
   const navigate = useNavigate();
   const [currentModal, setCurrentModal] = useState(null);
-  const currentUser = false;
+  const currentUser = true;
   const admin = false;
 
   const dropDownItems = {
