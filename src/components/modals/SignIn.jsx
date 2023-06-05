@@ -1,16 +1,40 @@
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
 import { useState } from "react";
-import SignUp from "../modals/SignUp";
+import {  signInWithEmailAndPassword   } from 'firebase/auth';
+import { auth } from "../../firebase";
 import facebookIcon from '../../assets/facebook_icon.svg';
 import ForgotPassword from "./ForgotPassword";
+import { useNavigate } from "react-router";
 
 const SignIn = ({open, handleCancel, handleSignUp}) => {
     const [currentModal, setCurrentModal] = useState(null);
+
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+
+    const signIn = (e) => {
+        e.preventDefault();
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            //navigate("/destination")
+            console.log(user);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+    }
+
     return (
       <>
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
@@ -31,7 +55,14 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                         <input 
                             type="email" 
                             placeholder="Email" 
-                            style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
+                            style={{
+                                marginLeft :"12px",
+                                borderWidth :'0', 
+                                outline:"none", 
+                                width : "400px"
+                            }}
+                            onChange={(e)=>setEmail(e.target.value)}>
+                        </input>
                 </div>
 
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
@@ -42,7 +73,14 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                         <input 
                             type="password" 
                             placeholder="Mật khẩu" 
-                            style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
+                            style={{
+                                marginLeft :"12px",
+                                borderWidth :'0', 
+                                outline:"none", 
+                                width : "400px"
+                            }}
+                            onChange={(e)=>setPassword(e.target.value)}>
+                        </input>
                         <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078", fontSize: "20px" }}/>
                 </div>
 
@@ -66,8 +104,10 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                         borderRadius:"10px", 
                         background: "#FF9648", 
                         color:"white"
-                        }}>
-                    ĐĂNG NHẬP </button>    
+                    }}
+                    onClick={signIn} >
+                    ĐĂNG NHẬP 
+                </button>    
                 
                 <div style = {{
                         display:"flex", 
