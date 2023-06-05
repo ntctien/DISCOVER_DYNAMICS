@@ -7,7 +7,7 @@ const ToursContainer = ({ tours, className }) => {
       style={{ gridTemplateColumns: "repeat(3, minmax(0, 30%))" }}
     >
       {tours.map((tour, i) => (
-        <TourItem key={i} {...tour} />
+        <TourItem key={i} tour={tour} />
       ))}
     </div>
   );

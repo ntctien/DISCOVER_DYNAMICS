@@ -16,8 +16,10 @@ function App() {
       <Route element={<HomeLayout />} path='/' >
         <Route element={<Home />} path='' />
         <Route element={<SearchLayout />}>
-          <Route element={<Destination />} path="destination" />
-          <Route element={<TourDetail />} path="destination/detail" />
+          <Route path="destination">
+            <Route element={<Destination />} index />
+            <Route element={<TourDetail />} path=":destinationId" />
+          </Route>
           <Route element={<About />} path="about" />
           <Route element={<Account />} path="account" />
           <Route element={<Contact />} path="contact" />

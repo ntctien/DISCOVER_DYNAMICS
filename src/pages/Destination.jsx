@@ -2,32 +2,20 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
-import tours from "../constants/tours";
 import { downArrowIcon } from "../assets/arrow_icons";
 import getCurrentFilter from "../utils/getCurrentFilter";
 import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
 import removeAccents from "../utils/removeAccents";
 import hasAccent from "../utils/hasAccent";
-
-const baseData = [
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-  ...tours,
-];
+import useDestination from "../hooks/useDestination";
 
 const itemsPerPage = 12;
 
 const Destination = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [data, setData] = useState([...baseData]);
+  const [baseData, setBaseData] = useState([]);
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState({
     search: null,
@@ -35,16 +23,18 @@ const Destination = () => {
     max: null,
     sort: null,
   });
+  const { destinations } = useDestination(() => setBaseData([...destinations]));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   useEffect(() => {
-    setFilter(getCurrentFilter(location));
-  }, [location]);
+    if (baseData) setFilter(getCurrentFilter(location));
+  }, [location, baseData]);
 
   useEffect(() => {
     handleFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const handleFilter = () => {
@@ -55,18 +45,18 @@ const Destination = () => {
     const search = filter.search?.toLowerCase() ?? "";
     tempArray = baseData.filter(
       (item) =>
-        item.expense >= min &&
-        item.expense <= max &&
+        item.price >= min &&
+        item.price <= max &&
         (hasAccent(search)
-          ? item.name.toLowerCase().includes(search)
-          : removeAccents(item.name.toLowerCase()).includes(search))
+          ? item.location.toLowerCase().includes(search)
+          : removeAccents(item.location.toLowerCase()).includes(search))
     );
     switch (filter.sort) {
       case "ascent":
-        tempArray = tempArray.sort((a, b) => a.expense - b.expense);
+        tempArray = tempArray.sort((a, b) => a.price - b.price);
         break;
       case "descent":
-        tempArray = tempArray.sort((a, b) => b.expense - a.expense);
+        tempArray = tempArray.sort((a, b) => b.price - a.price);
         break;
       default:
         break;
@@ -85,7 +75,7 @@ const Destination = () => {
   return (
     <div className="pb-[45px] relative px-[80px]">
       <ToursContainer
-        tours={data.slice(startIndex, endIndex)}
+        tours={data?.slice(startIndex, endIndex)}
         className={"mt-[25px]"}
       />
       <Pagination
@@ -93,7 +83,7 @@ const Destination = () => {
         onChange={setCurrentPage}
         pageSize={itemsPerPage}
         showSizeChanger={false}
-        total={data.length}
+        total={data?.length}
         className="mt-[47px] w-fit mx-auto"
       />
       <div className="absolute -top-[77px] right-0 row gap-x-[19px]">
