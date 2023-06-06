@@ -19,7 +19,8 @@ const AppBreadcrumb = () => {
   const pathSnippets = location.pathname.split("/").filter((i) => i);
 
   const getBreadCrumbItemTitle = async (url) => {
-    if (destinationId && url!=='/destination') {
+    console.log(url);
+    if (destinationId && url !== "/destination") {
       const destinationName = await getDestinationById(destinationId);
       return destinationName.location;
     }
@@ -45,8 +46,8 @@ const AppBreadcrumb = () => {
     };
 
     fetchBreadcrumbItems();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destinationId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [destinationId, location]);
 
   return (
     <Breadcrumb
