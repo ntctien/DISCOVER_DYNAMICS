@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import numberWithDots from "../utils/numberWithDots";
+import getDurationString from "../utils/getDurationString";
 
 const TourItem = ({ tour }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const TourItem = ({ tour }) => {
         <div>
           <h3 className="font-bold text-24 text-green">{tour?.location}</h3>
           <p className="text-16 mt-[1px]">
-            {tour?.dayDuration + " ngày " + tour?.nightDuration + " đêm"}
+            {getDurationString(tour?.dayDuration, tour?.nightDuration)}
           </p>
           <p className="text-description mt-[17px]">{tour?.shortDescription}</p>
         </div>

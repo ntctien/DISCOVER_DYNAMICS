@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase';
+import { auth } from "../firebase";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Title from "../components/Title";
@@ -10,6 +10,7 @@ import getDestinationById from "../api/services/getDestinationById";
 import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
 import getDividedLines from "../utils/getDividedLines";
 import numberWithDots from "../utils/numberWithDots";
+import getDurationString from "../utils/getDurationString";
 
 const TourDetail = () => {
   const navigate = useNavigate();
@@ -28,9 +29,9 @@ const TourDetail = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-        console.log(uid)
+        console.log(uid);
       } else {
-        console.log("user is logged out")
+        console.log("user is logged out");
       }
     });
     // navigate("/book-tour");
@@ -58,9 +59,7 @@ const TourDetail = () => {
               <div className="tour-info-img-container">
                 <img src={durationIcon} alt="Duration" />
               </div>
-              <p>{`${data?.dayDuration ?? 0} ngày ${
-                data?.nightDuration ?? 0
-              } đêm`}</p>
+              <p>{getDurationString(data?.dayDuration, data?.nightDuration)}</p>
             </div>
             <div className="tour-info">
               <div className="tour-info-img-container">
