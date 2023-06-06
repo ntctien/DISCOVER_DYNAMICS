@@ -50,7 +50,9 @@ const TourDetail = () => {
               <div className="tour-info-img-container">
                 <img src={expenseIcon} alt="Expense" />
               </div>
-              <p>{numberWithDots(data?.price) + " VNĐ"}</p>
+              <p>
+                {data?.price != null && numberWithDots(data?.price) + " VNĐ"}
+              </p>
             </div>
           </div>
           {/* Type tags */}
@@ -80,20 +82,21 @@ const TourDetail = () => {
           className={"w-fit mx-auto mt-[13px] mb-[15px]"}
         />
         {/* Long description */}
-        {getDividedLines(data?.longDescription)}
+        {data?.longDescription != null &&
+          getDividedLines(data?.longDescription)}
         {/* Schedule */}
-        {data?.schedule.map((day, i) => (
+        {data?.schedule?.map((day, i) => (
           <div key={i}>
             <h3 className="font-bold">{`Ngày ${day.day}: ${day.title}`}</h3>
-            {getDividedLines(day.body)}
+            {day.body != null && getDividedLines(day.body)}
           </div>
         ))}
         {/* Notes */}
-        {data?.note.map((item, i) => (
+        {data?.note?.map((item, i) => (
           <Fragment key={i}>
             <br />
             <h4 className="font-semibold italic">{item.title}</h4>
-            {getDividedLines(item.body, "font-light")}
+            {item.body != null && getDividedLines(item.body, "font-light")}
           </Fragment>
         ))}
       </div>
