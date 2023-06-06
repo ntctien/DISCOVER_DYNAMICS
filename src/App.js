@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ModalContext } from "./contexts/ModalContext";
 import HomeLayout from "./layouts/HomeLayout";
 import SearchLayout from "./layouts/SearchLayout";
 import Home from "./pages/Home";
@@ -9,25 +11,53 @@ import BookTour from "./pages/BookTour";
 import Account from "./pages/Account";
 import Contact from "./pages/Contact";
 import BookedTours from "./pages/BookedTours";
+import SignIn from "./components/modals/SignIn";
+import SignUp from "./components/modals/SignUp";
+import LogOut from "./components/modals/LogOut";
+import ChangePassword from "./components/modals/ChangePassword";
 
 function App() {
+  const { currentModal, setCurrentModal } = useContext(ModalContext);
+  
   return (
-    <Routes>
-      <Route element={<HomeLayout />} path='/' >
-        <Route element={<Home />} path='' />
-        <Route element={<SearchLayout />}>
-          <Route path="destination">
-            <Route element={<Destination />} index />
-            <Route element={<TourDetail />} path=":destinationId" />
+    <div>
+      {/* Routes */}
+      <Routes>
+        <Route element={<HomeLayout />} path='/' >
+          <Route element={<Home />} path='' />
+          <Route element={<SearchLayout />}>
+            <Route path="destination">
+              <Route element={<Destination />} index />
+              <Route element={<TourDetail />} path=":destinationId" />
+            </Route>
+            <Route element={<About />} path="about" />
+            <Route element={<Account />} path="account" />
+            <Route element={<Contact />} path="contact" />
           </Route>
-          <Route element={<About />} path="about" />
-          <Route element={<Account />} path="account" />
-          <Route element={<Contact />} path="contact" />
+          <Route element={<BookTour />} path="book-tour" />
+          <Route element={<BookedTours />} path="booked-tours" />
         </Route>
-        <Route element={<BookTour />} path="book-tour" />
-        <Route element={<BookedTours />} path="booked-tours" />
-      </Route>
-    </Routes>
+      </Routes>
+      {/* Modals */}
+      <SignIn
+        open={currentModal === "sign-in"}
+        handleCancel={() => setCurrentModal(null)}
+        handleSignUp={() => setCurrentModal("sign-up")}
+      />
+      <SignUp
+        open={currentModal === "sign-up"}
+        handleCancel={() => setCurrentModal(null)}
+        handleSignIn={() => setCurrentModal("sign-in")}
+      />
+      <LogOut
+        open={currentModal === "sign-out"}
+        handleCancel={() => setCurrentModal(null)}
+      />
+      <ChangePassword
+        open={currentModal === "change-password"}
+        handleCancel={() => setCurrentModal(null)}
+      />
+    </div>
   );
 }
 

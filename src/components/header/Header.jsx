@@ -1,18 +1,15 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "antd";
+import { ModalContext } from "../../contexts/ModalContext";
 import DropdownButton from "./DropdownButton";
 import DropdownItem from "./DropdownItem";
 import logo from "../../assets/logo.png";
 import accountIcon from "../../assets/account.svg";
-import { useState } from "react";
-import SignIn from "../modals/SignIn";
-import SignUp from "../modals/SignUp";
-import LogOut from "../modals/LogOut";
-import ChangePassword from "../modals/ChangePassword";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [currentModal, setCurrentModal] = useState(null);
+  const { setCurrentModal } = useContext(ModalContext);
   const currentUser = true;
   const admin = false;
 
@@ -105,24 +102,6 @@ const Header = () => {
           <p>Tài khoản</p>
         </div>
       </Dropdown>
-      <SignIn
-        open={currentModal === "sign-in"}
-        handleCancel={() => setCurrentModal(null)}
-        handleSignUp={() => setCurrentModal("sign-up")}
-      />
-      <SignUp
-        open={currentModal === "sign-up"}
-        handleCancel={() => setCurrentModal(null)}
-        handleSignIn={() => setCurrentModal("sign-in")}
-      />
-      <LogOut
-        open={currentModal === "sign-out"}
-        handleCancel={() => setCurrentModal(null)}
-      />
-      <ChangePassword
-        open={currentModal === "change-password"}
-        handleCancel={() => setCurrentModal(null)}
-      />
     </div>
   );
 };

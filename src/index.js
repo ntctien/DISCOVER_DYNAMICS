@@ -8,6 +8,7 @@ import { ConfigProvider } from 'antd';
 import './index.css';
 import App from './App';
 import allReducers from './reducers';
+import { ModalProvider } from './contexts/ModalContext';
 import reportWebVitals from './reportWebVitals';
 
 const middleware = [thunk]
@@ -18,9 +19,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider theme={{ token: { colorPrimaryHover: '#396746', colorPrimary: '#396746', fontFamily: 'Montserrat' } }}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <ModalProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ModalProvider>
       </ConfigProvider>
     </Provider>
   </React.StrictMode>
