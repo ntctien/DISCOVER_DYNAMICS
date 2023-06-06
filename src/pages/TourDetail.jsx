@@ -44,7 +44,9 @@ const TourDetail = () => {
               <div className="tour-info-img-container">
                 <img src={durationIcon} alt="Duration" />
               </div>
-              <p>{`${data?.dayDuration} ngày ${data?.nightDuration} đêm`}</p>
+              <p>{`${data?.dayDuration ?? 0} ngày ${
+                data?.nightDuration ?? 0
+              } đêm`}</p>
             </div>
             <div className="tour-info">
               <div className="tour-info-img-container">
