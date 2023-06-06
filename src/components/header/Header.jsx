@@ -13,7 +13,7 @@ import ChangePassword from "../modals/ChangePassword";
 const Header = () => {
   const navigate = useNavigate();
   const [currentModal, setCurrentModal] = useState(null);
-  const currentUser = false;
+  const currentUser = true;
   const admin = false;
 
   const dropDownItems = {
@@ -108,10 +108,12 @@ const Header = () => {
       <SignIn
         open={currentModal === "sign-in"}
         handleCancel={() => setCurrentModal(null)}
+        handleSignUp={() => setCurrentModal("sign-up")}
       />
       <SignUp
         open={currentModal === "sign-up"}
         handleCancel={() => setCurrentModal(null)}
+        handleSignIn={() => setCurrentModal("sign-in")}
       />
       <LogOut
         open={currentModal === "sign-out"}

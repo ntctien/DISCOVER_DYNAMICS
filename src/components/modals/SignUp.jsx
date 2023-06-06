@@ -4,10 +4,39 @@ import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
-import facebookIcon from '../../assets/facebook_icon.svg'
+import facebookIcon from '../../assets/facebook_icon.svg';
+import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from "../../firebase";
 
-const SignUp = ({open, handleCancel}) => {
-    
+
+const SignUp = ({open, handleCancel, handleSignIn}) => {
+    const [currentModal, setCurrentModal] = useState(null);
+
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+
+    const signUp = async (e) => {
+        e.preventDefault();
+
+        await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            //navigate("/login")
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            // ..
+        });
+    }
+
     return (
       <>
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
@@ -28,7 +57,14 @@ const SignUp = ({open, handleCancel}) => {
                         <input 
                             type="email" 
                             placeholder="Email" 
-                            style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
+                            style={{
+                                marginLeft :"12px",
+                                borderWidth :'0', 
+                                outline:"none", 
+                                width : "400px"
+                            }}
+                            onChange={(e) => setEmail(e.target.value)} >
+                            </input>
                 </div>
 
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
@@ -39,7 +75,15 @@ const SignUp = ({open, handleCancel}) => {
                         <input 
                             type="password" 
                             placeholder="Mật khẩu" 
-                            style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
+                            style={{
+                                marginLeft :"12px",
+                                borderWidth :'0', 
+                                outline:"none", 
+                                width : "400px"
+                            }}
+                            onChange={(e) => setPassword(e.target.value)}>
+                        </input>
+
                         <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078", fontSize: "20px" }}/>
                 </div>
 
@@ -51,13 +95,31 @@ const SignUp = ({open, handleCancel}) => {
                         <input 
                             type="password" 
                             placeholder="Nhập lại mật khẩu" 
-                            style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
+                            style={{
+                                marginLeft :"12px",
+                                borderWidth :'0', 
+                                outline:"none", 
+                                width : "400px"
+                            }}
+                            onChange={(e) => setPassword(e.target.value)} >
+            
+                        </input>
+
                         <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078", fontSize: "20px" }}/>
                 </div>
                 
                 <button 
-                    style={{width : "480px", height :"52px", marginTop :"20px", borderRadius:"10px", background: "#FF9648", color:"white"}}>
-                    ĐĂNG KÝ </button>    
+                    style={{
+                        width : "480px", 
+                        height :"52px", 
+                        marginTop :"20px", 
+                        borderRadius:"10px", 
+                        background: "#FF9648", 
+                        color:"white"
+                    }}
+                    onClick={signUp}>
+                    ĐĂNG KÝ 
+                </button>    
                 
                 <div style = {{display:"flex", alignItems:"center ", margin: "4px"}}>
                     <div style={{width : "200px", height : "0px", left : "40px", right : "416px", opacity: "0.47", border: "1px solid #000000"}}></div>
@@ -87,8 +149,12 @@ const SignUp = ({open, handleCancel}) => {
 
                 <div style = {{marginTop : "20px"}}>
                     <p style = {{color: "rgba(0, 0, 0, 0.7)"}}> Đã có tài khoản? 
-                    <button style={{color:"#FF9648", width : "130px"}}> 
-                    Đăng nhập tại đây</button></p>
+                    <button style={{
+                                color:"#FF9648", 
+                                width : "130px" 
+                            }} 
+                            onClick={handleSignIn}> 
+                        Đăng nhập tại đây</button></p>
                 </div>
           </div>
 
