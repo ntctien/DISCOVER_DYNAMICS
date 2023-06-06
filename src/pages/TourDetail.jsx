@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../firebase';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Title from "../components/Title";
@@ -21,6 +23,18 @@ const TourDetail = () => {
     };
     fetchData();
   }, [destinationId]);
+
+  const handleBookTour = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid)
+      } else {
+        console.log("user is logged out")
+      }
+    });
+    // navigate("/book-tour");
+  };
 
   return (
     <div className="pt-[10px] pb-[30px] px-[80px]">
@@ -70,7 +84,7 @@ const TourDetail = () => {
           </div>
           {/* Book button */}
           <button
-            onClick={() => navigate("/book-tour")}
+            onClick={handleBookTour}
             className="w-[200px] default-btn mt-[60px] mb-[40px]"
           >
             ĐẶT TOUR
