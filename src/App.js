@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ModalContext } from "./contexts/ModalContext";
 import HomeLayout from "./layouts/HomeLayout";
 import SearchLayout from "./layouts/SearchLayout";
@@ -15,10 +15,16 @@ import SignIn from "./components/modals/SignIn";
 import SignUp from "./components/modals/SignUp";
 import LogOut from "./components/modals/LogOut";
 import ChangePassword from "./components/modals/ChangePassword";
+import { useEffect } from "react";
 
 function App() {
   const { currentModal, setCurrentModal } = useContext(ModalContext);
-  
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location])
+
   return (
     <div>
       {/* Routes */}
