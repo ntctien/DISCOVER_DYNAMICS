@@ -8,11 +8,12 @@ const DefaultDatePicker = ({
   placeholder,
   initialValue,
   onChange,
-  value
+  value,
+  rules,
 }) => {
   return (
     <InputWrapper label={label} required={required}>
-      <Form.Item name={name} initialValue={initialValue}>
+      <Form.Item name={name} initialValue={initialValue} rules={rules}>
         <DatePicker
           placeholder={placeholder}
           format={"DD/MM/YYYY"}

@@ -120,7 +120,12 @@ const BookTour = () => {
           <h2 className="mt-[30px]">Thông tin đặt tour</h2>
           <div className="flex flex-col gap-y-[25px] mt-[30px]">
             <div className="book-form-row">
-              <DefaultInput name={"name"} label={"Họ và tên"} required />
+              <DefaultInput
+                name={"name"}
+                label={"Họ và tên"}
+                required
+                rules={[{ required: true, message: "Hãy nhập họ và tên" }]}
+              />
               <DefaultInput
                 name={"phoneNumber"}
                 type={"number"}
@@ -128,6 +133,20 @@ const BookTour = () => {
                 placeholder={"567 890 123"}
                 required
                 prefix={<p className="text-18 text-black47">+84</p>}
+                rules={[
+                  { required: true, message: "Hãy nhập số điện thoại" },
+                  {
+                    validator: (_, value) => {
+                      if (value == null) return Promise.resolve();
+                      if (value.length === 10 || value.length === 11) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject();
+                      }
+                    },
+                    message: "Số điện thoại không hợp lệ",
+                  },
+                ]}
               />
             </div>
             <div className="book-form-row">
@@ -136,6 +155,10 @@ const BookTour = () => {
                 label={"Email"}
                 placeholder={"example@email.com"}
                 required
+                rules={[
+                  { required: true, message: "Hãy nhập email" },
+                  { type: "email", message: "Email không hợp lệ" },
+                ]}
               />
               <DefaultDatePicker
                 name={"startDate"}
@@ -145,6 +168,21 @@ const BookTour = () => {
                 initialValue={startDate}
                 value={startDate}
                 onChange={setStartDate}
+                rules={[
+                  { required: true, message: "Hãy chọn ngày khởi hành" },
+                  {
+                    validator: (_, value) => {
+                      if (value == null) return Promise.resolve();
+                      if (dayjs(value).isAfter(dayjs(), "day")) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject();
+                      }
+                    },
+                    message:
+                      "Vui lòng chọn ngày khởi hành trễ hơn hôm nay ít nhất 1 ngày",
+                  },
+                ]}
               />
             </div>
             <AddressForm />

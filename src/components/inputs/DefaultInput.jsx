@@ -11,10 +11,11 @@ const DefaultInput = ({
   readOnly,
   height,
   fontSize,
+  rules,
 }) => {
   return (
     <InputWrapper label={label} required={required} fontSize={fontSize}>
-      <Form.Item name={name}>
+      <Form.Item name={name} rules={rules}>
         <Input
           type={type}
           placeholder={placeholder}
