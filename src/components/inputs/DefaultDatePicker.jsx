@@ -1,10 +1,25 @@
-import { DatePicker } from "antd";
+import { DatePicker, Form } from "antd";
 import InputWrapper from "./InputWrapper";
 
-const DefaultDatePicker = ({ label, required, placeholder }) => {
+const DefaultDatePicker = ({
+  name,
+  label,
+  required,
+  placeholder,
+  initialValue,
+  onChange,
+  value
+}) => {
   return (
     <InputWrapper label={label} required={required}>
-      <DatePicker placeholder={placeholder} />
+      <Form.Item name={name} initialValue={initialValue}>
+        <DatePicker
+          placeholder={placeholder}
+          format={"DD/MM/YYYY"}
+          value={value}
+          onChange={onChange}
+        />
+      </Form.Item>
     </InputWrapper>
   );
 };

@@ -1,7 +1,8 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import InputWrapper from "./InputWrapper";
 
 const DefaultInput = ({
+  name,
   label,
   placeholder,
   required,
@@ -9,17 +10,23 @@ const DefaultInput = ({
   type,
   readOnly,
   height,
-  fontSize
+  fontSize,
 }) => {
   return (
     <InputWrapper label={label} required={required} fontSize={fontSize}>
-      <Input
-        type={type}
-        placeholder={placeholder}
-        prefix={prefix}
-        readOnly={readOnly}
-        style={{ backgroundColor: readOnly && "#D9D9D9",height: height ?? 54 }}
-      />
+      <Form.Item name={name}>
+        <Input
+          type={type}
+          placeholder={placeholder}
+          prefix={prefix}
+          readOnly={readOnly}
+          style={{
+            backgroundColor: readOnly && "#D9D9D9",
+            height: height ?? 54,
+            fontSize: 18,
+          }}
+        />
+      </Form.Item>
     </InputWrapper>
   );
 };

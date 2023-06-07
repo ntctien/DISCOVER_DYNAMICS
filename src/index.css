@@ -108,7 +108,7 @@ input[type=number] {
 }
 
 .quantity-btn {
-  @apply row justify-center;
+  @apply row justify-center hover:bg-black5;
 }
 
 .warning-modal-btn {
@@ -134,4 +134,28 @@ input[type=number] {
 
 .ant-dropdown-menu-title-content {
   @apply text-center;
+}
+
+.ant-form {
+  all: unset;
+}
+
+.ant-form-item {
+  all: unset;
+}
+
+.payment-checkbox.ant-form-item .ant-form-item-control-input {
+  align-items: unset;
+}
+
+.ant-form label {
+  font-size: inherit;
+}
+
+.ant-checkbox-wrapper {
+  padding-bottom: 0;
+}
+
+.book-form-row .ant-col {
+  font-size: 18px;
 }

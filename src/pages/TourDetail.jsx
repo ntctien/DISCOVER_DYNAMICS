@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
@@ -11,10 +11,12 @@ import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
 import getDividedLines from "../utils/getDividedLines";
 import numberWithDots from "../utils/numberWithDots";
 import getDurationString from "../utils/getDurationString";
+import { ModalContext } from "../contexts/ModalContext";
 
 const TourDetail = () => {
   const navigate = useNavigate();
   const { destinationId } = useParams();
+  const { setCurrentModal } = useContext(ModalContext);
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -28,13 +30,11 @@ const TourDetail = () => {
   const handleBookTour = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        console.log(uid);
+        navigate(`/book-tour/${destinationId}`);
       } else {
-        console.log("user is logged out");
+        setCurrentModal("sign-in");
       }
     });
-    // navigate("/book-tour");
   };
 
   return (
