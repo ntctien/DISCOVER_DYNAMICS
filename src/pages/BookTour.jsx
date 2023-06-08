@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import bookTour from "../api/services/bookTour";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import phoneNumberRule from "../constants/phoneNumberRule";
 
 const BookTour = () => {
   const navigate = useNavigate();
@@ -178,17 +179,7 @@ const BookTour = () => {
                   prefix={<p className="text-18 text-black47">+84</p>}
                   rules={[
                     { required: true, message: "Hãy nhập số điện thoại" },
-                    {
-                      validator: (_, value) => {
-                        if (value == null) return Promise.resolve();
-                        if (value.length === 10 || value.length === 11) {
-                          return Promise.resolve();
-                        } else {
-                          return Promise.reject();
-                        }
-                      },
-                      message: "Số điện thoại không hợp lệ",
-                    },
+                    phoneNumberRule,
                   ]}
                 />
               </div>
