@@ -15,7 +15,7 @@ const DefaultInput = ({
 }) => {
   return (
     <InputWrapper label={label} required={required} fontSize={fontSize}>
-      <Form.Item name={name} rules={rules}>
+      <Form.Item name={name} rules={rules} initialValue={null}>
         <Input
           type={type}
           placeholder={placeholder}

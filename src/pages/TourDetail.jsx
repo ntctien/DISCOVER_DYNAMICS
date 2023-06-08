@@ -1,6 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -69,7 +68,7 @@ const TourDetail = () => {
             </div>
           </div>
           {/* Type tags */}
-          <div className="flex flex-wrap gap-[10px] ml-[8.57%] mr-[3.8%] mt-[58px]">
+          <div className="flex flex-wrap gap-[10px] ml-[8.57%] mr-[3.8%] mt-[58px] self-start">
             {data?.type?.map((type, i) => (
               <div
                 key={i}

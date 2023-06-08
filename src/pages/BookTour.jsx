@@ -13,6 +13,10 @@ import getDestinationById from "../api/services/getDestinationById";
 import getDurationString from "../utils/getDurationString";
 import numberWithDots from "../utils/numberWithDots";
 import dayjs from "dayjs";
+import bookTour from "../api/services/bookTour";
+import { auth } from "../firebase";
+import { Timestamp } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const BookTour = () => {
   const navigate = useNavigate();
@@ -25,6 +29,14 @@ const BookTour = () => {
   const [startDate, setStartDate] = useState(dayjs().add(1, "day"));
   const [paymentCheck, setPaymentCheck] = useState(true);
   const [policyCheck, setPolicyCheck] = useState(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/destination");
+      }
+    });
+  }, []);
 
   // Fetch tour info
   useEffect(() => {
@@ -41,9 +53,19 @@ const BookTour = () => {
   }, [quantity, tourInfo?.price]);
 
   const handleBookTour = () => {
-    form.validateFields().then((values) => {
+    form.validateFields().then(async (values) => {
       if (values.paymentCheck && values.policyCheck) {
-        
+        const result = await bookTour({
+          uid: auth.currentUser.uid,
+          tourId,
+          ...values,
+          startDate: Timestamp.fromDate(dayjs(startDate).toDate()),
+        });
+        if (result.success) {
+          setSuccess(true);
+        } else {
+          console.log(result.error);
+        }
       } else {
         setPaymentCheck(values.paymentCheck);
         setPolicyCheck(values.policyCheck);
@@ -295,7 +317,11 @@ const BookTour = () => {
             XÁC NHẬN ĐẶT TOUR
           </button>
         </div>
-        <SuccessModal open={success} onCancel={() => navigate("/")} />
+        <SuccessModal
+          open={success}
+          onCancel={() => navigate("/")}
+          email={form.getFieldValue("email")}
+        />
       </div>
     </Form>
   );
