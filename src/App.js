@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location])
+  }, [location.pathname])
 
   return (
     <div>
@@ -40,7 +40,7 @@ function App() {
             <Route element={<Account />} path="account" />
             <Route element={<Contact />} path="contact" />
           </Route>
-          <Route element={<BookTour />} path="book-tour" />
+          <Route element={<BookTour />} path="book-tour/:tourId" />
           <Route element={<BookedTours />} path="booked-tours" />
         </Route>
       </Routes>

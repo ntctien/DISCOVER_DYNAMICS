@@ -19,7 +19,6 @@ const AppBreadcrumb = () => {
   const pathSnippets = location.pathname.split("/").filter((i) => i);
 
   const getBreadCrumbItemTitle = async (url) => {
-    console.log(url);
     if (destinationId && url !== "/destination") {
       const destinationName = await getDestinationById(destinationId);
       return destinationName.location;

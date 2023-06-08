@@ -3,14 +3,17 @@ import { Dropdown } from "antd";
 import { locationIcon } from "../../assets/search_icons";
 import tourStatus from "../../constants/tourStatus";
 import editIcon from "../../assets/edit.svg";
+import numberWithDots from "../../utils/numberWithDots";
 
 const editOptions = [
   { key: "pay", label: "Thanh toán" },
   { key: "cancel", label: "Hủy tour", danger: true },
 ];
 
-const BookItem = ({ item, setModal, onClick }) => {
-  const handleOptionClick = ({ key }) => {
+const BookItem = ({ item, setModal, onClick, setCurrItem }) => {
+  const handleOptionClick = ({ key, domEvent }) => {
+    domEvent.stopPropagation();
+    setCurrItem(item);
     setModal(key);
   };
 
@@ -22,27 +25,31 @@ const BookItem = ({ item, setModal, onClick }) => {
       <div className="flex justify-between text-grey-darker">
         <div>
           <p>
-            Mã đặt tour: <span className="font-bold text-green">{item.id}</span>
+            Mã đặt tour:{" "}
+            <span className="font-bold text-green">{item?.id}</span>
           </p>
           <p className="mt-[15px]">
-            Họ tên khách hàng: <span className="text-black">{item.name}</span>
+            Họ tên khách hàng: <span className="text-black">{item?.name}</span>
           </p>
         </div>
         <div>
           <p>
             Trạng thái:{" "}
-            <span style={{ color: tourStatus[item.status].color }}>
-              {tourStatus[item.status].title}
+            <span style={{ color: tourStatus[item?.status].color }}>
+              {tourStatus[item?.status].title}
             </span>
           </p>
           <p className="mt-[15px]">
-            SĐT: <span className="text-black">{item.phoneNumber}</span>
+            SĐT: <span className="text-black">{item?.phoneNumber}</span>
           </p>
         </div>
       </div>
       <div className="flex gap-x-5 mt-[22px]">
         <img
-          src={item.image}
+          src={
+            item?.destinationInfo.tourImages &&
+            item?.destinationInfo.tourImages[0]
+          }
           alt="Tour"
           className="w-[32%] aspect-[4/3] rounded-10 object-cover object-center"
         />
@@ -52,7 +59,7 @@ const BookItem = ({ item, setModal, onClick }) => {
             <div className="book-tour-info-container">
               <h3>Tour của bạn</h3>
               <div className="book-tour-info">
-                <p>{item.location}</p>
+                <p>{item?.destinationInfo.location}</p>
                 <img src={locationIcon} alt="Location" />
               </div>
             </div>
@@ -60,35 +67,42 @@ const BookItem = ({ item, setModal, onClick }) => {
             <div className="book-tour-info-container">
               <h3>Ngày đi</h3>
               <div className="book-tour-info">
-                <p>{item.startDate}</p>
+                <p>{item?.startDate}</p>
               </div>
             </div>
             {/* Expense */}
             <div className="book-tour-info-container">
               <h3>Ngày về</h3>
-              <p>{item.startDate}</p>
+              <p>{item?.endDate}</p>
             </div>
           </div>
           <p>
             <span className="text-grey-darker">Số lượng khách: </span>
-            {item.quantity}
+            {item?.quantity}
           </p>
           <p className="text-grey-darker">
             Tổng cộng:{" "}
-            <span className="font-bold text-24 text-green">{item.total}</span>
+            <span className="font-bold text-24 text-green">
+              {numberWithDots(item?.total) + " VNĐ"}
+            </span>
           </p>
         </div>
       </div>
       {/* Edit button */}
-      <Dropdown
-        menu={{ items: editOptions, onClick: handleOptionClick }}
-        placement="top"
-        arrow
-      >
-        <button onClick={(e)=>e.stopPropagation()} className="absolute bottom-5 right-5">
-          <img src={editIcon} alt="Edit" />
-        </button>
-      </Dropdown>
+      {item.status !== 3 && (
+        <Dropdown
+          menu={{ items: editOptions, onClick: handleOptionClick }}
+          placement="top"
+          arrow
+        >
+          <button
+            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-5 right-5"
+          >
+            <img src={editIcon} alt="Edit" />
+          </button>
+        </Dropdown>
+      )}
     </div>
   );
 };

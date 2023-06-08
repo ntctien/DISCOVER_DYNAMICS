@@ -1,12 +1,14 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import InputWrapper from "./InputWrapper";
 
 const { TextArea } = Input;
 
-const DefaultTextArea = ({ label, placeholder, required, fontSize }) => {
+const DefaultTextArea = ({ name, label, placeholder, required, fontSize }) => {
   return (
     <InputWrapper label={label} required={required} fontSize={fontSize}>
-      <TextArea placeholder={placeholder} />
+      <Form.Item name={name} initialValue={null}>
+        <TextArea placeholder={placeholder} className="text-18"/>
+      </Form.Item>
     </InputWrapper>
   );
 };

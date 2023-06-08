@@ -13,8 +13,9 @@ const AddressForm = () => {
   return (
     <>
       <div className="book-form-row">
-        <DefaultInput label={"Địa chỉ "} />
+        <DefaultInput name={"address"} label={"Địa chỉ "} />
         <DefaultSelect
+          name={"province"}
           label={"Tỉnh thành"}
           placeholder={"Chọn tỉnh thành"}
           items={provinces}
@@ -23,12 +24,14 @@ const AddressForm = () => {
       </div>
       <div className="book-form-row">
         <DefaultSelect
+          name={"district"}
           label={"Quận/huyện"}
           placeholder={"Chọn quận/huyện"}
           items={districts}
           onChange={handleChangeDistrict}
         />
         <DefaultSelect
+          name={"ward"}
           label={"Phường/xã"}
           placeholder={"Chọn phường/xã"}
           items={wards}
