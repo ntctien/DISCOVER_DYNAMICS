@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router-dom';
 
 const LogOut = ({open,handleOk , handleCancel}) => {
 
+    const refresh = () => window.location.reload(true);
+
     const navigate = useNavigate();
     const Logout = () => {               
         signOut(auth).then(() => {
         // Sign-out successful.
             navigate("/");
-            console.log("Logged out successfully")
+            console.log("Logged out successfully");
+            refresh();
         }).catch((error) => {
         // An error happened.
         });
@@ -19,7 +22,7 @@ const LogOut = ({open,handleOk , handleCancel}) => {
 
     return (
         <>
-        <Modal open={open} onCancel={handleCancel} footer={null}>
+        <Modal centered open={open} onCancel={handleCancel} footer={null}>
             <div style={{
                 width : "450px", 
                 top :"30px",

@@ -1,10 +1,11 @@
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
 import facebookIcon from '../../assets/facebook_icon.svg';
+import loadingIcon from '../../assets/loading.gif';
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
@@ -13,13 +14,19 @@ import { auth } from "../../firebase";
 
 const SignUp = ({open, handleCancel, handleSignIn}) => {
     const [currentModal, setCurrentModal] = useState(null);
-
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const refresh = () => window.location.reload(true);
+
+    const resetForm = () => {
+        setEmail('');
+        setPassword('');
+    };
 
     const signUp = async (e) => {
+        setLoading(true);
         e.preventDefault();
 
         await createUserWithEmailAndPassword(auth, email, password)
@@ -27,7 +34,8 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             // Signed in
             const user = userCredential.user;
             console.log(user);
-            //navigate("/login")
+            refresh();
+            resetForm();
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -35,6 +43,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             console.log(errorCode, errorMessage);
             // ..
         });
+        setLoading(false);
     }
 
     return (
@@ -42,6 +51,12 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <Spin 
+                    spinning={loading}
+                    indicator={
+                        <img src={loadingIcon} alt="Loading" />
+                    }
+                />
                 <img
                     src={logo}
                     alt="logo"

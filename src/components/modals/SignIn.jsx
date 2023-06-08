@@ -1,9 +1,10 @@
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
+import loadingIcon from '../../assets/loading.gif';
 import { useState } from "react";
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from "../../firebase";
@@ -13,26 +14,36 @@ import { useNavigate } from "react-router";
 
 const SignIn = ({open, handleCancel, handleSignUp}) => {
     const [currentModal, setCurrentModal] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const refresh = () => window.location.reload(true);
+
+    const resetForm = () => {
+        setEmail('');
+        setPassword('');
+      };
 
     const signIn = (e) => {
+        setLoading(true);
         e.preventDefault();
 
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            //navigate("/destination")
-            console.log(user);
+            console.log("user");
+            refresh();
+            resetForm();
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
         });
+
+        setLoading(false);
     }
 
     return (
@@ -40,6 +51,12 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <Spin 
+                    spinning={loading}
+                    indicator={
+                        <img src={loadingIcon} alt="Loading" />
+                    }
+                />
                 <img
                     src={logo}
                     alt="logo"
