@@ -7,9 +7,9 @@ import googleIcon from '../../assets/google_icon.svg';
 import facebookIcon from '../../assets/facebook_icon.svg';
 import loadingIcon from '../../assets/loading.gif';
 import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth } from "../../firebase";
+import { auth, provider, provider1 } from "../../firebase";
+import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
 
 const SignUp = ({open, handleCancel, handleSignIn}) => {
@@ -33,7 +33,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user);
+            // console.log(user);
             refresh();
             resetForm();
         })
@@ -45,6 +45,46 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         });
         setLoading(false);
     }
+
+    const signUpWithGoogle = () => {
+        setLoading(true);
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            refresh();
+            resetForm();
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+        setLoading(false);
+        
+    };
+
+    const signUpWithFacebook = () => {
+        setLoading(true);
+        signInWithPopup(auth, provider1)
+        .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const accessToken = credential.accessToken;
+            // IdP data available using getAdditionalUserInfo(result)
+            refresh();
+            
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+        setLoading(false);
+    };
 
     return (
       <>
@@ -143,9 +183,9 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
                     <div style={{width : "200px", height : "0px", left : "320px", right : "416px", border: "1px solid rgba(0, 0, 0, 0.47)"}}></div>
                 </div>
 
-                <button 
+                <button onClick={signUpWithGoogle}
                     style = {{display : "flex", alignItems:"center", justifyContent:"center", width : "480px", height :"52px", 
-                    left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
+                        left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
                     <img 
                         src={googleIcon} 
                         alt="Google" />
@@ -153,8 +193,9 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
                         Tiếp tục với Google</p>
                 </button>
 
-                <button style = {{display : "flex", alignItems:"center", justifyContent:"center", marginTop : "20px", 
-                    width : "480px", height :"52px", left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
+                <button onClick={signUpWithFacebook}
+                    style = {{display : "flex", alignItems:"center", justifyContent:"center", marginTop : "20px", 
+                        width : "480px", height :"52px", left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
                     <img 
                         src={facebookIcon} 
                         alt="Facebook" />

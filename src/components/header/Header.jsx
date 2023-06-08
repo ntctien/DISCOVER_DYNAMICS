@@ -13,7 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
   const { setCurrentModal } = useContext(ModalContext);
   const [currentUser, setCurrentUser] = useState(false);
-  //const currentUser = false;
   const admin = false;
 
   useEffect(() => {

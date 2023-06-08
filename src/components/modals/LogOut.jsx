@@ -2,21 +2,19 @@ import { Button, Modal } from "antd";
 import React from 'react';
 import {  signOut } from "firebase/auth";
 import {auth} from '../../firebase';
-import { useNavigate } from 'react-router-dom';
 
 const LogOut = ({open,handleOk , handleCancel}) => {
 
     const refresh = () => window.location.reload(true);
 
-    const navigate = useNavigate();
     const Logout = () => {               
         signOut(auth).then(() => {
         // Sign-out successful.
-            navigate("/");
-            console.log("Logged out successfully");
             refresh();
         }).catch((error) => {
-        // An error happened.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
         });
     }
 
