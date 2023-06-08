@@ -1,8 +1,11 @@
-import React from "react";
-import ModalWrapper from "./ModalWrapper";
 import { Divider } from "antd";
+import ModalWrapper from "./ModalWrapper";
+import getDurationString from "../../utils/getDurationString.js";
+import numberWithDots from "../../utils/numberWithDots";
+import tourStatus from "../../constants/tourStatus";
+import getAddressString from "../../utils/getAddressString";
 
-const BookingDetailModal = ({ open, onCancel, admin }) => {
+const BookingDetailModal = ({ open, onCancel, admin, data }) => {
   return (
     <ModalWrapper open={open} onCancel={onCancel} title={"Chi tiết tour đặt"}>
       {/* Booking detail */}
@@ -13,23 +16,33 @@ const BookingDetailModal = ({ open, onCancel, admin }) => {
             <h3>Thông tin đặt tour</h3>
             <div className="flex flex-col gap-y-[25px] mt-[30px]">
               <p className="font-bold text-green">
-                <span>Mã đặt tour: </span>LQNSU346JK
+                <span>Mã đặt tour: </span>
+                {data?.id}
               </p>
               <p>
-                <span>Họ tên khách hàng: </span>Phạm Thị Thu Trang
+                <span>Họ tên khách hàng: </span>
+                {data?.name}
               </p>
               <p>
-                <span>SĐT: </span>09xx xxx xxx
+                <span>SĐT: </span>
+                {data?.phoneNumber}
               </p>
               <p>
-                <span>Email: </span>example@email.com
+                <span>Email: </span>
+                {data?.email}
               </p>
               <p>
-                <span>Địa chỉ: </span>ĐH CNTT, phường Linh Trung, thành phố Thủ
-                Đức, TPHCM
+                <span>Địa chỉ: </span>
+                {getAddressString(
+                  data?.address,
+                  data?.province,
+                  data?.district,
+                  data?.ward
+                )}
               </p>
               <p>
-                <span>Ghi chú: </span>Tôi ăn chay
+                <span>Ghi chú: </span>
+                {data?.note}
               </p>
             </div>
           </div>
@@ -38,7 +51,8 @@ const BookingDetailModal = ({ open, onCancel, admin }) => {
             <div>
               <h3>Tóm tắt chuyến đi</h3>
               <p className="mt-[30px]">
-                <span>Tour: </span>Cao Bằng
+                <span>Tour: </span>
+                {data?.destinationInfo.location}
               </p>
               <div className="flex mt-[15px]">
                 <div>
@@ -46,7 +60,7 @@ const BookingDetailModal = ({ open, onCancel, admin }) => {
                     <span>Ngày đi: </span>
                     <br />
                     <br />
-                    11/04/2023
+                    {data?.startDate}
                   </p>
                 </div>
                 <div className="w-[1px] bg-grey mx-[50px]" />
@@ -55,20 +69,27 @@ const BookingDetailModal = ({ open, onCancel, admin }) => {
                     <span>Ngày về: </span>
                     <br />
                     <br />
-                    16/04/2023
+                    {data?.endDate}
                   </p>
                 </div>
               </div>
               <p className="mt-5">
-                <span>Thời gian: </span>5 ngày 4 đêm
+                <span>Thời gian: </span>
+                {getDurationString(
+                  data?.destinationInfo.dayDuration,
+                  data?.destinationInfo.nightDuration
+                )}
               </p>
               <p className="mt-[30px]">
-                <span>Số lượng khách: </span>1 người
+                <span>Số lượng khách: </span>
+                {data?.quantity} người
               </p>
             </div>
             <div className="row gap-x-[53px] text-green justify-self-end">
               <h4 className="text-22">Tổng cộng:</h4>
-              <p className="font-semibold text-25">6.600.000 VNĐ</p>
+              <p className="font-semibold text-25">
+                {numberWithDots(data?.total)} VNĐ
+              </p>
             </div>
           </div>
         </div>
@@ -78,7 +99,10 @@ const BookingDetailModal = ({ open, onCancel, admin }) => {
           <h3>Thông tin thanh toán</h3>
           {/* Status */}
           <p className="text-grey-darker mt-[15px]">
-            Trạng thái: <span style={{ color: "#00B1FF" }}>Đang xử lý</span>
+            Trạng thái:{" "}
+            <span style={{ color: tourStatus[data?.status]?.color }}>
+              {tourStatus[data?.status]?.title}
+            </span>
           </p>
           {/* Payment image */}
           <div className="w-[360px] h-[360px] bg-grey rounded-10 mt-[15px] flex items-center justify-center">

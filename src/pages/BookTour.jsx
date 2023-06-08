@@ -15,7 +15,6 @@ import numberWithDots from "../utils/numberWithDots";
 import dayjs from "dayjs";
 import bookTour from "../api/services/bookTour";
 import { auth } from "../firebase";
-import { Timestamp } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const BookTour = () => {
@@ -30,12 +29,17 @@ const BookTour = () => {
   const [paymentCheck, setPaymentCheck] = useState(true);
   const [policyCheck, setPolicyCheck] = useState(true);
 
+  const endDate = dayjs(startDate).add(tourInfo?.dayDuration ?? 0, "day");
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      if (user) {
+        form.setFieldValue("email", user.email);
+      } else {
         navigate("/destination");
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch tour info
@@ -58,8 +62,12 @@ const BookTour = () => {
         const result = await bookTour({
           uid: auth.currentUser.uid,
           tourId,
+          quantity,
+          total,
           ...values,
-          startDate: Timestamp.fromDate(dayjs(startDate).toDate()),
+          startDate: dayjs(startDate).toDate(),
+          endDate: dayjs(endDate).toDate(),
+          createdAt: dayjs().toDate()
         });
         if (result.success) {
           setSuccess(true);
@@ -269,9 +277,7 @@ const BookTour = () => {
               <span>Ngày về: </span>
               <br />
               <br />
-              {dayjs(startDate)
-                .add(tourInfo?.dayDuration ?? 0, "day")
-                .format("DD/MM/YYYY")}
+              {dayjs(endDate).format("DD/MM/YYYY")}
             </p>
           </div>
           <p className="mt-5">

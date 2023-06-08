@@ -23,7 +23,7 @@ const PaymentModal = ({ open, onCancel }) => {
             <p className="text-12 mt-[5px]">Hoặc kéo và thả</p>
           </div>
         </Dragger>
-        <div className="flex gap-x-5 mt-[10px]">
+        <div className="flex gap-x-5 mt-[15px]">
           <button
             onClick={onCancel}
             className="w-[160px] h-[40px] rounded-10 font-medium border-1 border-black"

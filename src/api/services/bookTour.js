@@ -1,10 +1,10 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 
-const bookTour = async ({ uid, tourId, name, phoneNumber, email, startDate, address, province, district, ward, note }) => {
+const bookTour = async ({ uid, tourId, quantity, total, name, phoneNumber, email, startDate, address, province, district, ward, note, endDate, createdAt }) => {
     try {
         await addDoc(collection(db, "bookedTour"), {
-            uid, tourId, name, phoneNumber, email, startDate, address, province, district, ward, note
+            uid, tourId, quantity, total, name, phoneNumber, email, startDate, address, province, district, ward, note, endDate, createdAt, status: 0
         });
         return { success: true }
     } catch (e) {
