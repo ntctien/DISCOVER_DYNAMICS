@@ -35,7 +35,7 @@
 }
 
 .tour-info-img-container {
-  @apply w-[50px] h-[50px] outline-dashed outline-1 outline-blue rounded-full flex items-center justify-center
+  @apply w-[50px] h-[50px] outline-dashed outline-1 outline-blue rounded-full flex items-center justify-center;
 }
 
 /* Custom arrow button for Slick */
@@ -147,15 +147,17 @@
 }
 
 /* Select */
-.destination-filter.ant-select:not(.ant-select-customize-input) .ant-select-selector,
-.destination-filter.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
-    .ant-pagination-size-changer
-  ):hover
+.destination-filter.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector,
+.destination-filter.ant-select:not(.ant-select-disabled):not(
+    .ant-select-customize-input
+  ):not(.ant-pagination-size-changer):hover
   .ant-select-selector {
   @apply border-[2px] border-black;
 }
 
-.destination-filter.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+.destination-filter.ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
   @apply pl-6 pr-5;
 }
 
@@ -167,11 +169,13 @@
   @apply flex items-center;
 }
 
-.destination-filter.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+.destination-filter.ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
   height: 60px;
 }
 
-.destination-filter.ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+.destination-filter.ant-select-single.ant-select-show-arrow
+  .ant-select-selection-item {
   padding: 0 !important;
 }
 
@@ -212,5 +216,15 @@
 
 /* Dragger */
 .ant-upload-wrapper .ant-upload-drag {
-  @apply bg-grey w-[360px] h-[360px];
+  @apply bg-grey overflow-hidden;
+}
+
+.ant-upload-wrapper .ant-upload-drag .ant-upload {
+  @apply p-0;
+}
+
+/* Spin */
+:where(.css-dev-only-do-not-override-13pcdoi)[class^="ant-spin"] {
+  font-family: unset;
+  font-size: unset;
 }

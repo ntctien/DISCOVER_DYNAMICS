@@ -5,12 +5,12 @@ import tourStatus from "../../constants/tourStatus";
 import editIcon from "../../assets/edit.svg";
 import numberWithDots from "../../utils/numberWithDots";
 
-const editOptions = [
-  { key: "pay", label: "Thanh toán" },
-  { key: "cancel", label: "Hủy tour", danger: true },
-];
-
 const BookItem = ({ item, setModal, onClick, setCurrItem }) => {
+  const editOptions = [
+    item.status === 0 && { key: "pay", label: "Thanh toán" },
+    { key: "cancel", label: "Hủy tour", danger: true },
+  ];
+
   const handleOptionClick = ({ key, domEvent }) => {
     domEvent.stopPropagation();
     setCurrItem(item);
