@@ -106,7 +106,13 @@ const BookingDetailModal = ({ open, onCancel, admin, data }) => {
           </p>
           {/* Payment image */}
           <div className="w-[360px] h-[360px] bg-grey rounded-10 mt-[15px] flex items-center justify-center">
-            <p className="font-semibold text-[#676767]">Hình ảnh thanh toán</p>
+            {data?.paymentImage ? (
+              <img src={data.paymentImage} alt="Payment" className="w-full h-full object-contain"/>
+            ) : (
+              <p className="font-semibold text-[#676767]">
+                Hình ảnh thanh toán
+              </p>
+            )}
           </div>
           {/* Admin buttons */}
           {admin && (
