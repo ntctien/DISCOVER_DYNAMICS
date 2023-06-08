@@ -23,6 +23,8 @@ const BookTour = () => {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
   const [startDate, setStartDate] = useState(dayjs().add(1, "day"));
+  const [paymentCheck, setPaymentCheck] = useState(true);
+  const [policyCheck, setPolicyCheck] = useState(true);
 
   // Fetch tour info
   useEffect(() => {
@@ -40,7 +42,12 @@ const BookTour = () => {
 
   const handleBookTour = () => {
     form.validateFields().then((values) => {
-      console.log(values);
+      if (values.paymentCheck && values.policyCheck) {
+        
+      } else {
+        setPaymentCheck(values.paymentCheck);
+        setPolicyCheck(values.policyCheck);
+      }
     });
   };
 
@@ -204,7 +211,10 @@ const BookTour = () => {
                 initialValue={false}
                 className="payment-checkbox"
               >
-                <Checkbox id="paymentCb" />
+                <Checkbox
+                  id="paymentCb"
+                  onChange={(e) => setPaymentCheck(e.target.checked)}
+                />
               </Form.Item>
               <label htmlFor="paymentCb" className=" text-[#222222]">
                 Tôi cam kết thanh toán đầy đủ 100% chuyến đi trước khi khởi hành
@@ -212,6 +222,11 @@ const BookTour = () => {
             </div>
             <img src={expenseIcon} alt="Money" />
           </div>
+          {!paymentCheck && (
+            <p className="mt-2 text-[#FF0000] text-16">
+              Vui lòng cam kết thanh toán
+            </p>
+          )}
         </div>
         {/* Right side */}
         <div className="container flex-1 py-[25px] book-summary">
@@ -255,7 +270,11 @@ const BookTour = () => {
               valuePropName="checked"
               initialValue={false}
             >
-              <Checkbox id="policyCb" className="small-checkbox" />
+              <Checkbox
+                id="policyCb"
+                onChange={(e) => setPolicyCheck(e.target.checked)}
+                className="small-checkbox"
+              />
             </Form.Item>
             <label
               htmlFor="policyCb"
@@ -266,6 +285,9 @@ const BookTour = () => {
               <span className="text-red"> *</span>
             </label>
           </div>
+          {!policyCheck && (
+            <p className="text-[#FF0000] text-16">Vui lòng xác nhận</p>
+          )}
           <button
             onClick={handleBookTour}
             className="default-btn w-full mt-[10px]"

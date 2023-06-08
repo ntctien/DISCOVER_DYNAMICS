@@ -28,13 +28,11 @@ const TourDetail = () => {
   }, [destinationId]);
 
   const handleBookTour = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate(`/book-tour/${destinationId}`);
-      } else {
-        setCurrentModal("sign-in");
-      }
-    });
+    if (auth.currentUser) {
+      navigate(`/book-tour/${destinationId}`);
+    } else {
+      setCurrentModal("sign-in");
+    }
   };
 
   return (
