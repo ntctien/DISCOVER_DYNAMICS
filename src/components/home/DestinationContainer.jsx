@@ -3,6 +3,7 @@ import {
   centralIcon,
   southIcon,
 } from "../../assets/destination_icons";
+import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
 import DestinationItem from "./DestinationItem";
 
 const destinations = [
@@ -12,10 +13,20 @@ const destinations = [
 ];
 
 const DestinationContainer = () => {
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
+  
+  const handleRegionClick = (region) => {
+    navigateToDestinationWithParams({ region: region.title });
+  };
+
   return (
     <div className="w-full mx-[20px] between-row mt-[37px]">
       {destinations.map((destination, i) => (
-        <DestinationItem key={i} {...destination} />
+        <DestinationItem
+          key={i}
+          {...destination}
+          onClick={() => handleRegionClick(destination)}
+        />
       ))}
     </div>
   );

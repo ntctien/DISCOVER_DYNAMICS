@@ -1,4 +1,4 @@
-const filterTypes = ["search", "min", "max","sort"];
+const filterTypes = ["search", "min", "max", "sort", "region"];
 
 const getCurrentFilter = (location) => {
   const params = new URLSearchParams(location.search);

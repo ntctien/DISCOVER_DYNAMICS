@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SearchBarItem from "./SearchBarItem";
 import { locationIcon, priceIcon, typeIcon } from "../../assets/search_icons";
 import PriceDropdown from "./PriceDropdown";
 import getCurrentFilter from "../../utils/getCurrentFilter";
-import navigateToDestinationWithParams from "../../utils/navigateToDestinationWithParams";
 import getPriceText from "../../utils/getPriceText";
+import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
 
 const filters = [
   {
@@ -35,12 +35,13 @@ const filters = [
 ];
 
 const SearchBar = () => {
-  const navigate = useNavigate();
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const location = useLocation();
   const [searchData, setSearchData] = useState({
     location: "",
     price: { text: "", min: null, max: null },
     type: "",
+    region: "",
   });
 
   useEffect(() => {
@@ -48,14 +49,17 @@ const SearchBar = () => {
     const filter = getCurrentFilter(location);
     const min = parseInt(filter.min);
     const max = parseInt(filter.max);
-    setSearchData({
-      ...searchData,
-      location: filter.search ?? "",
-      price: {
-        text: getPriceText(min, max),
-        min,
-        max,
-      },
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        location: filter.search ?? "",
+        price: {
+          text: getPriceText(min, max),
+          min,
+          max,
+        },
+        region: filter.region ?? "",
+      };
     });
   }, [location]);
 
@@ -78,17 +82,15 @@ const SearchBar = () => {
       min: searchData.price.min,
       max: searchData.price.max,
       search: searchData.location,
+      region: searchData.region,
     };
-    navigateToDestinationWithParams(params, navigate);
+    navigateToDestinationWithParams(params);
   };
 
   return (
     <div className="relative w-fit mx-auto">
       <div className="h-2 w-full bg-white absolute -top-2"></div>
-      <form
-        onSubmit={handleSearch}
-        className="search-bar-container"
-      >
+      <form onSubmit={handleSearch} className="search-bar-container">
         <div className="row gap-x-[46px]">
           {filters.map((item, i) =>
             item.id === "price" ? (
