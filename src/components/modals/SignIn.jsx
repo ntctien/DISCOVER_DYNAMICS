@@ -25,6 +25,11 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
         setPassword('');
       };
 
+    const onCancel = () => {
+        handleCancel();
+        resetForm();
+    };
+
     const signIn = (e) => {
         setLoading(true);
         e.preventDefault();
@@ -87,7 +92,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
 
     return (
       <>
-        <Modal centered open={open} onCancel={handleCancel} footer={null}>
+        <Modal centered open={open} onCancel={onCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                 <Spin 

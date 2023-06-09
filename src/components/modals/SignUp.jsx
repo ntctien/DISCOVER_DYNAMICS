@@ -8,9 +8,9 @@ import facebookIcon from '../../assets/facebook_icon.svg';
 import loadingIcon from '../../assets/loading.gif';
 import React, {useState} from 'react';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth, provider, provider1 } from "../../firebase";
+import { auth, db, provider, provider1 } from "../../firebase";
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
-
+import { addDoc, collection } from "firebase/firestore"; 
 
 const SignUp = ({open, handleCancel, handleSignIn}) => {
     const [currentModal, setCurrentModal] = useState(null);
@@ -25,6 +25,29 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         setPassword('');
     };
 
+    const onCancel = () => {
+        handleCancel();
+        resetForm();
+    }
+
+    const addUser = async (email) => {
+
+        try {
+            const docRef = await addDoc(collection(db, "user"), {
+                address: null,
+                district: null,
+                email: email,
+                name: null,
+                phone: null,
+                province: null,
+                role: "customer",
+                ward: null,
+            });
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+    };
+
     const signUp = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -33,9 +56,10 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            // console.log(user);
+            //console.log(user.email);
+            addUser(user.email);
             refresh();
-            resetForm();
+            // resetForm();
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -88,7 +112,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
 
     return (
       <>
-        <Modal centered open={open} onCancel={handleCancel} footer={null}>
+        <Modal centered open={open} onCancel={onCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
                 <Spin 
