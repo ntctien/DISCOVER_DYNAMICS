@@ -37,7 +37,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            addUser(user.email);
+            addUser(user.email, user.uid);
             onCancel();
         })
         .catch((error) => {
@@ -58,7 +58,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            addUser(user.email);
+            addUser(user.email, user.uid);
             onCancel();
             
         }).catch((error) => {
@@ -79,7 +79,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
-            addUser(user.email);
+            addUser(user.email, user.uid);
             onCancel();
             
         }).catch((error) => {
