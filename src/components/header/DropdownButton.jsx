@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { Dropdown } from "antd";
 import {downArrowIcon} from "../../assets/arrow_icons";
 
-const DropdownButton = ({ items, label, linkTo }) => {
-  const navigate = useNavigate();
-
+const DropdownButton = ({ items, label, onClick }) => {
   const handleOnClick = (e) => {
-    navigate(linkTo);
+    onClick()
     e.preventDefault()
   }
 

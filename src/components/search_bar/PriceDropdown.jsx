@@ -1,7 +1,6 @@
 import { cloneElement, useState } from "react";
 import { Divider, Dropdown, Form, theme } from "antd";
 import PriceInput from "./PriceInput";
-import numberWithDots from "../../utils/numberWithDots";
 import getPriceText from "../../utils/getPriceText";
 
 const { useToken } = theme;

@@ -6,16 +6,44 @@ import DropdownButton from "./DropdownButton";
 import DropdownItem from "./DropdownItem";
 import logo from "../../assets/logo.png";
 import accountIcon from "../../assets/account.svg";
+import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
+import regions from "../../constants/regions";
+import tourTypes from "../../constants/tourTypes";
 
 const Header = () => {
   const navigate = useNavigate();
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const { setCurrentModal } = useContext(ModalContext);
   const currentUser = true;
   const admin = false;
 
   const dropDownItems = {
-    destination: [],
-    tourType: [],
+    destination: regions.map((region) => {
+      return {
+        key: region.title,
+        label: (
+          <DropdownItem
+            label={region.title}
+            onClick={() =>
+              navigateToDestinationWithParams({ region: region.title })
+            }
+          />
+        ),
+      };
+    }),
+    tourType: tourTypes.map((type) => {
+      return {
+        key: type.title,
+        label: (
+          <DropdownItem
+            label={type.title}
+            onClick={() =>
+              navigateToDestinationWithParams({ type: type.title })
+            }
+          />
+        ),
+      };
+    }),
     account: currentUser
       ? [
           {
@@ -70,11 +98,12 @@ const Header = () => {
         <DropdownButton
           items={dropDownItems.destination}
           label={"Điểm đến"}
-          linkTo={"/destination"}
+          onClick={() => navigate("/destination")}
         />
         <DropdownButton
           items={dropDownItems.tourType}
           label={"Loại hình tour"}
+          onClick={() => navigateToDestinationWithParams({ type: "all" })}
         />
         <Link to={"/about"}>
           <p className="cursor-pointer">Về chúng tôi</p>

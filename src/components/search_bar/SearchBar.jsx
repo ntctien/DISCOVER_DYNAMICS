@@ -6,6 +6,7 @@ import PriceDropdown from "./PriceDropdown";
 import getCurrentFilter from "../../utils/getCurrentFilter";
 import getPriceText from "../../utils/getPriceText";
 import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
+import TypeDropdown from "./TypeDropdown";
 
 const filters = [
   {
@@ -59,6 +60,7 @@ const SearchBar = () => {
           max,
         },
         region: filter.region ?? "",
+        type : filter.type ?? ""
       };
     });
   }, [location]);
@@ -83,6 +85,7 @@ const SearchBar = () => {
       max: searchData.price.max,
       search: searchData.location,
       region: searchData.region,
+      type: searchData.type
     };
     navigateToDestinationWithParams(params);
   };
@@ -92,19 +95,16 @@ const SearchBar = () => {
       <div className="h-2 w-full bg-white absolute -top-2"></div>
       <form onSubmit={handleSearch} className="search-bar-container">
         <div className="row gap-x-[46px]">
-          {filters.map((item, i) =>
-            item.id === "price" ? (
-              <PriceDropdown
-                key={i}
-                searchData={searchData}
-                setSearchData={setSearchData}
-              >
-                <SearchBarItem {...getItemProps(i, item)} />
-              </PriceDropdown>
-            ) : (
-              <SearchBarItem key={i} {...getItemProps(i, item)} />
-            )
-          )}
+          {/* Địa điểm */}
+          <SearchBarItem {...getItemProps(0, filters[0])} />
+          {/* Giá cả */}
+          <PriceDropdown searchData={searchData} setSearchData={setSearchData}>
+            <SearchBarItem {...getItemProps(1, filters[1])} />
+          </PriceDropdown>
+          {/* Loại hình */}
+          <TypeDropdown setSearchData={setSearchData}>
+            <SearchBarItem {...getItemProps(2, filters[2])} />
+          </TypeDropdown>
         </div>
         <button
           type="submit"

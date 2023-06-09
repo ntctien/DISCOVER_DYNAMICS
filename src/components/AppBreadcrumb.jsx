@@ -28,10 +28,22 @@ const AppBreadcrumb = () => {
 
   useEffect(() => {
     const fetchBreadcrumbItems = async () => {
+      //Check params
+      const params = new URLSearchParams(location.search);
+      const region = params.get("region");
+      const type = params.get("type");
+
       const items = await Promise.all(
         pathSnippets.map(async (_, index) => {
-          const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-          const title = await getBreadCrumbItemTitle(url);
+          let url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+          let title;
+
+          //Type
+          if (type && !region) {
+            title = "Loại hình tour";
+            url += "?type=all";
+          } else title = await getBreadCrumbItemTitle(url);
+
           return {
             key: url,
             title: title,
@@ -41,14 +53,23 @@ const AppBreadcrumb = () => {
           };
         })
       );
-      const params = new URLSearchParams(location.search);
-      const region = params.get("region");
+
+      //Region
       if (region) {
         items.push({
           key: "region",
           title: region,
         });
       }
+
+      //Type
+      if (type && type !== "all" && !region) {
+        items.push({
+          key: type,
+          title: type,
+        });
+      }
+
       setBreadcrumbItems(items);
     };
 
