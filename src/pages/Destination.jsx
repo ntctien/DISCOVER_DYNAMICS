@@ -42,8 +42,8 @@ const Destination = () => {
     let tempArray;
 
     // Filter
-    const min = filter.min ?? 0;
-    const max = filter.max ?? 999999999;
+    const min = filter.min ? parseInt(filter.min) : 0;
+    const max = filter.max ? parseInt(filter.max) : 999999999;
     const search = filter.search?.toLowerCase() ?? "";
     const region = filter.region ?? "";
     tempArray = baseData.filter(
