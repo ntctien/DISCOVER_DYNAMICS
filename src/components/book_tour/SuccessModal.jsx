@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import successIcon from "../../assets/success.svg";
 
-const SuccessModal = ({ open, onCancel }) => {
+const SuccessModal = ({ open, onCancel, email }) => {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +18,7 @@ const SuccessModal = ({ open, onCancel }) => {
         <h2 className="font-bold text-25 mt-5">Đặt tour thành công!</h2>
         <p className="mt-[15px]">
           Đơn xác nhận đặt tour đã được gửi tới email của bạn tại địa chỉ:
-          example@gmail.com
+          {" "+ email ?? "example@gmail.com"}
         </p>
         <p>Vui lòng xác nhận và thanh toán đúng thời hạn.</p>
         <br />

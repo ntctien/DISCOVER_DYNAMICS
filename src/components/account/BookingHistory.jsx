@@ -1,111 +1,96 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookItem from "./BookItem";
-import WarningModal from "../modals/WarningModal";
 import PaymentModal from "./PaymentModal";
 import BookingDetailModal from "../modals/BookingDetailModal";
-
-const data = [
-  {
-    id: "LQNSU346JK",
-    status: 0,
-    name: "Phạm Thị Thu Trang",
-    phoneNumber: "09xx xxx xxx",
-    location: "Cao Bằng",
-    startDate: "11/04/2023",
-    endDate: "16/04/2023",
-    quantity: 1,
-    total: "6.600.000 VNĐ",
-    image:
-      "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  },
-  {
-    id: "LQNSU346JK",
-    status: 2,
-    name: "Phạm Thị Thu Trang",
-    phoneNumber: "09xx xxx xxx",
-    location: "Cao Bằng",
-    startDate: "11/04/2023",
-    endDate: "16/04/2023",
-    quantity: 1,
-    total: "6.600.000 VNĐ",
-    image:
-      "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  },
-  {
-    id: "LQNSU346JK",
-    status: 3,
-    name: "Phạm Thị Thu Trang",
-    phoneNumber: "09xx xxx xxx",
-    location: "Cao Bằng",
-    startDate: "11/04/2023",
-    endDate: "16/04/2023",
-    quantity: 1,
-    total: "6.600.000 VNĐ",
-    image:
-      "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  },
-  {
-    id: "LQNSU346JK",
-    status: 1,
-    name: "Phạm Thị Thu Trang",
-    phoneNumber: "09xx xxx xxx",
-    location: "Cao Bằng",
-    startDate: "11/04/2023",
-    endDate: "16/04/2023",
-    quantity: 1,
-    total: "6.600.000 VNĐ",
-    image:
-      "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  },
-  {
-    id: "LQNSU346JK",
-    status: 0,
-    name: "Phạm Thị Thu Trang",
-    phoneNumber: "09xx xxx xxx",
-    location: "Cao Bằng",
-    startDate: "11/04/2023",
-    endDate: "16/04/2023",
-    quantity: 1,
-    total: "6.600.000 VNĐ",
-    image:
-      "https://bizweb.dktcdn.net/thumb/1024x1024/100/401/490/products/cb04.jpg?v=1673448957217",
-  },
-];
+import getBookingHistory from "../../api/services/getBookingHistory";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import getDestinationById from "../../api/services/getDestinationById";
+import timeStampToString from "../../utils/timeStampToString";
+import updateTourStatus from "../../api/services/updateTourStatus";
+import { Spin } from "antd";
+import CancelTourModal from "./CancelTourModal";
 
 const BookingHistory = () => {
   const [modal, setModal] = useState(null);
+  const [data, setData] = useState([]);
+  const [currItem, setCurrItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    setLoading(true);
+    let result = await getBookingHistory(auth.currentUser.uid);
+    result = await Promise.all(
+      result.map(async (item) => {
+        const destinationInfo = await getDestinationById(item.tourId);
+        return {
+          ...item,
+          destinationInfo,
+          startDate: timeStampToString(item.startDate),
+          endDate: timeStampToString(item.endDate),
+        };
+      })
+    );
+    setData([...result]);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        fetchData();
+      }
+    });
+  }, []);
+
+  const handleItemClick = (item) => {
+    setModal("detail");
+    setCurrItem(item);
+  };
+
+  const handleCancelTour = async () => {
+    await updateTourStatus(currItem.id, 3);
+    setModal(null);
+    fetchData();
+  };
 
   return (
-    <div className="w-[62.5%] mt-[9px] flex flex-col items-center">
+    <div className="w-[62.5%] mt-[9px]">
       <h2 className="font-semibold text-32 w-full">Lịch sử đặt tour</h2>
-      <div className="flex flex-col gap-y-5 mt-[25px]">
-        {data.map((item, i) => (
-          <BookItem
-            key={i}
-            item={item}
-            setModal={setModal}
-            onClick={() => setModal("detail")}
-          />
-        ))}
-      </div>
-      <button className="mt-[35px] font-medium hover:text-green">
-        Xem thêm...
-      </button>
-      <WarningModal
-        title={
-          <p className="font-medium text-24 text-center">
-            Bạn chắc chắn muốn hủy tour{" "}
-            <span className="font-semibold text-green">Cao Bằng</span>, mã{" "}
-            <span className="font-semibold text-green">LQNSU346JK</span> không?{" "}
-          </p>
-        }
+      <Spin spinning={loading}>
+        <div className="flex flex-col items-center">
+          <div className="flex flex-col gap-y-5 mt-[25px]">
+            {data.map((item, i) => (
+              <BookItem
+                key={i}
+                item={item}
+                setModal={setModal}
+                setCurrItem={setCurrItem}
+                onClick={() => handleItemClick(item)}
+              />
+            ))}
+          </div>
+          {/* <button className="mt-[35px] font-medium hover:text-green">
+            Xem thêm...
+          </button> */}
+        </div>
+      </Spin>
+      <CancelTourModal
+        currItem={currItem}
         open={modal === "cancel"}
-        onCancel={() => setModal(null)}
+        handleCancel={() => setModal(null)}
+        handleCancelTour={handleCancelTour}
       />
-      <PaymentModal open={modal === "pay"} onCancel={() => setModal(null)} />
+      <PaymentModal
+        open={modal === "pay"}
+        onCancel={() => setModal(null)}
+        tourId={currItem?.id}
+        fetchData={fetchData}
+      />
       <BookingDetailModal
         open={modal === "detail"}
         onCancel={() => setModal(null)}
+        data={currItem}
       />
     </div>
   );

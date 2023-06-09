@@ -1,7 +1,6 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase';
+import { auth } from "../firebase";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Title from "../components/Title";
@@ -10,10 +9,13 @@ import getDestinationById from "../api/services/getDestinationById";
 import { locationIcon, durationIcon, expenseIcon } from "../assets/tour_icons";
 import getDividedLines from "../utils/getDividedLines";
 import numberWithDots from "../utils/numberWithDots";
+import getDurationString from "../utils/getDurationString";
+import { ModalContext } from "../contexts/ModalContext";
 
 const TourDetail = () => {
   const navigate = useNavigate();
   const { destinationId } = useParams();
+  const { setCurrentModal } = useContext(ModalContext);
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -25,15 +27,11 @@ const TourDetail = () => {
   }, [destinationId]);
 
   const handleBookTour = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(uid)
-      } else {
-        console.log("user is logged out")
-      }
-    });
-    // navigate("/book-tour");
+    if (auth.currentUser) {
+      navigate(`/book-tour/${destinationId}`);
+    } else {
+      setCurrentModal("sign-in");
+    }
   };
 
   return (
@@ -58,9 +56,7 @@ const TourDetail = () => {
               <div className="tour-info-img-container">
                 <img src={durationIcon} alt="Duration" />
               </div>
-              <p>{`${data?.dayDuration ?? 0} ngày ${
-                data?.nightDuration ?? 0
-              } đêm`}</p>
+              <p>{getDurationString(data?.dayDuration, data?.nightDuration)}</p>
             </div>
             <div className="tour-info">
               <div className="tour-info-img-container">
@@ -72,7 +68,7 @@ const TourDetail = () => {
             </div>
           </div>
           {/* Type tags */}
-          <div className="flex flex-wrap gap-[10px] ml-[8.57%] mr-[3.8%] mt-[58px]">
+          <div className="flex flex-wrap gap-[10px] ml-[8.57%] mr-[3.8%] mt-[58px] self-start">
             {data?.type?.map((type, i) => (
               <div
                 key={i}
