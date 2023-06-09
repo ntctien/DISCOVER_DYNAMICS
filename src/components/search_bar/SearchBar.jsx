@@ -41,6 +41,7 @@ const SearchBar = () => {
     location: "",
     price: { text: "", min: null, max: null },
     type: "",
+    region: "",
   });
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const SearchBar = () => {
         min,
         max,
       },
+      region: filter.region ?? "",
     });
   }, [location]);
 
@@ -78,6 +80,7 @@ const SearchBar = () => {
       min: searchData.price.min,
       max: searchData.price.max,
       search: searchData.location,
+      region: searchData.region
     };
     navigateToDestinationWithParams(params);
   };
@@ -85,10 +88,7 @@ const SearchBar = () => {
   return (
     <div className="relative w-fit mx-auto">
       <div className="h-2 w-full bg-white absolute -top-2"></div>
-      <form
-        onSubmit={handleSearch}
-        className="search-bar-container"
-      >
+      <form onSubmit={handleSearch} className="search-bar-container">
         <div className="row gap-x-[46px]">
           {filters.map((item, i) =>
             item.id === "price" ? (

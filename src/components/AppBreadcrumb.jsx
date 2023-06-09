@@ -41,6 +41,14 @@ const AppBreadcrumb = () => {
           };
         })
       );
+      const params = new URLSearchParams(location.search);
+      const region = params.get("region");
+      if (region) {
+        items.push({
+          key: "region",
+          title: region,
+        });
+      }
       setBreadcrumbItems(items);
     };
 

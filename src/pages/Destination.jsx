@@ -22,6 +22,7 @@ const Destination = () => {
     min: null,
     max: null,
     sort: null,
+    region: null,
   });
   const { destinations } = useDestination(() => setBaseData([...destinations]));
 
@@ -39,18 +40,23 @@ const Destination = () => {
 
   const handleFilter = () => {
     let tempArray;
+
     // Filter
     const min = filter.min ?? 0;
     const max = filter.max ?? 999999999;
     const search = filter.search?.toLowerCase() ?? "";
+    const region = filter.region ?? "";
     tempArray = baseData.filter(
       (item) =>
         item.price >= min &&
         item.price <= max &&
         (hasAccent(search)
           ? item.location.toLowerCase().includes(search)
-          : removeAccents(item.location.toLowerCase()).includes(search))
+          : removeAccents(item.location.toLowerCase()).includes(search)) &&
+        item.region?.includes(region)
     );
+
+    // Sort
     switch (filter.sort) {
       case "ascent":
         tempArray = tempArray.sort((a, b) => a.price - b.price);
@@ -61,6 +67,8 @@ const Destination = () => {
       default:
         break;
     }
+
+    // Set states
     setData(tempArray);
     setCurrentPage(1);
   };
