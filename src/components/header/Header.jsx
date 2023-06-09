@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "antd";
 import { ModalContext } from "../../contexts/ModalContext";
@@ -6,6 +6,8 @@ import DropdownButton from "./DropdownButton";
 import DropdownItem from "./DropdownItem";
 import logo from "../../assets/logo.png";
 import accountIcon from "../../assets/account.svg";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
 import regions from "../../constants/regions";
 import tourTypes from "../../constants/tourTypes";
@@ -14,8 +16,19 @@ const Header = () => {
   const navigate = useNavigate();
   const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const { setCurrentModal } = useContext(ModalContext);
-  const currentUser = true;
+  const [currentUser, setCurrentUser] = useState(false);
   const admin = false;
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(true);
+      } else  {
+        setCurrentUser(false);
+      }
+    });
+  }, []);
+
 
   const dropDownItems = {
     destination: regions.map((region) => {

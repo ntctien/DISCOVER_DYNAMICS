@@ -1,45 +1,105 @@
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
 import { EyeOutlined } from '@ant-design/icons';
 import googleIcon from '../../assets/google_icon.svg';
+import loadingIcon from '../../assets/loading.gif';
 import { useState } from "react";
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
-import { auth } from "../../firebase";
+import { auth, provider, provider1 } from "../../firebase";
 import facebookIcon from '../../assets/facebook_icon.svg';
 import ForgotPassword from "./ForgotPassword";
-import { useNavigate } from "react-router";
+import { GoogleAuthProvider, FacebookAuthProvider , signInWithPopup } from "firebase/auth";
+import refresh from "../../utils/refreshPage";
 
 const SignIn = ({open, handleCancel, handleSignUp}) => {
     const [currentModal, setCurrentModal] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
 
+    const resetForm = () => {
+        setEmail('');
+        setPassword('');
+      };
+
+    const onCancel = () => {
+        handleCancel();
+        resetForm();
+    };
+
     const signIn = (e) => {
+        setLoading(true);
         e.preventDefault();
 
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            //navigate("/destination")
-            console.log(user);
+            console.log("user");
+            refresh();
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
         });
-    }
+
+        setLoading(false);
+    };
+
+    const signInWithGoogle = () => {
+        setLoading(true);
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            refresh();
+
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+        setLoading(false);
+    };
+
+    const signInWithFacebook = () => {
+        setLoading(true);
+        signInWithPopup(auth, provider1)
+        .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const accessToken = credential.accessToken;
+            // IdP data available using getAdditionalUserInfo(result)
+            refresh();
+            
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+        setLoading(false);
+    };
 
     return (
       <>
-        <Modal centered open={open} onCancel={handleCancel} footer={null}>
+        <Modal centered open={open} onCancel={onCancel} footer={null}>
           <div style={{position:"relative",background:"#FFFFFF",borderRadius:"15px", padding:"24px",
             display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                <Spin 
+                    spinning={loading}
+                    indicator={
+                        <img src={loadingIcon} alt="Loading" />
+                    }
+                />
                 <img
                     src={logo}
                     alt="logo"
@@ -127,7 +187,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                     <div style={{width : "200px", height : "0px", left : "320px", right : "416px", border: "1px solid rgba(0, 0, 0, 0.47)"}}></div>
                 </div>
 
-                <button 
+                <button onClick={signInWithGoogle}
                     style = {{display : "flex", alignItems:"center", justifyContent:"center", width : "480px", height :"52px", 
                     left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
                     <img 
@@ -137,7 +197,8 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                         Tiếp tục với Google</p>
                 </button>
 
-                <button style = {{display : "flex", alignItems:"center", justifyContent:"center", marginTop : "20px", 
+                <button onClick={signInWithFacebook}
+                    style = {{display : "flex", alignItems:"center", justifyContent:"center", marginTop : "20px", 
                     width : "480px", height :"52px", left : "40px", top : "439px", borderRadius:"10px", background: "#FFFFFF", color:"#000000", border: "1px solid rgba(0, 0, 0, 0.47)"}}>
                     <img 
                         src={facebookIcon} 
