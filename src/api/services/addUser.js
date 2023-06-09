@@ -14,7 +14,11 @@ const addUser = async (email) => {
             role: "customer",
             ward: null,
         });
+        console.log("Document written with ID: ", docRef.id);
+        
       } catch (e) {
         console.error("Error adding document: ", e);
       }
 };
+
+export default addUser

@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth, db, provider, provider1 } from "../../firebase";
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore"; 
+import addUser from "../../api/services/addUser"
 
 const SignUp = ({open, handleCancel, handleSignIn}) => {
     const [currentModal, setCurrentModal] = useState(null);
@@ -18,7 +18,6 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const refresh = () => window.location.reload(true);
 
     const resetForm = () => {
         setEmail('');
@@ -30,25 +29,6 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         resetForm();
     }
 
-    const addUser = async (email) => {
-
-        try {
-            const docRef = await addDoc(collection(db, "user"), {
-                address: null,
-                district: null,
-                email: email,
-                name: null,
-                phone: null,
-                province: null,
-                role: "customer",
-                ward: null,
-            });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-    };
-
     const signUp = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -57,10 +37,8 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            //console.log(user.email);
             addUser(user.email);
-            //refresh();
-            // resetForm();
+            onCancel();
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -80,8 +58,9 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            refresh();
-            resetForm();
+            addUser(user.email);
+            onCancel();
+            
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -100,8 +79,8 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
-            // IdP data available using getAdditionalUserInfo(result)
-            refresh();
+            addUser(user.email);
+            onCancel();
             
         }).catch((error) => {
             const errorCode = error.code;

@@ -11,6 +11,7 @@ import { auth, provider, provider1 } from "../../firebase";
 import facebookIcon from '../../assets/facebook_icon.svg';
 import ForgotPassword from "./ForgotPassword";
 import { GoogleAuthProvider, FacebookAuthProvider , signInWithPopup } from "firebase/auth";
+import refresh from "../../utils/refreshPage";
 
 const SignIn = ({open, handleCancel, handleSignUp}) => {
     const [currentModal, setCurrentModal] = useState(null);
@@ -18,7 +19,6 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const refresh = () => window.location.reload(true);
 
     const resetForm = () => {
         setEmail('');
@@ -40,7 +40,6 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
             const user = userCredential.user;
             console.log("user");
             refresh();
-            resetForm();
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -61,7 +60,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
             // The signed-in user info.
             const user = result.user;
             refresh();
-            resetForm();
+
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
