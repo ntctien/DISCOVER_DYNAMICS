@@ -43,6 +43,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
                 role: "customer",
                 ward: null,
             });
+            console.log("Document written with ID: ", docRef.id);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
@@ -58,7 +59,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             const user = userCredential.user;
             //console.log(user.email);
             addUser(user.email);
-            refresh();
+            //refresh();
             // resetForm();
         })
         .catch((error) => {
