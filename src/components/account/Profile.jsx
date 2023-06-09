@@ -1,16 +1,28 @@
 import { useEffect, useState } from "react";
-import { Form, Spin } from "antd";
+import { Form, Spin, message } from "antd";
 import DefaultInput from "../inputs/DefaultInput";
 import AddressForm from "./AddressForm";
 import phoneNumberRule from "../../constants/phoneNumberRule";
 import updateProfile from "../../api/services/updateProfile";
+import fetchProfile from "../../api/services/fetchProfile";
 
 const Profile = ({ user }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+  const province = form.getFieldValue("province");
+  const district = form.getFieldValue("district");
+
   useEffect(() => {
-    if (user) form.setFieldValue("email", user.email);
+    if (user) {
+      const fetchData = async () => {
+        setLoading(true);
+        const profile = await fetchProfile(user.uid);
+        form.setFieldsValue({ ...profile });
+        setLoading(false);
+      };
+      fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -18,6 +30,7 @@ const Profile = ({ user }) => {
     form.validateFields().then(async (values) => {
       setLoading(true);
       await updateProfile({ uid: user.uid, ...values });
+      message.success("Cập nhật thông tin cá nhân thành công!");
       setLoading(false);
     });
   };
@@ -43,7 +56,7 @@ const Profile = ({ user }) => {
               placeholder={"example@email.com"}
               readOnly
             />
-            <AddressForm />
+            <AddressForm province={province} district={district} />
             <button
               onClick={handleSave}
               className="bg-orange rounded-5 font-medium text-18 text-white w-[100px] h-[40px] mx-auto hover:brightness-110"
