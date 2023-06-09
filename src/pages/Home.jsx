@@ -4,8 +4,11 @@ import Title from "../components/Title";
 import FeaturedTours from "../components/home/FeaturedTours";
 import DestinationContainer from "../components/home/DestinationContainer";
 import TourType from "../components/home/TourType";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="bg-white pb-[60px]">
@@ -21,7 +24,10 @@ const Home = () => {
             <h1 className="font-bold text-[64px] leading-[78px] text-white">
               Discover Dynamics
             </h1>
-            <button className="p-[18px] bg-orange rounded-5 font-semibold text-black mt-[34px]">
+            <button
+              onClick={() => navigate("/destination")}
+              className="p-[18px] bg-orange rounded-5 font-semibold text-black mt-[34px] hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-150"
+            >
               Khám phá ngay
             </button>
           </div>

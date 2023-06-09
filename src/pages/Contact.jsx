@@ -22,7 +22,7 @@ const contactInformations = [
 const Contact = () => {
   return (
     <div className="relative">
-      <img src={mapImg} alt="Map" className="w-screen mt-[31px]" />
+      <img src={mapImg} alt="Map" className="w-screen aspect-[2/1] mt-[31px] object-cover object-center bg-green" />
       <div className="w-[45%] bg-white rounded-20 absolute -top-[65px] right-[30px] p-[25px]">
         <h1 className="font-semibold text-24">Hỗ trợ dịch vụ Tour</h1>
         <div className="row gap-x-[40px] gap-y-5 flex-wrap mt-5">

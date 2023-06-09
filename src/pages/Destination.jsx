@@ -25,7 +25,7 @@ const Destination = () => {
     region: null,
     type: null,
   });
-  const { destinations } = useDestination(() => setBaseData([...destinations]));
+  const { destinations, loading } = useDestination(() => setBaseData([...destinations]));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -88,6 +88,7 @@ const Destination = () => {
     <div className="pb-[45px] relative px-[80px]">
       <ToursContainer
         tours={data?.slice(startIndex, endIndex)}
+        loading={loading}
         className={"mt-[25px]"}
       />
       <Pagination

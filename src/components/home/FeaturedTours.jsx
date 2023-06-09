@@ -15,9 +15,11 @@ const FeaturedTours = () => {
       );
     });
   };
-  const { destinations } = useDestination(fetchData);
+  const { destinations, loading } = useDestination(fetchData);
 
-  return <ToursContainer tours={data} className={"mt-[37px]"} />;
+  return (
+    <ToursContainer tours={data} loading={loading} className={"mt-[37px]"} />
+  );
 };
 
 export default FeaturedTours;
