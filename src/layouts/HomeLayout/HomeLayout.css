@@ -46,7 +46,7 @@
   @apply flex gap-x-5;
 }
 
-.book-form-item {
+.book-form-row > div {
   @apply flex-1;
 }
 
@@ -61,7 +61,6 @@
 
 .book-form-item input,
 .book-form-item textarea {
-  font-size: inherit !important;
   @apply default-input;
 }
 
@@ -108,7 +107,6 @@
 /* Antd */
 
 .book-form-item .ant-input-affix-wrapper {
-  font-size: inherit !important;
   @apply default-input;
 }
 

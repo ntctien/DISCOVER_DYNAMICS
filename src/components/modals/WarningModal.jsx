@@ -1,6 +1,6 @@
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 
-const WarningModal = ({ open, onCancel, title, onOk }) => {
+const WarningModal = ({ open, onCancel, title, onOk, loading }) => {
   return (
     <Modal
       open={open}
@@ -9,17 +9,25 @@ const WarningModal = ({ open, onCancel, title, onOk }) => {
       footer={null}
       closable={false}
     >
-      <div className="flex flex-col items-center">
+      <Spin spinning={loading === true}>
+        <div className="flex flex-col items-center">
           {title}
           <div className="flex gap-x-5 mt-[26px]">
-            <button onClick={onCancel} className="warning-modal-btn border-1 border-black">
+            <button
+              onClick={onCancel}
+              className="warning-modal-btn border-1 border-black"
+            >
               KHÔNG
             </button>
-            <button onClick={onOk} className="warning-modal-btn bg-orange text-white hover:brightness-110">
+            <button
+              onClick={onOk}
+              className="warning-modal-btn bg-orange text-white hover:brightness-110"
+            >
               CHẮC CHẮN
             </button>
           </div>
-      </div>    
+        </div>
+      </Spin>
     </Modal>
   );
 };
