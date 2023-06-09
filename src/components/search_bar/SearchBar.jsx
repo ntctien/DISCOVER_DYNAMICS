@@ -49,15 +49,17 @@ const SearchBar = () => {
     const filter = getCurrentFilter(location);
     const min = parseInt(filter.min);
     const max = parseInt(filter.max);
-    setSearchData({
-      ...searchData,
-      location: filter.search ?? "",
-      price: {
-        text: getPriceText(min, max),
-        min,
-        max,
-      },
-      region: filter.region ?? "",
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        location: filter.search ?? "",
+        price: {
+          text: getPriceText(min, max),
+          min,
+          max,
+        },
+        region: filter.region ?? "",
+      };
     });
   }, [location]);
 
@@ -80,7 +82,7 @@ const SearchBar = () => {
       min: searchData.price.min,
       max: searchData.price.max,
       search: searchData.location,
-      region: searchData.region
+      region: searchData.region,
     };
     navigateToDestinationWithParams(params);
   };
