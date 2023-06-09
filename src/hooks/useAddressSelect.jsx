@@ -74,6 +74,8 @@ const useAddressSelect = () => {
     wards,
     handleChangeProvince,
     handleChangeDistrict,
+    fetchDistricts,
+    fetchWards,
   };
 };
 
