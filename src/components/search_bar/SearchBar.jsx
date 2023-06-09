@@ -60,16 +60,22 @@ const SearchBar = () => {
           max,
         },
         region: filter.region ?? "",
-        type : filter.type ?? ""
+        type: filter.type ?? "",
       };
     });
   }, [location]);
+
+  const getItemPropsValue = (id) => {
+    if (id === "price") return searchData.price.text;
+    if (id === "type" && searchData[id] === "all") return "";
+    return searchData[id];
+  };
 
   const getItemProps = (i, item) => {
     return {
       item,
       index: i,
-      value: item.id === "price" ? searchData.price.text : searchData[item.id],
+      value: getItemPropsValue(item.id),
       onChange: (e) => {
         if (item.id === "location") {
           setSearchData({ ...searchData, location: e.target.value });
@@ -85,7 +91,7 @@ const SearchBar = () => {
       max: searchData.price.max,
       search: searchData.location,
       region: searchData.region,
-      type: searchData.type
+      type: searchData.type,
     };
     navigateToDestinationWithParams(params);
   };
@@ -108,7 +114,7 @@ const SearchBar = () => {
         </div>
         <button
           type="submit"
-          className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white"
+          className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white hover:brightness-110"
         >
           Tìm kiếm
         </button>
