@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SearchBarItem from "./SearchBarItem";
 import { locationIcon, priceIcon, typeIcon } from "../../assets/search_icons";
 import PriceDropdown from "./PriceDropdown";
 import getCurrentFilter from "../../utils/getCurrentFilter";
-import navigateToDestinationWithParams from "../../utils/navigateToDestinationWithParams";
 import getPriceText from "../../utils/getPriceText";
+import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
 
 const filters = [
   {
@@ -35,7 +35,7 @@ const filters = [
 ];
 
 const SearchBar = () => {
-  const navigate = useNavigate();
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const location = useLocation();
   const [searchData, setSearchData] = useState({
     location: "",
@@ -79,7 +79,7 @@ const SearchBar = () => {
       max: searchData.price.max,
       search: searchData.location,
     };
-    navigateToDestinationWithParams(params, navigate);
+    navigateToDestinationWithParams(params);
   };
 
   return (

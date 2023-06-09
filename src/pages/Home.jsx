@@ -2,7 +2,7 @@ import SearchBar from "../components/search_bar/SearchBar";
 import banner from "../assets/banner.jpg";
 import Title from "../components/Title";
 import FeaturedTours from "../components/home/FeaturedTours";
-import Destination from "../components/home/DestinationContainer";
+import DestinationContainer from "../components/home/DestinationContainer";
 import TourType from "../components/home/TourType";
 
 const Home = () => {
@@ -62,7 +62,7 @@ const Home = () => {
         <FeaturedTours />
         {/* Destination */}
         <Title text={"Điểm đến"} className={"mt-[86px]"} />
-        <Destination />
+        <DestinationContainer />
         {/* Tour types */}
         <Title text={"Loại hình tour"} className={"mt-[86px]"} />
         <p className="text-description mt-[9px]">

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { updateProfile } from "firebase/auth";
 import { Form, Spin } from "antd";
 import DefaultInput from "../inputs/DefaultInput";
 import AddressForm from "./AddressForm";
 import phoneNumberRule from "../../constants/phoneNumberRule";
+import updateProfile from "../../api/services/updateProfile";
 
 const Profile = ({ user }) => {
   const [form] = Form.useForm();
