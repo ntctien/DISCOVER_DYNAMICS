@@ -1,4 +1,4 @@
-import { Modal, Spin } from "antd";
+import { Modal, Spin, message } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
@@ -38,6 +38,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             // Signed in
             const user = userCredential.user;
             addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
         })
         .catch((error) => {
@@ -59,6 +60,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             // The signed-in user info.
             const user = result.user;
             addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
             
         }).catch((error) => {
@@ -80,6 +82,7 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
             addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
             
         }).catch((error) => {
