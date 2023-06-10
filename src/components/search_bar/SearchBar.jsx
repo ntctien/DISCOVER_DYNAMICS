@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SearchBarItem from "./SearchBarItem";
 import { locationIcon, priceIcon, typeIcon } from "../../assets/search_icons";
 import PriceDropdown from "./PriceDropdown";
 import getCurrentFilter from "../../utils/getCurrentFilter";
-import navigateToDestinationWithParams from "../../utils/navigateToDestinationWithParams";
 import getPriceText from "../../utils/getPriceText";
+import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
+import TypeDropdown from "./TypeDropdown";
 
 const filters = [
   {
@@ -35,12 +36,13 @@ const filters = [
 ];
 
 const SearchBar = () => {
-  const navigate = useNavigate();
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const location = useLocation();
   const [searchData, setSearchData] = useState({
     location: "",
     price: { text: "", min: null, max: null },
     type: "",
+    region: "",
   });
 
   useEffect(() => {
@@ -48,22 +50,32 @@ const SearchBar = () => {
     const filter = getCurrentFilter(location);
     const min = parseInt(filter.min);
     const max = parseInt(filter.max);
-    setSearchData({
-      ...searchData,
-      location: filter.search ?? "",
-      price: {
-        text: getPriceText(min, max),
-        min,
-        max,
-      },
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        location: filter.search ?? "",
+        price: {
+          text: getPriceText(min, max),
+          min,
+          max,
+        },
+        region: filter.region ?? "",
+        type: filter.type ?? "",
+      };
     });
   }, [location]);
+
+  const getItemPropsValue = (id) => {
+    if (id === "price") return searchData.price.text;
+    if (id === "type" && searchData[id] === "all") return "";
+    return searchData[id];
+  };
 
   const getItemProps = (i, item) => {
     return {
       item,
       index: i,
-      value: item.id === "price" ? searchData.price.text : searchData[item.id],
+      value: getItemPropsValue(item.id),
       onChange: (e) => {
         if (item.id === "location") {
           setSearchData({ ...searchData, location: e.target.value });
@@ -78,35 +90,31 @@ const SearchBar = () => {
       min: searchData.price.min,
       max: searchData.price.max,
       search: searchData.location,
+      region: searchData.region,
+      type: searchData.type,
     };
-    navigateToDestinationWithParams(params, navigate);
+    navigateToDestinationWithParams(params);
   };
 
   return (
     <div className="relative w-fit mx-auto">
       <div className="h-2 w-full bg-white absolute -top-2"></div>
-      <form
-        onSubmit={handleSearch}
-        className="search-bar-container"
-      >
+      <form onSubmit={handleSearch} className="search-bar-container">
         <div className="row gap-x-[46px]">
-          {filters.map((item, i) =>
-            item.id === "price" ? (
-              <PriceDropdown
-                key={i}
-                searchData={searchData}
-                setSearchData={setSearchData}
-              >
-                <SearchBarItem {...getItemProps(i, item)} />
-              </PriceDropdown>
-            ) : (
-              <SearchBarItem key={i} {...getItemProps(i, item)} />
-            )
-          )}
+          {/* Địa điểm */}
+          <SearchBarItem {...getItemProps(0, filters[0])} />
+          {/* Giá cả */}
+          <PriceDropdown searchData={searchData} setSearchData={setSearchData}>
+            <SearchBarItem {...getItemProps(1, filters[1])} />
+          </PriceDropdown>
+          {/* Loại hình */}
+          <TypeDropdown setSearchData={setSearchData}>
+            <SearchBarItem {...getItemProps(2, filters[2])} />
+          </TypeDropdown>
         </div>
         <button
           type="submit"
-          className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white"
+          className="px-[52px] py-[18px] bg-blue rounded-5 text-medium text-white hover:brightness-110"
         >
           Tìm kiếm
         </button>

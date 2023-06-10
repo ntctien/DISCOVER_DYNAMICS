@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Pagination, Select } from "antd";
 import ToursContainer from "../components/ToursContainer";
 import { downArrowIcon } from "../assets/arrow_icons";
 import getCurrentFilter from "../utils/getCurrentFilter";
-import navigateToDestinationWithParams from "../utils/navigateToDestinationWithParams";
 import removeAccents from "../utils/removeAccents";
 import hasAccent from "../utils/hasAccent";
 import useDestination from "../hooks/useDestination";
+import useNavigateToDestinationWithParams from "../hooks/useNavigateToDestinationWithParams";
 
 const itemsPerPage = 12;
 
 const Destination = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const [baseData, setBaseData] = useState([]);
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,8 +22,10 @@ const Destination = () => {
     min: null,
     max: null,
     sort: null,
+    region: null,
+    type: null,
   });
-  const { destinations } = useDestination(() => setBaseData([...destinations]));
+  const { destinations, loading } = useDestination(() => setBaseData([...destinations]));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -39,18 +41,26 @@ const Destination = () => {
 
   const handleFilter = () => {
     let tempArray;
+
     // Filter
-    const min = filter.min ?? 0;
-    const max = filter.max ?? 999999999;
+    const min = filter.min ? parseInt(filter.min) : 0;
+    const max = filter.max ? parseInt(filter.max) : 999999999;
     const search = filter.search?.toLowerCase() ?? "";
+    const region = filter.region ?? "";
+    const type = filter.type ? (filter.type !== "all" ? filter.type : "") : "";
+
     tempArray = baseData.filter(
       (item) =>
         item.price >= min &&
         item.price <= max &&
         (hasAccent(search)
           ? item.location.toLowerCase().includes(search)
-          : removeAccents(item.location.toLowerCase()).includes(search))
+          : removeAccents(item.location.toLowerCase()).includes(search)) &&
+        item.region?.includes(region) &&
+        (type !== "" ? item.type?.includes(type) : true)
     );
+
+    // Sort
     switch (filter.sort) {
       case "ascent":
         tempArray = tempArray.sort((a, b) => a.price - b.price);
@@ -61,21 +71,24 @@ const Destination = () => {
       default:
         break;
     }
+
+    // Set states
     setData(tempArray);
     setCurrentPage(1);
   };
 
   const handleSortClick = (value) => {
-    navigateToDestinationWithParams(
-      { ...filter, sort: value === "default" ? null : value },
-      navigate
-    );
+    navigateToDestinationWithParams({
+      ...filter,
+      sort: value === "default" ? null : value,
+    });
   };
 
   return (
     <div className="pb-[45px] relative px-[80px]">
       <ToursContainer
         tours={data?.slice(startIndex, endIndex)}
+        loading={loading}
         className={"mt-[25px]"}
       />
       <Pagination

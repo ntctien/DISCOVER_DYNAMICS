@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import numberWithDots from "../utils/numberWithDots";
 import getDurationString from "../utils/getDurationString";
+import useBookTour from "../hooks/useBookTour";
 
 const TourItem = ({ tour }) => {
   const navigate = useNavigate();
+  const handleBookTour = useBookTour();
 
   const handleOnClick = () => {
     navigate(`/destination/${tour?.id}`);
+  };
+
+  const handleBookTourBtnClick = (e) => {
+    e.stopPropagation();
+    handleBookTour(tour?.id);
   };
 
   return (
@@ -31,7 +38,10 @@ const TourItem = ({ tour }) => {
           <p className="font-medium text-red">
             {tour?.price != null && numberWithDots(tour?.price) + " VNĐ"}
           </p>
-          <button className="px-[12px] py-[9px] bg-orange rounded-5 font-medium text-18 text-white">
+          <button
+            onClick={handleBookTourBtnClick}
+            className="px-[12px] py-[9px] bg-orange rounded-5 font-medium text-18 text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110"
+          >
             ĐẶT TOUR
           </button>
         </div>
