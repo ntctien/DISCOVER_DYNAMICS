@@ -31,7 +31,10 @@ const BookTour = () => {
   const [policyCheck, setPolicyCheck] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const endDate = dayjs(startDate).add(tourInfo?.dayDuration ?? 0, "day");
+  const endDate = dayjs(startDate).add(
+    tourInfo?.dayDuration ? tourInfo.dayDuration - 1 : 0,
+    "day"
+  );
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
