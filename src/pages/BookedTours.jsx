@@ -31,15 +31,15 @@ const BookedTours = () => {
     );
     console.log(result);
     setData([...result]);
-};
+  };
 
-useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        fetchData();
-      }
-    });
-}, []);
+  useEffect(() => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          fetchData();
+        }
+      });
+  }, []);
 
   return (
     <div>
