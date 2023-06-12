@@ -1,4 +1,4 @@
-import { DatePicker, Button, Select } from 'antd';
+import { DatePicker, Button, Select, Spin } from 'antd';
 import { useState, useEffect } from "react";
 import BookedTourItem from '../components/booked_tour/BookedTourItem';
 import { auth } from "../firebase";
@@ -6,7 +6,7 @@ import timeStampToString from "../utils/timeStampToString";
 import { onAuthStateChanged } from "firebase/auth";
 import getBookedTour from "../api/services/getBookedTour";
 import getDestinationById from '../api/services/getDestinationById';
-
+import BookingDetailModal from '../components/modals/BookingDetailModal';
 
 const handleChange = (value) => {
   console.log(`selected ${value}`);
@@ -14,8 +14,12 @@ const handleChange = (value) => {
 
 const BookedTours = () => {
   const [data, setData] = useState([]);
+  const [modal, setModal] = useState(null);
+  const [currItem, setCurrItem] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     let result = await getBookedTour();
     result = await Promise.all(
       result.map(async (item) => {
@@ -29,8 +33,8 @@ const BookedTours = () => {
         };
       })
     );
-    console.log(result);
     setData([...result]);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -41,15 +45,13 @@ const BookedTours = () => {
       });
   }, []);
 
+  const handleItemClick = (item) => {
+    setModal("detail");
+    setCurrItem(item);
+  };
+
   return (
     <div>
-      {
-        data?.map((data,i)=>(
-            <p key={i}>
-                {data.data}
-            </p>
-        ))
-      }
       <div style={{
         color: "#5C913B",
         marginLeft : "89px",
@@ -109,11 +111,19 @@ const BookedTours = () => {
         </div>
       </div>
 
-      {/* Booked tour items */}
-      {data.map((item,i) =>(
-        <BookedTourItem item={item} key={i} />
-      ))}
-
+      <Spin spinning={loading}> 
+        {/* Booked tour items */}
+        {data.map((item,i) =>(
+          <BookedTourItem 
+            item={item} 
+            key={i} 
+            setModal={setModal}
+            setCurrItem={setCurrItem}
+            onClick={() => handleItemClick(item)}
+          />
+        ))}
+      </Spin>
+      
       <Button 
         style={{
           marginTop : "20px", 
@@ -122,7 +132,13 @@ const BookedTours = () => {
           }}>
         Xem thêm...
       </Button>
-
+          
+      <BookingDetailModal
+        open={modal === "detail"}
+        onCancel={() => setModal(null)}
+        data={currItem}
+        admin={true}
+      />
     </div>
   )
 }

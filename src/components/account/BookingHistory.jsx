@@ -91,7 +91,6 @@ const BookingHistory = () => {
         open={modal === "detail"}
         onCancel={() => setModal(null)}
         data={currItem}
-        admin={true}
       />
     </div>
   );

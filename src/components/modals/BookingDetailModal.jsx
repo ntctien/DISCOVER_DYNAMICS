@@ -9,6 +9,7 @@ import ConfirmIncompletePayment from "./ConfirmIncompletePayment";
 import { useState } from "react";
 
 const BookingDetailModal = ({ open, onCancel, admin, data }) => {
+
   const [currentModal, setCurrentModal] = useState(null);
 
   return (
@@ -139,10 +140,12 @@ const BookingDetailModal = ({ open, onCancel, admin, data }) => {
       <ConfirmPayment
         open={currentModal === 'confirm-payment'}
         handleCancel={() => setCurrentModal(null)}
+        tourId={data?.id}
       />
       <ConfirmIncompletePayment
         open={currentModal === 'confirm-incomplete-payment'}
         handleCancel={() => setCurrentModal(null)}
+        tourId={data?.id}
       />
     </>
   );
