@@ -1,5 +1,4 @@
 import { Descriptions } from 'antd';
-import { useEffect, useState } from "react";
 import numberWithDots from "../../utils/numberWithDots";
 import tourStatus from "../../constants/tourStatus";
 
@@ -13,8 +12,8 @@ const BookedTourItem = ({item}) => {
             width : "200px",
             height : "150px"
           }}
-          src='logo.png'
-          alt='Logo'
+          src= {item.destinationInfo?.tourImages}
+          alt='image'
         />
 
         <Descriptions style={{marginLeft : "46px"}}>

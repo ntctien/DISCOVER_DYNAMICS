@@ -8,7 +8,7 @@ import ConfirmPayment from "./ConfirmPayment";
 import ConfirmIncompletePayment from "./ConfirmIncompletePayment";
 import { useState } from "react";
 
-const BookingDetailModal = ({ open, handleCancel, onCancel, admin, data }) => {
+const BookingDetailModal = ({ open, onCancel, admin, data }) => {
   const [currentModal, setCurrentModal] = useState(null);
 
   return (
@@ -124,11 +124,11 @@ const BookingDetailModal = ({ open, handleCancel, onCancel, admin, data }) => {
             {admin && (
               <div className="row gap-x-5 mt-[17px]">
                 <button className="w-[320px] h-[40px] primary-btn"
-                  onClick={() => {handleCancel(); setCurrentModal("confirm-payment")}}>
+                  onClick={() => {onCancel(); setCurrentModal("confirm-payment")}}>
                   Xác nhận thanh toán đầy đủ
                 </button>
                 <button className="w-[320px] h-[40px] secondary-btn"
-                  onClick={() => {handleCancel(); setCurrentModal("confirm-incomplete-payment")}}>
+                  onClick={() => {onCancel(); setCurrentModal("confirm-incomplete-payment")}}>
                   Yêu cầu kiểm tra lại
                 </button>
               </div>
