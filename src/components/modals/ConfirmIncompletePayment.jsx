@@ -6,12 +6,12 @@ import refresh from "../../utils/refreshPage";
 const ConfirmIncompletePayment = ({open, handleCancel, tourId}) => {
     const [loading, setLoading] = useState(false);
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         setLoading(false);
         handleCancel();
-        updateTourStatus(tourId, 0);
+        await updateTourStatus(tourId, 0);
         message.success("Yêu cầu kiểm tra lại thành công");
-        // refresh();
+        refresh();
     }
 
     return (
