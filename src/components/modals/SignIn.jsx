@@ -46,6 +46,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
+            message.error("Tài khoản hoặc mật khẩu không chính xác");
         });
 
         setLoading(false);

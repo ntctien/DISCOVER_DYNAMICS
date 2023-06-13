@@ -1,11 +1,31 @@
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import profileIcon from '../../assets/Profile.svg';
 import logo from '../../assets/logo.png';
 import { useState } from "react";
 import EnterOTP from "./EnterOTP";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = ({ open, handleCancel }) => {
     const [currentModal, setCurrentModal] = useState(null);
+    const [email, setEmail] = useState('');
+
+    const forgotPassword = () => {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            // Password reset email sent!
+            // ..
+            message.success("Vui lòng kiểm tra Email để thay đổi mật khẩu mới");
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            message.error("Tài khoản không tồn tại");
+
+        });
+    }
+
   return (
     <>
         <Modal centered open={open} onCancel={handleCancel} footer={null}>
@@ -34,12 +54,13 @@ const ForgotPassword = ({ open, handleCancel }) => {
                                 src={profileIcon} 
                                 alt="Profile"/>
                             <input 
+                                value={email} onChange={e => setEmail(e.target.value)}
                                 type="email" 
                                 placeholder="Email" 
                                 style={{marginLeft :"12px",borderWidth :'0', outline:"none", width : "400px"}}></input>
                     </div>
 
-                    <button 
+                    <button onClick={forgotPassword}
                         style={{
                             width : "480px", 
                             height :"52px", 
@@ -48,8 +69,9 @@ const ForgotPassword = ({ open, handleCancel }) => {
                             background: "#FF9648", 
                             color:"white"
                             }}
-                        onClick={() => {handleCancel(); setCurrentModal("enter-OTP")}}>
-                        NHẬN MÃ OTP 
+                        // onClick={() => {handleCancel(); setCurrentModal("enter-OTP")}}
+                        >
+                        XÁC NHẬN
                     </button> 
             </div>
         </Modal>
