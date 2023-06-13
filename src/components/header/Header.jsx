@@ -11,13 +11,15 @@ import { auth } from "../../firebase";
 import useNavigateToDestinationWithParams from "../../hooks/useNavigateToDestinationWithParams";
 import regions from "../../constants/regions";
 import tourTypes from "../../constants/tourTypes";
+import fetchProfile from "../../api/services/fetchProfile";
 
 const Header = () => {
   const navigate = useNavigate();
   const navigateToDestinationWithParams = useNavigateToDestinationWithParams();
   const { setCurrentModal } = useContext(ModalContext);
   const [currentUser, setCurrentUser] = useState(false);
-  const admin = false;
+  // let admin = true;
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -29,6 +31,20 @@ const Header = () => {
     });
   }, []);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const fetchData = async () => {
+          const profile = await fetchProfile(user.uid);
+          if(profile.role === 'admin') {
+            setAdmin(true);
+          }
+      }; fetchData();
+      } else  {
+        setAdmin(false);
+      }
+    });
+  }, [admin]);
 
   const dropDownItems = {
     destination: regions.map((region) => {
