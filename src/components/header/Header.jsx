@@ -25,15 +25,6 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(true);
-      } else  {
-        setCurrentUser(false);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
         const fetchData = async () => {
           const profile = await fetchProfile(user.uid);
           if(profile.role === 'admin') {
@@ -41,10 +32,10 @@ const Header = () => {
           }
       }; fetchData();
       } else  {
-        setAdmin(false);
+        setCurrentUser(false);
       }
     });
-  }, [admin]);
+  }, []);
 
   const dropDownItems = {
     destination: regions.map((region) => {
