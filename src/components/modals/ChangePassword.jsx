@@ -14,6 +14,7 @@ const ChangePassword = ({open, handleCancel}) => {
     const resetForm = () => {
         setCurrentPassword('');
         setNewPassword('');
+        setConfirmPassword('');
       };
 
     const onCancel = () => {
@@ -36,8 +37,8 @@ const ChangePassword = ({open, handleCancel}) => {
         await reauthenticateWithCredential(
             auth.currentUser, 
             credential
-        ).then((result) => {
-            updatePassword(result.user, newPassword)
+        ).then(async (result) => {
+            await updatePassword(result.user, newPassword)
             .then(() => {
                 message.success('Đổi mật khẩu thành công');
                 onCancel();
