@@ -15,8 +15,8 @@ const BookedTourItem = ({item, onClick}) => {
           width : "200px",
           height : "150px"
         }}
-        src= {item.destinationInfo?.tourImages}
-        alt='image'
+        src= {item.destinationInfo?.tourImages && item.destinationInfo?.tourImages[0]}
+        alt='Tour'
       />
 
       <Descriptions style={{marginLeft : "46px"}}>
