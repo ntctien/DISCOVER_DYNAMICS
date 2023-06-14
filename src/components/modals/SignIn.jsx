@@ -1,4 +1,4 @@
-import { Modal, Spin, message } from "antd";
+import { Modal, Spin, message, Input } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
@@ -35,10 +35,10 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
         e.preventDefault();
 
         await signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
             // Signed in
             const user = userCredential.user;
-            message.success("Đăng nhập thành công");
+            await message.success("Đăng nhập thành công");
             refresh();
         })
         .catch((error) => {
@@ -109,42 +109,34 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
                 <p style={{fontWeight:600, fontSize:"40px", lineHeight : "49px" ,marginTop :"4px"}}>
                     Đăng nhập </p>
 
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
-                    border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop :"32px", padding:"12px", width :"480px"}}>
-                        <img 
-                            src={profileIcon} 
-                            alt="Profile"/>
-                        <input 
-                            type="email" 
-                            placeholder="Email" 
-                            style={{
-                                marginLeft :"12px",
-                                borderWidth :'0', 
-                                outline:"none", 
-                                width : "400px"
-                            }}
-                            onChange={(e)=>setEmail(e.target.value)}>
-                        </input>
-                </div>
+                <Input 
+                    style={{
+                        border:"1px solid rgba(0, 0, 0, 0.47)", 
+                        borderRadius:"10px", 
+                        marginTop :"32px", 
+                        padding:"12px", 
+                        width :"480px"
+                    }}
+                    prefix = {<img 
+                        src={profileIcon} 
+                        alt="Profile"/>}
+                    placeholder="Email" 
+                    onChange={(e)=>setEmail(e.target.value)}>
+                </Input>    
 
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
-                    border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop :"20px", padding:"12px", width :"480px"}}>
-                        <img
-                            src={lockIcon} 
-                            alt="Password"/>
-                        <input 
-                            type="password" 
-                            placeholder="Mật khẩu" 
-                            style={{
-                                marginLeft :"12px",
-                                borderWidth :'0', 
-                                outline:"none", 
-                                width : "400px"
-                            }}
-                            onChange={(e)=>setPassword(e.target.value)}>
-                        </input>
-                        <EyeOutlined style={{ width :"30px" ,height : "20px" , color: "#00000078", fontSize: "20px" }}/>
-                </div>
+                <Input.Password
+                    style={{
+                        border:"1px solid rgba(0, 0, 0, 0.47)", 
+                        borderRadius:"10px", 
+                        marginTop :"20px", 
+                        padding:"12px", 
+                        width :"480px"}}
+                    prefix = {<img
+                        src={lockIcon} 
+                        alt="Password"/>}
+                    placeholder="Mật khẩu"
+                    onChange={(e)=>setPassword(e.target.value)}
+                />
 
                 <button 
                     style={{

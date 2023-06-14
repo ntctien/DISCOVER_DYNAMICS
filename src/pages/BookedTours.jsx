@@ -137,7 +137,7 @@ const BookedTours = () => {
         open={modal === "detail"}
         onCancel={() => setModal(null)}
         data={currItem}
-        admin={true}
+        admin={currItem?.status === 1}
       />
     </div>
   )

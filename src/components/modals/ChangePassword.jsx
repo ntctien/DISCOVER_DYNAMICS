@@ -1,4 +1,4 @@
-import { Modal, Button, Spin, message } from "antd";
+import { Modal, Button, Spin, message, Input } from "antd";
 import logo from '../../assets/logo.png';
 import lockIcon from '../../assets/lock.svg';
 import loadingIcon from '../../assets/loading.gif';
@@ -75,70 +75,56 @@ const ChangePassword = ({open, handleCancel}) => {
                 <div style={{ fontSize: "20px"}}>
                     Nhập mật khẩu cũ: </div>
 
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
-                        border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop :"8px", padding:"12px", width :"470px"}}>
-                        <img
-                            src={lockIcon} 
-                            alt="Password"/>
-                        <input 
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                            type="password" 
-                            placeholder="Nhập mật khẩu" 
-                            style={{
-                                marginLeft :"12px",
-                                borderWidth :'0', 
-                                outline:"none", 
-                                width : "400px"
-                            }}>
-                        </input>
-                </div>
+                <Input.Password
+                    style={{
+                        border:"1px solid rgba(0, 0, 0, 0.47)", 
+                        borderRadius:"10px", 
+                        marginTop :"8px", 
+                        padding:"12px", 
+                        width :"470px"}}
+                    prefix = {<img
+                        src={lockIcon} 
+                        alt="Password"/>}
+                    placeholder="Nhập mật khẩu"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                />
 
                 <div style={{ fontSize: "20px", marginTop : "12px"}}>
-                    Nhập mật khẩu mới: </div>
-
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
-                        border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop :"8px", padding:"12px", width :"470px"}}>
-                        <img
-                            src={lockIcon} 
-                            alt="Password"/>
-                        <input 
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            type="password" 
-                            placeholder="Nhập mật khẩu" 
-                            style={{
-                                marginLeft :"12px",
-                                borderWidth :'0', 
-                                outline:"none", 
-                                width : "400px"
-                            }}>
-                        </input>
-
+                    Nhập mật khẩu mới: 
                 </div>
+
+                <Input.Password
+                    style={{
+                        border:"1px solid rgba(0, 0, 0, 0.47)", 
+                        borderRadius:"10px", 
+                        marginTop :"8px", 
+                        padding:"12px", 
+                        width :"470px"}}
+                    prefix = {<img
+                        src={lockIcon} 
+                        alt="Password"/>}
+                    placeholder="Nhập mật khẩu"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}/>
 
                 <div style={{ fontSize: "20px", marginTop : "12px"}}>
-                    Nhập lại mật khẩu: </div>
-
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", 
-                        border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop :"8px", padding:"12px", width :"470px"}}>
-                        <img
-                            src={lockIcon} 
-                            alt="Password"/>
-                        <input 
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            type="password" 
-                            placeholder="Nhập mật khẩu" 
-                            style={{
-                                marginLeft :"12px",
-                                borderWidth :'0', 
-                                outline:"none", 
-                                width : "400px"
-                            }}>
-                        </input>
-
+                    Nhập lại mật khẩu: 
                 </div>
+
+                <Input.Password
+                    style={{
+                        border:"1px solid rgba(0, 0, 0, 0.47)", 
+                        borderRadius:"10px", 
+                        marginTop :"8px", 
+                        padding:"12px", 
+                        width :"470px"}}
+                    prefix = {<img
+                        src={lockIcon} 
+                        alt="Password"/>}
+                    placeholder="Nhập mật khẩu"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}/>
           </div>
 
             <Button onClick={handleCancel} 
