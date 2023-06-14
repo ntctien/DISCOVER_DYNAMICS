@@ -56,7 +56,7 @@ const BookItem = ({ item, setModal, onClick, setCurrItem }) => {
         <div className="flex-1 flex flex-col justify-between">
           <div className="flex justify-between">
             {/* Tour name */}
-            <div className="book-tour-info-container">
+            <div className="book-tour-info-container max-w-[35%]">
               <h3>Tour của bạn</h3>
               <div className="book-tour-info">
                 <p>{item?.destinationInfo.location}</p>
@@ -64,16 +64,18 @@ const BookItem = ({ item, setModal, onClick, setCurrItem }) => {
               </div>
             </div>
             {/* Duration */}
-            <div className="book-tour-info-container">
+            <div className="flex flex-col">
               <h3>Ngày đi</h3>
-              <div className="book-tour-info">
+              <div className="book-tour-info flex-1">
                 <p>{item?.startDate}</p>
               </div>
             </div>
             {/* Expense */}
-            <div className="book-tour-info-container">
+            <div className="flex flex-col">
               <h3>Ngày về</h3>
-              <p>{item?.endDate}</p>
+              <div className="book-tour-info flex-1">
+                <p>{item?.endDate}</p>
+              </div>
             </div>
           </div>
           <p>
