@@ -1,11 +1,55 @@
-import { DatePicker, Button, Select, Descriptions, Pagination } from 'antd';
-import React from 'react'
+import { DatePicker, Button, Select, Spin } from 'antd';
+import { useState, useEffect } from "react";
+import BookedTourItem from '../components/booked_tour/BookedTourItem';
+import { auth } from "../firebase";
+import timeStampToString from "../utils/timeStampToString";
+import { onAuthStateChanged } from "firebase/auth";
+import getBookedTour from "../api/services/getBookedTour";
+import getDestinationById from '../api/services/getDestinationById';
+import BookingDetailModal from '../components/modals/BookingDetailModal';
 
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
 
 const BookedTours = () => {
+  const [data, setData] = useState([]);
+  const [modal, setModal] = useState(null);
+  const [currItem, setCurrItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    setLoading(true);
+    let result = await getBookedTour();
+    result = await Promise.all(
+      result.map(async (item) => {
+        const destinationInfo = await getDestinationById(item.tourId);
+        
+        return {
+          ...item,
+          destinationInfo,
+          startDate: timeStampToString(item.startDate),
+          endDate: timeStampToString(item.endDate),
+        };
+      })
+    );
+    setData([...result]);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          fetchData();
+        }
+      });
+  }, []);
+
+  const handleItemClick = (item) => {
+    setModal("detail");
+    setCurrItem(item);
+  };
+
   return (
     <div>
       <div style={{
@@ -67,41 +111,34 @@ const BookedTours = () => {
         </div>
       </div>
 
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"flex-start", alignItems:"center", background: "#FFFFFF",  
-                    marginLeft : "150px", border:"1px solid rgba(0, 0, 0, 0.47)", borderRadius:"10px", marginTop : "25px", width : "1200px", height : "180px"}}>
-        <img
-          style={{
-            marginLeft : "30px",
-            width : "200px",
-            height : "150px"
-          }}
-          src='logo.png'
-        />
-
-        <Descriptions style={{marginLeft : "46px"}}>
-          <Descriptions.Item label="Mã đặt Tour" 
-            contentStyle={{
-              color: "green",
-            }}
-            >LQNSU346JK</Descriptions.Item>
-          <Descriptions.Item label="Họ tên khách hàng">Phạm Thị Thu Trang</Descriptions.Item>
-          <Descriptions.Item label="SĐT">09xx xxx xxx</Descriptions.Item>
-          <Descriptions.Item label="Tour đã đặt"> Cao Bằng</Descriptions.Item>
-          <Descriptions.Item label="Trạng thái" 
-            contentStyle={{
-              color: "#FF9648"
-            }}>Chưa thanh toán</Descriptions.Item>
-          <Descriptions.Item label="Số lượng khách"> 1</Descriptions.Item>
-          <Descriptions.Item label="Tổng cộng" 
-            contentStyle={{
-              color: "#396746"
-            }}> 6.600.000 VNĐ</Descriptions.Item>
-        </Descriptions>
-      </div>
-      <Button style={{marginTop : "20px", left : "650px" , border: "none"}}>
+      <Spin spinning={loading}> 
+        {/* Booked tour items */}
+        {data.map((item,i) =>(
+          <BookedTourItem 
+            item={item} 
+            key={i} 
+            setModal={setModal}
+            setCurrItem={setCurrItem}
+            onClick={() => handleItemClick(item)}
+          />
+        ))}
+      </Spin>
+      
+      <Button 
+        style={{
+          marginTop : "20px", 
+          left : "650px" , 
+          border: "none"
+          }}>
         Xem thêm...
       </Button>
-
+          
+      <BookingDetailModal
+        open={modal === "detail"}
+        onCancel={() => setModal(null)}
+        data={currItem}
+        admin={true}
+      />
     </div>
   )
 }

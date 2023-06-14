@@ -1,4 +1,4 @@
-import { Modal, Spin } from "antd";
+import { Modal, Spin, message } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
@@ -30,21 +30,22 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
         resetForm();
     };
 
-    const signIn = (e) => {
+    const signIn = async (e) => {
         setLoading(true);
         e.preventDefault();
 
-        signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log("user");
+            message.success("Đăng nhập thành công");
             refresh();
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
+            message.error("Tài khoản hoặc mật khẩu không chính xác");
         });
 
         setLoading(false);
@@ -59,6 +60,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
+            message.success("Đăng nhập thành công");
             refresh();
 
         }).catch((error) => {
@@ -78,7 +80,7 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             const credential = FacebookAuthProvider.credentialFromResult(result);
             const accessToken = credential.accessToken;
-            // IdP data available using getAdditionalUserInfo(result)
+            message.success("Đăng nhập thành công");
             refresh();
             
         }).catch((error) => {

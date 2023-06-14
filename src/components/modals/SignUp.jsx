@@ -1,4 +1,4 @@
-import { Modal, Spin } from "antd";
+import { Modal, Spin, message } from "antd";
 import logo from '../../assets/logo.png';
 import profileIcon from '../../assets/Profile.svg';
 import lockIcon from '../../assets/lock.svg';
@@ -8,12 +8,11 @@ import facebookIcon from '../../assets/facebook_icon.svg';
 import loadingIcon from '../../assets/loading.gif';
 import React, {useState} from 'react';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth, db, provider, provider1 } from "../../firebase";
+import { auth, provider, provider1 } from "../../firebase";
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 import addUser from "../../api/services/addUser"
 
 const SignUp = ({open, handleCancel, handleSignIn}) => {
-    const [currentModal, setCurrentModal] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const [email, setEmail] = useState('')
@@ -33,60 +32,60 @@ const SignUp = ({open, handleCancel, handleSignIn}) => {
         setLoading(true);
         e.preventDefault();
 
-        await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             // Signed in
             const user = userCredential.user;
-            addUser(user.email, user.uid);
+            await addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
-        })
-        .catch((error) => {
+        } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
             // ..
-        });
+        }
+
         setLoading(false);
     }
 
-    const signUpWithGoogle = () => {
+    const signUpWithGoogle = async () => {
         setLoading(true);
-        signInWithPopup(auth, provider)
-        .then((result) => {
+        try {
+            const result = await signInWithPopup(auth, provider);
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            addUser(user.email, user.uid);
+            await addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
-            
-        }).catch((error) => {
+        } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+            console.log(errorCode, errorMessage);
+        }
         setLoading(false);
-        
     };
 
-    const signUpWithFacebook = () => {
+    const signUpWithFacebook = async () => {
         setLoading(true);
-        signInWithPopup(auth, provider1)
-        .then((result) => {
+        try {
+            const result = await signInWithPopup(auth, provider1);
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            const credential = FacebookAuthProvider.credentialFromResult(result);
-            const accessToken = credential.accessToken;
-            addUser(user.email, user.uid);
+            await addUser(user.email, user.uid);
+            message.success("Đăng ký thành công");
             onCancel();
-            
-        }).catch((error) => {
+        } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+            console.log(errorCode, errorMessage);
+        }
         setLoading(false);
     };
 
