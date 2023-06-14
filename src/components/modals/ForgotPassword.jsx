@@ -2,25 +2,28 @@ import { Modal, message } from "antd";
 import profileIcon from '../../assets/Profile.svg';
 import logo from '../../assets/logo.png';
 import { useState } from "react";
-import EnterOTP from "./EnterOTP";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = ({ open, handleCancel }) => {
-    const [currentModal, setCurrentModal] = useState(null);
     const [email, setEmail] = useState('');
 
-    const forgotPassword = () => {
+    const resetForm = () => {
+        setEmail('');
+    };
+
+    const onCancel = () => {
+        resetForm();
+        handleCancel();
+    };
+
+    const forgotPassword = async () => {
         const auth = getAuth();
-        sendPasswordResetEmail(auth, email)
+        await sendPasswordResetEmail(auth, email)
         .then(() => {
-            // Password reset email sent!
-            // ..
             message.success("Vui lòng kiểm tra Email để thay đổi mật khẩu mới");
+            onCancel();
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
+        .catch(() => {
             message.error("Tài khoản không tồn tại");
 
         });
@@ -69,16 +72,12 @@ const ForgotPassword = ({ open, handleCancel }) => {
                             background: "#FF9648", 
                             color:"white"
                             }}
-                        // onClick={() => {handleCancel(); setCurrentModal("enter-OTP")}}
                         >
                         XÁC NHẬN
                     </button> 
             </div>
         </Modal>
-        <EnterOTP
-            open={currentModal === 'enter-OTP'}
-            handleCancel={() => setCurrentModal(null)} 
-        />
+
     </>
   );
 };

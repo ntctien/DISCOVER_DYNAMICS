@@ -30,15 +30,14 @@ const SignIn = ({open, handleCancel, handleSignUp}) => {
         resetForm();
     };
 
-    const signIn = (e) => {
+    const signIn = async (e) => {
         setLoading(true);
         e.preventDefault();
 
-        signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log("user");
             message.success("Đăng nhập thành công");
             refresh();
         })

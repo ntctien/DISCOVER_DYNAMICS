@@ -7,11 +7,12 @@ const ConfirmPayment = ({open, handleCancel, tourId}) => {
     const [loading, setLoading] = useState(false);
     
     const handleConfirm = async () => {
-        setLoading(false);
+        setLoading(true);
         handleCancel();
         await updateTourStatus(tourId, 2);
         message.success("Xác nhận thanh đoán đầy đủ thành công");
         refresh();
+        setLoading(false);
     }
 
     return (
